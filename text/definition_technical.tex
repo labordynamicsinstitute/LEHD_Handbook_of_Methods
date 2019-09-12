@@ -1,0 +1,1321 @@
+%TCIDATA{Version=5.50.0.2953}
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+                      
+
+% -*- latex -*- 
+% Time-stamp: <08/09/03 12:57:45 vilhuber> 
+% $Id: definition_technical.tex 461 2008-09-03 19:46:44Z vilhu001 $
+% $URL: https://repository.vrdc.cornell.edu/private/lv39_Papers/LEHD_definitions_revisions/text/definition_technical.tex $
+%
+% definition_technical.tex
+
+\subsection{Overview and basic data processing conventions}
+
+\label{sec:technical:overview}
+
+\index{variable definition} For internal processing the variable $t$ refers
+to the sequential quarter. The variable $t$ runs from $qmin$ to $qmax$,
+regardless of the state being processed. The quarters are numbered
+sequentially from 1 (1985:1) to the latest available quarter. These values
+are $qmin=1$ (1985:1) and $qmax=88$ (2006:4), as of December 2007. For
+publication, presentation, and internal data files, all dates are presented
+as (year:quarter) pairs, \textit{e.g.} (1990:1) for first quarter 1990. The
+variable $qfirst$ refers to the first available sequential quarter of data
+for a state (\textit{e.g.}, $qfirst=21$ for Illinois). The variable $qlast$
+refers to the last available sequential quarter of data for a state (\textit{%
+e.g.}, $qlast=88$ for Illinois). Unless otherwise specified a variable is
+defined for $qfirst\leq t\leq qlast.$ Statistics are produced for both sexes
+combined, as well as separately, for all age groups, ages 14-18, 19-21,
+22-24, 25-34, 35-44, 45-54, 55-64, 65+, and all combinations of these age
+groups and sexes. An individual's age is measured as of the last day of the
+quarter.
+
+\subsection{Individual concepts}
+
+\label{sec:technical:individual}
+
+\paragraph{Flow employment}
+
+\index{Employment!flow}
+
+$\left( m\right) $: for $qfirst\leq t\leq qlast$, individual $i$ employed
+(matched to a job) at some time during period $t$ at establishment $j$%
+\begin{equation}
+m_{ijt}=\left\{ 
+\begin{array}{l}
+1,%
+\text{ if }i\text{ has positive earnings at establishment }j\text{ during
+quarter }t \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.  \label{eq:mijt}
+\end{equation}
+
+\paragraph{Beginning of quarter employment}
+
+\mindex{Employment!Beginning of quarter}
+
+$\left( b\right) $: for $qfirst<t$, individual $i$ employed at the beginning
+of $t$ (and the end of $t-1$), 
+\begin{equation}
+b_{ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }m_{ijt-1}=m_{ijt}=1 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.  \label{eq:bijt}
+\end{equation}
+
+\paragraph{End of quarter employment}
+
+\mindex{Employment!End of quarter}
+
+$\left( e\right) $: for $t<qlast$, individual $i$ employed at $j$ at the end
+of $t$ (and the beginning of $t+1$),%
+\begin{equation}
+e_{ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }m_{ijt}=m_{ijt+1}=1 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.  \label{eq:eijt}
+\end{equation}
+
+\paragraph{Accessions}
+
+\mindex{Accessions}
+
+$\left( a_{1}\right) $: for $qfirst<t$, individual $i$ acceded to $j$ during 
+$t$%
+\begin{equation}
+a_{1ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }m_{ijt-1}=0\;\&\;m_{ijt}=1 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.  \label{eq:a1ijt}
+\end{equation}
+
+\paragraph{Separations}
+
+\mindex{Separations}
+
+$\left( s_{1}\right) $: for $t<qlast$, individual $i$ separated from $j$
+during $t$%
+\begin{equation}
+s_{1ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }m_{ijt}=1\;\&\;m_{ijt+1}=0 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.  \label{eq:s1ijt}
+\end{equation}
+
+\paragraph{Full quarter employment}
+
+\mindex{Employment!Full quarter}
+
+$\left( f\right) $: for $qfirst<t<qlast$, individual $i$ was employed at $j$
+at the beginning and end of quarter $t$ (full-quarter job)%
+\begin{equation}
+f_{ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }m_{ijt-1}=1\;\&\;m_{ijt}=1\;\&\;m_{ijt+1}=1 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.  \label{eq:fijt}
+\end{equation}
+
+\paragraph{New hires}
+
+\mindex{Hires!New}
+
+$\left( h_{1}\right) $: for $qfirst+3<t$, individual $i$ was newly hired at $%
+j$ during period $t$%
+\begin{equation}
+h_{1ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }m_{ijt-4}=0\;\&\;m_{ijt-3}=0\;\&\;m_{ijt-2}=0\;\&\;m_{ijt-1}=0%
+\;\&\;m_{ijt}=1 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.  \label{eq:h1ijt}
+\end{equation}
+
+\paragraph{Recalls}
+
+\mindex{Recalls}
+
+$\left( r_{1}\right) $: for $qfirst+3<t$, individual $i$ was recalled from
+layoff at $j$ during period $t$%
+\begin{equation}
+r_{1ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }m_{ijt-1}=0\;\&\;m_{ijt}=1\;\&\;h_{ijt}=0 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.  \label{eq:r1ijt}
+\end{equation}
+
+\paragraph{Accessions to consecutive quarter status}
+
+\mindex{Accessions!to consecutive quarter status}
+
+$\left( a_{2}\right) $: for $qfirst<t<qlast$, individual $i$ transited from
+accession to consecutive-quarter status at $j$ at the end of $t$ and the
+beginning of $t+1$ (accession in $t$ and still employed at the end of the
+quarter)%
+\begin{equation}
+a_{2ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }a_{1ijt}=1\;\&\;m_{ijt+1}=1 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.  \label{eq:a2ijt}
+\end{equation}
+
+\paragraph{Accessions to full quarter status}
+
+\mindex{Accessions!to full quarter status}
+
+$\left( a_{3}\right) $: for $qfirst+1<t<qlast$, individual $i$ transited
+from consecutive-quarter to full-quarter status at $j$ during period $t$
+(accession in $t-1$ and employed for the full quarter in $t$)%
+\begin{equation}
+a_{3ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }a_{2ijt-1}=1\;\&\;m_{ijt+1}=1 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.  \label{eq:a3ijt}
+\end{equation}
+
+\paragraph{New hires to consecutive quarter status}
+
+\mindex{Hires!New!to consecutive quarter status}
+
+$\left( h_{2}\right) $: for $qfirst+3<t<qlast$, individual $i$ transited
+from newly hired to consecutive-quarter hired status at $j$ at the end of $t$
+and the beginning of $t+1$ (hired in $t$ and still employed at the end of
+the quarter)%
+\begin{equation}
+h_{2ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }h_{1ijt}=1\;\&\;m_{ijt+1}=1 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.  \label{eq:h2ijt}
+\end{equation}
+
+\paragraph{New hires to full quarter status}
+
+\mindex{Hires!New!to full quarter status}
+
+$\left( a_{3}\right) $: for $qfirst+4<t<qlast$, individual $i$ transited
+from consecutive-quarter hired to full-quarter hired status at $j$ during
+period $t$ (hired in $t-1$ and full-quarter employed in $t$)%
+\begin{equation}
+h_{3ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }h_{2ijt-1}=1\;\&\;m_{ijt+1}=1 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.  \label{eq:h3ijt}
+\end{equation}
+
+\paragraph{Recalls to consecutive quarter status}
+
+\mindex{Recalls!to consecutive quarter status}
+
+$\left( r_{2}\right) $: for $qfirst+3<t<qlast$, individual $i$ transited
+from recalled to consecutive-quarter recalled status at $j$ at the end of $t$
+and beginning of $t+1$ (recalled in $t$ and still employed at the end of the
+quarter)%
+\begin{equation}
+r_{2ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }r_{1ijt}=1\;\&\;m_{ijt+1}=1 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.  \label{eq:r2ijt}
+\end{equation}
+
+\paragraph{Recalls to full quarter status}
+
+\mindex{Recalls!to full quarter status}
+
+$\left( r_{3}\right) $: for $qfirst+4<t<qlast$, individual $i$ transited
+from consecutive-quarter recalled to full-quarter recalled status at $j$
+during period $t$ (recalled in $t-1$ and full-quarter employed in $t$)%
+\begin{equation}
+r_{3ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }r_{2ijt-1}=1\;\&\;m_{ijt+1}=1 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.  \label{eq:r3ijt}
+\end{equation}
+
+\paragraph{Separations from consecutive quarter status}
+
+\mindex{Separations!from consecutive quarter status}
+
+$\left( s_{2}\right) $: for $qfirst<t<qlast$, individual $i$ separated from $%
+j$ during $t$ with consecutive-quarter status at the start of $t$%
+\begin{equation}
+s_{2ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }s_{1ijt}=1\;\&\;m_{ijt-1}=1 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.  \label{eq:s2ijt}
+\end{equation}
+
+\paragraph{Separations from full-quarter status}
+
+\mindex{Separations!from full-quarter status}
+
+$\left( s_{3}\right) $: for $qfirst+1<t<qlast$, individual $i$ separated
+from $j$ during $t$ with full-quarter status during $t-1$
+
+\begin{equation}
+s_{3ijt}=\left\{ 
+\begin{array}{l}
+{1}\text{, if }{s_{2ijt}=1\And m_{ijt-2}=1} \\ 
+{0,}\text{otherwise.}%
+\end{array}%
+\right.  \label{eq:s3ijt}
+\end{equation}
+
+\paragraph{Total earnings during the quarter}
+
+\mindex{Earnings!Total}
+
+$\left( w_{1}\right) $: for $qfirst\leq t\leq qlast$, earnings of individual 
+$i$ at establishment $j$ during period $t$%
+\begin{equation}
+w_{1ijt}=\sum \text{{all }}{UI}\text{-covered earnings by }{i}\text{ at }{j}%
+\text{ during }{t}
+\end{equation}
+
+\paragraph{Earnings of end-of-period employees}
+
+\mindex{Earnings!end-of-period employees}
+
+$\left( w_{2}\right) $: for $qfirst\leq t<qlast$, earnings of individual $i$
+at establishment $j$ during period $t$
+
+\begin{equation}
+w_{2ijt}=\left\{ 
+\begin{array}{l}
+{w_{1ijt}}\text{, if }{e_{ijt}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right.
+\end{equation}
+
+\paragraph{Earnings of full-quarter individual}
+
+\mindex{Earnings!full-quarter individual}
+
+$\left( w_{3}\right) $: for $qfirst<t<qlast$, earnings of individual $i$ at
+establishment $j$ during period $t$
+
+\begin{equation}
+w_{3ijt}=\left\{ 
+\begin{array}{l}
+{w_{1ijt}}\text{, if }{f_{ijt}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right.
+\end{equation}
+
+\paragraph{Total earnings at all employers}
+
+\mindex{Employees!total earnings of}
+
+$\left( w_{1\bullet }\right) $: for $qfirst\leq t\leq qlast$, total earnings
+of individual $i$ during period $t$
+
+\begin{equation}
+w_{1i\bullet t}=\sum\limits_{j\text{ employs}\;i\text{ during }t}{w_{1ijt}}
+\end{equation}
+
+\paragraph{Total earnings at all employers for of end-of-period employees}
+
+\mindex{Employees!end-of-period!total earnings of}
+
+$\left( w_{2\bullet }\right) $: for $qfirst\leq t<qlast$, total earnings of
+individual $i$ during period $t$
+
+\begin{equation}
+w_{2i\bullet t}=\left\{ 
+\begin{array}{l}
+{w_{1i\bullet t}}\text{, if }{e_{ijt}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right.
+\end{equation}
+
+\paragraph{Total earnings at all employers of full-quarter employees}
+
+\mindex{Employees!full-quarter!total earnings of}
+
+$\left( w_{3\bullet }\right) $: for $qfirst<t<qlast$, total earnings of
+individual $i$ during period $t$
+
+\begin{equation}
+w_{3i\bullet t}=\left\{ 
+\begin{array}{l}
+{w_{1i\bullet t}}\text{, if }{f_{ijt}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right.
+\end{equation}
+
+\paragraph{Change in total earnings at all employers}
+
+\mindex{Earnings!total change}
+
+$\left( \Delta w_{1\bullet }\right) $: for $qfirst<t\leq qlast$, change in
+total earnings of individual $i$ between periods $t-1$ and $t$
+
+\begin{equation}
+\Delta w_{1i\bullet t} = w_{1i\bullet t} - w_{1i\bullet t - 1}
+\end{equation}
+
+\paragraph{Earnings of accessions}
+
+\mindex{Earnings!accessions}
+
+$\left( wa_{1}\right) $: for $qfirst<t\leq qlast$, earnings of individual $i$
+at employer $j$ during period $t$
+
+\begin{equation}
+wa_{1ijt}=\left\{ 
+\begin{array}{l}
+{w_{1ijt}}\text{, if }{a_{1ijt}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right.
+\end{equation}
+
+\paragraph{Earnings of consecutive-quarter accessions}
+
+\mindex{Earnings!accessions!consecutive-quarter}
+
+$\left( wa_{2}\right) $: for $qfirst<t<qlast$, earnings of individual $i$ at
+employer $j$ during period $t$
+
+\begin{equation}
+wa_{2ijt}=\left\{ 
+\begin{array}{l}
+{w_{1ijt}}\text{, if }{a_{2ijt}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right.
+\end{equation}
+
+\paragraph{Earnings of full-quarter accessions}
+
+\mindex{Earnings!accessions!full-quarter}
+
+$\left( wa_{3}\right) $: for $qfirst+1<t<qlast$, earnings of individual $i$
+at employer $j$ during period $t$
+
+\begin{equation}
+wa_{3ijt}=\left\{ 
+\begin{array}{l}
+{w_{1ijt}}\text{, if }{a_{3ijt}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right.
+\end{equation}
+
+\paragraph{Earnings of full-quarter new hires}
+
+\mindex{Earnings!hires!full-quarter} 
+\mindex{Hires!to full-quarter
+status!Earnings of}
+
+$\left( wh_{3}\right) $: for $qfirst+4<t<qlast$, earnings of individual $i$
+at employer $j$ during period $t$
+
+\begin{equation}
+wh_{3ijt}=\left\{ 
+\begin{array}{l}
+{w_{1ijt}}\text{, if }{h_{3ijt}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right.
+\end{equation}
+
+\paragraph{Total earnings change for accessions}
+
+\mindex{Earnings!total change!accessions}
+
+$\left( \Delta wa_{1}\right) $: for $qfirst+1<t\leq qlast$, earnings change
+of individual $i$ at employer $j$ during period $t$
+
+\begin{equation}
+\Delta wa_{1ijt}=\left\{ 
+\begin{array}{l}
+{\Delta w_{1i\bullet t},}\text{, if }{a_{1ijt}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right.
+\end{equation}
+
+\paragraph{Total earnings change for full-quarter accessions}
+
+\mindex{Earnings!total change!full-quarter accessions}
+
+$\left( \Delta wa_{3}\right) $: for $qfirst+2<t<qlast$, earnings change of
+individual $i$ at employer $j$ during period $t$
+
+\begin{equation}
+\Delta wa_{3ijt}=\left\{ 
+\begin{array}{l}
+{\Delta w_{1i\bullet t},}\text{if }{a_{3ijt}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right.
+\end{equation}
+
+\paragraph{Earnings of separations from establishment}
+
+\mindex{Earnings!separations} \mindex{Separations!earnings}
+
+$\left( ws_{1}\right) $: for $t<qlast$, earnings of individual $i$ separated
+from $j$ during $t$
+
+\begin{equation}
+ws_{1ijt}=\left\{ 
+\begin{array}{l}
+{w_{1ijt}}\text{, if }{s_{1ijt}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right.
+\end{equation}
+
+\paragraph{Earnings of full-quarter separations}
+
+\mindex{Earnings!separations!from full-quarter status} %
+\mindex{Separations!from full-quarter status!earnings}
+
+$\left( ws_{3}\right) $: for $qfirst+1<t<qlast$, individual $i$ separated
+from $j$ during $t+1$ with full-quarter status during $t$
+
+\begin{equation}
+ws_{3ijt}=\left\{ 
+\begin{array}{l}
+{w_{1ijt}}\text{, if }{s_{3ijt+1}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right.
+\end{equation}
+
+\paragraph{Total earnings change for separations}
+
+\mindex{Earnings!total change!separations} 
+\mindex{Separations!total
+earnings change}
+
+$\left( \Delta ws_{1}\right) $: for $t<qlast$, earnings change in period $%
+t+1 $ of individual $i$ separated from $j$ during $t$
+
+\begin{equation}
+\Delta ws_{1ijt}=\left\{ 
+\begin{array}{l}
+{\Delta w_{1i\bullet t+1},}\text{if }{s_{1ijt}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right.
+\end{equation}
+
+\paragraph{Total earnings change for full-quarter separations}
+
+\mindex{Earnings!total change!separations from full-quarter status} %
+\mindex{Separations!from full-quarter status!total earnings change}
+
+$\left( \Delta ws_{3}\right) $: for $t<qlast$, earnings change in period $%
+t+1 $ of individual $i$ full-quarter separated from $j$ during $t$, last
+full-quarter employment was $t-1$
+
+\begin{equation}
+\Delta ws_{3ijt}=\left\{ 
+\begin{array}{l}
+{\Delta w_{1i\bullet t+1},}\text{if }{s_{3ijt}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right.
+\end{equation}
+
+\paragraph{Periods of non-employment prior to an accession}
+
+\mindex{Non-employment!periods prior to an accession}
+
+$\left( na\right) $: for $qfirst+3<t$, periods of non-employment during the
+previous four quarters by $i$ prior to an accession at establishment $j$
+during $t$ 
+\begin{equation}
+na_{ijt}=\left\{ 
+\begin{array}{l}
+{\sum\limits_{1\leqslant s\leqslant 4}{n_{it-s}},\mbox{ if }a_{1ijt}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right.
+\end{equation}%
+where $n_{it}=1$, if $m_{ijt}=0\ \forall j$.
+
+\paragraph{Periods of non-employment prior to a new hire}
+
+\mindex{Non-employment!periods prior to a new hire}
+
+$\left( nh\right) $: for $qfirst+3<t$, periods of non-employment during the
+previous four quarters by $i$ prior to a new hire at establishment $j$
+during $t$ 
+\begin{equation}
+nh_{ijt}=\left\{ 
+\begin{array}{l}
+{\sum\limits_{1\leqslant s\leqslant 4}{n_{it-s}},}\text{if }{h_{1ijt}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right.
+\end{equation}
+
+\paragraph{Periods of non-employment prior to a recall}
+
+\mindex{Non-employment!periods prior to a recall}
+
+$\left( nr\right) $: for $qfirst+3<t$, periods of non-employment during the
+previous four quarters by $i$ prior to a recall at establishment $j$ during $%
+t$%
+\begin{equation}
+nr_{ijt}=\left\{ 
+\begin{array}{l}
+{\sum\limits_{1\leqslant s\leqslant 4}{n_{it-s}},}\text{if }{r_{1ijt}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right.
+\end{equation}
+
+\paragraph{Periods of non-employment following a separation}
+
+\mindex{Non-employment!periods following a separation}
+
+$\left( ns\right) $: for $t<qlast-3$, periods of non-employment during the
+next four quarters by individual $i$ separated from establishment $j$ during 
+$t$
+
+\begin{equation}
+ns_{ijt}=\left\{ 
+\begin{array}{l}
+{\sum\limits_{1\leqslant s\leqslant 4}{n_{it+s}},}\text{if }{s_{1ijt}=1} \\ 
+\text{{undefined, otherwise}}%
+\end{array}%
+\right. .
+\end{equation}
+
+\subsection{Establishment concepts}
+
+\label{sec:technical:employer}
+
+For statistic $x_{cijt}$ denote the sum over $i$ during period $t$ as $%
+x_{c\cdot jt}$. For example, beginning of period employment for firm $j$ is
+written as:%
+\begin{equation}
+b_{\cdot jt}=\sum\limits_{i}b_{ijt}
+\end{equation}%
+All individual statistics generate establishment totals according to the
+formula above. The key establishment statistic is the average employment
+growth rate for establishment $j$, the components of which are defined here.
+
+\paragraph{Beginning-of-period employment}
+
+(number of jobs)%
+\begin{equation}
+B_{jt}=b_{\cdot jt}
+\end{equation}
+
+\paragraph{End-of-period employment}
+
+(number of jobs)%
+\begin{equation}
+E_{jt}=e_{\cdot jt}
+\end{equation}
+
+\paragraph{Employment any time during the period}
+
+(number of jobs) 
+\begin{equation}
+M_{jt}=m_{\cdot jt}
+\end{equation}
+
+\paragraph{Full-quarter employment}
+
+\begin{equation}
+F_{jt}=f_{\cdot jt}
+\end{equation}
+
+\paragraph{Net job flows}
+
+(change in employment) for establishment $j$ during period $t$%
+\begin{equation}
+JF_{jt}=E_{jt}-B_{jt}  \label{eq:JFjt}
+\end{equation}
+
+\paragraph{Average employment}
+
+for establishment $j$ between periods $t-1$ and $t$%
+\begin{equation}
+\bar{E}_{jt}=\frac{\left( B_{jt}+E_{jt}\right) }{2}  \label{eq:ebarjt}
+\end{equation}
+
+\paragraph{Average employment growth rate}
+
+for establishment $j$ between periods $t-1$ and $t$%
+\begin{equation}
+G_{jt}=\frac{JF_{jt}}{\bar{E}_{jt}}  \label{eq:Gjt}
+\end{equation}
+
+\paragraph{Job creation}
+
+for establishment $j$ between periods $t-1$ and $t$%
+\begin{equation}
+JC_{jt}=\bar{E}_{jt}\max \left( {0,}G_{jt}\right)  \label{eq:JCjt}
+\end{equation}
+
+\paragraph{Average job creation rate}
+
+for establishment $j$ between periods $t-1$ and $t$%
+\begin{equation}
+JCR_{jt}=\frac{JC_{jt}}{\bar{E}_{jt}}  \label{eq:JCRjt}
+\end{equation}
+
+\paragraph{Job destruction}
+
+for establishment $j$ between periods $t-1$ and $t$%
+\begin{equation}
+JD_{jt}=\bar{E}_{jt}\limfunc{abs}\left( \min \left( 0,G_{jt}\right) \right)
+\label{eq:JDjt}
+\end{equation}
+
+\paragraph{Average job destruction rate}
+
+for establishment $j$ between periods $t-1$ and $t$%
+\begin{equation}
+JDR_{jt}=\frac{JD_{jt}}{\bar{E}_{jt}}  \label{eq:JDRjt}
+\end{equation}
+
+\paragraph{Net change in full-quarter employment}
+
+for establishment $j$ during period $t$%
+\begin{equation}
+FJF_{jt}=F_{jt}-F_{jt-1}  \label{eq:FJFjt}
+\end{equation}
+
+\paragraph{Average full-quarter employment}
+
+for establishment $j$ during period $t$%
+\begin{equation}
+\bar{F}_{jt}=\frac{F_{jt-1}+F_{jt}}{2}  \label{eq:Fbarjt}
+\end{equation}
+
+\paragraph{Average full-quarter employment growth rate}
+
+for establishment $j$ between $t-1$ and $t$%
+\begin{equation}
+FG_{jt}=\frac{FJF_{jt}}{\bar{F}_{jt}}  \label{eq:FGjt}
+\end{equation}
+
+\paragraph{Full-quarter job creations}
+
+for establishment $j$ between $t-1$ and $t$%
+\begin{equation}
+FJC_{jt}=\bar{F}_{jt}\max \left( 0,FG_{jt}\right)  \label{eq:FJCjt}
+\end{equation}
+
+\paragraph{Average full-quarter job creation rate}
+
+for establishment $j$ between $t-1$ and $t$%
+\begin{equation}
+FJCR_{jt}={FJC_{jt}\left/ {\vphantom {{JD_{jt} } {\bar {F}_{jt} }}}\right. 
+\bar{F}_{jt}}
+\end{equation}
+
+\paragraph{Full-quarter job destruction}
+
+for establishment $j$ between $t-1$ and $t$%
+\begin{equation}
+FJD_{jt}=\bar{F}_{jt}\limfunc{abs}\left( {\min \left( {0,FG_{jt}}\right) }%
+\right)
+\end{equation}
+
+\paragraph{Average full-quarter job destruction rate}
+
+for establishment $j$ between $t-1$ and $t$
+
+\begin{equation}
+FJDR_{jt} = F{JD_{jt} } \left/ {\vphantom {{JD_{jt} } {\bar {F}_{jt} }}}
+\right. {\bar {F}_{jt} }
+\end{equation}
+
+\paragraph{Accessions}
+
+for establishment $j$ during $t$
+
+\begin{equation}
+A_{jt} = a_{1\cdot jt}
+\end{equation}
+
+\paragraph{Average accession rate}
+
+for establishment $j$ during $t$
+
+\begin{equation}
+AR_{jt} = {A_{jt} } \left/ {\vphantom {{A_{jt} } {\bar {E}_{jt} }}} \right. {%
+\bar{E}_{jt} }
+\end{equation}
+
+\paragraph{Separations}
+
+for establishment $j$ during $t$
+
+\begin{equation}
+S_{jt} = s_{1\cdot jt}
+\end{equation}
+
+\paragraph{Average separation rate}
+
+for establishment $j$ during $t$
+
+\begin{equation}
+SR_{jt} = {S_{jt} } \left/ {\vphantom {{S_{jt} } {\bar {E}_{jt} }}} \right. {%
+\bar{E}_{jt} }
+\end{equation}
+
+\paragraph{New hires}
+
+for establishment $j$ during $t$
+
+\begin{equation}
+H_{jt}=h_{1\cdot jt}
+\end{equation}
+
+\paragraph{Full-quarter new hires}
+
+for establishment $j$ during $t$
+
+\begin{equation}
+H_{3jt}=h_{3\cdot jt}
+\end{equation}
+
+\paragraph{Recalls}
+
+for establishment $j$ during $t$
+
+\begin{equation}
+R_{jt} = r_{1\cdot jt}
+\end{equation}
+
+\paragraph{Flow into full-quarter employment}
+
+for establishment $j$ during $t$
+
+\begin{equation}
+FA_{jt}=a_{3\cdot jt}
+\end{equation}
+
+\paragraph{New hires into full-quarter employment}
+
+for establishment $j$ during $t$
+
+\begin{equation}
+FH_{jt}=h_{3\cdot jt}
+\end{equation}
+
+\paragraph{Average rate of flow into full-quarter employment}
+
+for establishment $j$ during $t$
+
+\begin{equation}
+FAR_{jt} = {FA_{jt} } \left/ {\vphantom {{FA_{jt} } {\bar {F}_{jt} }}}
+\right. {\bar {F}_{jt} }
+\end{equation}
+
+\paragraph{Flow out of full-quarter employment}
+
+for establishment $j$ during $t$
+
+\begin{equation}
+FS_{jt} = s_{3\cdot jt}
+\end{equation}
+
+\paragraph{Average rate of flow out of full-quarter employment}
+
+for establishment $j$ during $t$
+
+\begin{equation}
+FSR_{jt} = {FS_{jt} } \left/ {\vphantom {{FS_{jt} } {\bar {F}_{jt} }}}
+\right. {\bar {F}_{jt} }
+\end{equation}
+
+\paragraph{Flow into consecutive quarter employment}
+
+for establishment $j$ during $t$
+
+\begin{equation}
+CA_{jt} = a_{2\cdot jt}
+\end{equation}
+
+\paragraph{Flow out of consecutive quarter employment}
+
+for establishment $j$ during $t$
+
+\begin{equation}
+CS_{jt} = s_{2\cdot jt}
+\end{equation}
+
+\paragraph{Total payroll of all employees}
+
+\begin{equation}
+W_{1jt} = w_{1\cdot jt}
+\end{equation}
+
+\paragraph{Total payroll of end-of-period employees}
+
+\begin{equation}
+W_{2jt} = w_{2\cdot jt}
+\end{equation}
+
+\paragraph{Total payroll of full-quarter employees}
+
+\begin{equation}
+W_{3jt} = w_{3\cdot jt}
+\end{equation}
+
+\paragraph{Total payroll of accessions}
+
+\begin{equation}
+WA_{jt} = wa_{1\cdot jt}
+\end{equation}
+
+\paragraph{Change in total earnings for accessions}
+
+\begin{equation}
+\Delta WA_{jt}=\sum\limits_{i\in \left\{ {J(i,t)=j}\right\} }\bigtriangleup
+wa_{1ijt}
+\end{equation}
+
+\paragraph{Total payroll of transits to consecutive-quarter status}
+
+\begin{equation}
+WCA_{jt}=wa_{2\cdot jt}
+\end{equation}
+
+\paragraph{Total payroll of transits to full-quarter status}
+
+\begin{equation}
+WFA_{jt}=wa_{3\cdot jt}
+\end{equation}
+
+\paragraph{Total payroll of new hires to full-quarter status}
+
+\begin{equation}
+WFH_{jt}=wh_{3\cdot jt}
+\end{equation}
+
+\paragraph{Change in total earnings for transits to full-quarter status}
+
+\begin{equation}
+\Delta WFA_{jt} = \sum\limits_{i \in \left\{ {J(i,t) = j} \right\}} {\Delta
+wa_{3ijt} }
+\end{equation}
+
+\paragraph{Total periods of non-employment for accessions}
+
+\begin{equation}
+NA_{jt} = na_{\cdot jt}
+\end{equation}
+
+\paragraph{Total periods of non-employment for new hires (last four quarters)%
+}
+
+\begin{equation}
+NH_{jt} = nh_{\cdot jt}
+\end{equation}
+
+\paragraph{Total periods of non-employment for recalls (last four quarters)}
+
+\begin{equation}
+NR_{jt} = nr_{\cdot jt}
+\end{equation}
+
+\paragraph{Total earnings of separations}
+
+\begin{equation}
+WS_{jt}=ws_{1\cdot jt}
+\end{equation}
+
+\paragraph{Total change in total earnings for separations}
+
+\begin{equation}
+\Delta WS_{jt} = \sum\limits_{i \in \left\{ {J(i,t) = j} \right\}} {\Delta
+ws_{1ijt} }
+\end{equation}
+
+\paragraph{Total earnings of separations from full-quarter status (most
+recent full quarter)}
+
+\begin{equation}
+WFS_{jt}=ws_{3\cdot jt}
+\end{equation}
+
+\paragraph{Total change in total earnings for full-quarter separations}
+
+\begin{equation}
+\Delta WFS_{jt} = \sum\limits_{i \in \left\{ {J(i,t) = j} \right\}} {\Delta
+ws_{3ijt} }
+\end{equation}
+
+\paragraph{Total periods of non-employment for separations}
+
+\begin{equation}
+NS_{jt} = ns_{\cdot jt}
+\end{equation}
+
+\paragraph{Average earnings of end-of-period employees}
+
+\begin{equation}
+ZW_{2jt} = {W_{2jt} } \left/ {\vphantom {{W_{2jt} } {E_{jt} }}} \right. {%
+E_{jt} }
+\end{equation}
+
+\paragraph{Average earnings of full-quarter employees}
+
+\begin{equation}
+ZW_{3jt} = {W_{3jt} } \left/ {\vphantom {{W_{3jt} } {F_{jt} }}} \right. {%
+F_{jt} }
+\end{equation}
+
+\paragraph{Average earnings of accessions}
+
+\begin{equation}
+ZWA_{jt} = {WA_{jt} } \left/ {\vphantom {{WA_{jt} } {A_{jt} }}} \right. {%
+A_{jt} }
+\end{equation}
+
+\paragraph{Average change in total earnings for accessions}
+
+\begin{equation}
+Z\Delta WA_{jt} = {\Delta WA_{jt} } \left/ {\vphantom {{\Delta WA_{jt} }
+{A_{jt} }}} \right. {A_{jt} }
+\end{equation}
+
+\paragraph{Average earnings of transits to full-quarter status}
+
+\begin{equation}
+ZWFA_{jt}={WFA_{jt}}\left/ {\vphantom {{WFA_{jt} } {FA_{jt} }}}\right. {%
+FA_{jt}}
+\end{equation}
+
+\paragraph{Average earnings of new hires to full-quarter status}
+
+\begin{equation}
+ZWFH_{jt}={WFH_{jt}}\left/ {\vphantom {{WFA_{jt} } {FA_{jt} }}}\right. {%
+FH_{jt}}
+\end{equation}
+
+\paragraph{Average change in total earnings for transits to full-quarter
+status}
+
+\begin{equation}
+Z\Delta WFA_{jt} = {\Delta WFA_{jt} } \left/ {\vphantom {{\Delta WFA_{jt} }
+{FA_{jt} }}} \right. {FA_{jt} }
+\end{equation}
+
+\paragraph{Average periods of non-employment for accessions}
+
+\begin{equation}
+ZNA_{jt} = {NA_{jt} } \left/ {\vphantom {{NA_{jt} } {A_{jt} }}} \right. {%
+A_{jt} }
+\end{equation}
+
+\paragraph{Average periods of non-employment for new hires (last four
+quarters)}
+
+\begin{equation}
+ZNH_{jt} = {NH_{jt} } \left/ {\vphantom {{NH_{jt} } {H_{jt} }}} \right. {%
+H_{jt} }
+\end{equation}
+
+\paragraph{Average periods of non-employment for recalls (last four quarters)%
+}
+
+\begin{equation}
+ZNR_{jt} = {NR_{jt} } \left/ {\vphantom {{NR_{jt} } {R_{jt} }}} \right. {%
+R_{jt} }
+\end{equation}
+
+\paragraph{Average earnings of separations}
+
+\begin{equation}
+ZWS_{jt} = {WS_{jt} } \left/ {\vphantom {{WS_{jt} } {S_{jt} }}} \right. {%
+S_{jt} }
+\end{equation}
+
+\paragraph{Average change in total earnings for separations}
+
+\begin{equation}
+Z\Delta WS_{jt} = {\Delta WS_{jt} } \left/ {\vphantom {{\Delta WS_{jt} }
+{S_{jt} }}} \right. {S_{jt} }
+\end{equation}
+
+\paragraph{Average earnings of separations from full-quarter status (most
+recent full quarter)}
+
+\begin{equation}
+ZWFS_{jt - 1} = {WFS_{jt - 1} } \left/ {\vphantom {{WFS_{jt - 1} } {FS_{jt}
+}}} \right. {FS_{jt} }
+\end{equation}
+
+\paragraph{Average change in total earnings for full-quarter separations}
+
+\begin{equation}
+Z\Delta WFS_{jt} = {\Delta WFS_{jt} } \left/ {\vphantom {{\Delta WFS_{jt} }
+{FS_{jt} }}} \right. {FS_{jt} }
+\end{equation}
+
+\paragraph{Average periods of non-employment for separations}
+
+\begin{equation}
+ZNS_{jt} = {NS_{jt} } \left/ {\vphantom {{NS_{jt} } {S_{jt} }}} \right. {%
+S_{jt} }
+\end{equation}
+
+\paragraph{End-of-period employment (number of workers)}
+
+[Aggregate concept not related to a business]
+
+\begin{equation}
+N_t = n_{\cdot t}
+\end{equation}
+
+\subsection{Identities}
+\label{sec:identities}
+
+The identities stated below hold at the establishment level for every age
+group and sex subcategory. These identities are preserved in the QWI
+processing.
+
+\begin{definition}
+Employment at beginning of period $t$ equals end of period $t - 1$ 
+\begin{equation*}
+B_{jt} = E_{jt - 1}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Evolution of end of period employment 
+\begin{equation*}
+E_{jt} = B_{jt} + A_{jt} - S_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Evolution of average employment 
+\begin{equation*}
+\bar{E}_{jt} = B_{jt} + {\left( {A_{jt} - S_{jt} } \right)} \mathord{\left/
+{\vphantom {{\left( {A_{jt} - S_{jt} } \right)} 2}} \right.
+\kern-\nulldelimiterspace} 2
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Job flow identity 
+\begin{equation*}
+JF_{jt} = JC_{jt} - JD_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Creation-destruction identity 
+\begin{equation*}
+E_{jt} = B_{jt} + JC_{jt} - JD_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Creation-destruction/accession-separation identity 
+\begin{equation*}
+A_{jt} - S_{jt} = JC_{jt} - JD_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Evolution of full-quarter employment 
+\begin{equation*}
+F_{jt} = F_{jt - 1} + FA{\ }_{jt} - FS_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Full-quarter creation-destruction identity 
+\begin{equation*}
+F_{jt} = F_{jt - 1} + FJC_{jt} - FJD_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Full-quarter job flow identity 
+\begin{equation*}
+FJF_{jt} = FJC_{jt} - FJD_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Full-quarter creation-destruction/accession-separation identity 
+\begin{equation*}
+FA_{jt} - FS_{jt} = FJC_{jt} - FJD_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Employment growth rate identity 
+\begin{equation*}
+G_{jt} = JCR_{jt} - JDR_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Creation-destruction/accession-separation rate identity 
+\begin{equation*}
+JCR_{jt} - JDR_{jt} = AR_{jt} - SR_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Full quarter employment growth rate identity 
+\begin{equation*}
+FG_{jt} = FJCR_{jt} - FJDR_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Full quarter creation-destruction/accession-separation rate identity 
+\begin{equation*}
+FJCR_{jt} - FJDR_{jt} = FAR_{jt} - FSR_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Total payroll identity 
+\begin{equation*}
+W_{1jt} = W_{2jt} + WS_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Payroll identity for consecutive-quarter employees 
+\begin{equation*}
+W_{2jt} = W_{1jt} - WCA_{jt} - WS_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Full-quarter payroll identity 
+\begin{equation*}
+W_{3jt} = W_{2jt} - WCA_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+New hires/recalls identity 
+\begin{equation*}
+A_{jt} = H_{jt} + R_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Periods of non-employment identity 
+\begin{equation*}
+NA_{jt} = NH_{jt} + NR_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Worker-jobs in period $t$ are the sum of accessions and beginning of period
+employment. 
+\begin{equation*}
+M_{jt} = A_{jt} + B_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Worker-jobs in period $t$ are the sum of accessions to consecutive quarter
+status, separations, and full quarter workers. 
+\begin{equation*}
+M_{jt} = CA_{jt} + S_{jt} + F_{jt}
+\end{equation*}
+\end{definition}
+
+\begin{definition}
+Consecutive quarter accessions in period $t-1$ are the sum of consecutive
+quarter separations in period $t$ and full quarter accessions in period $t$ 
+\begin{equation*}
+CA_{jt - 1} - CS_{jt} = FA_{jt} - FS_{jt}
+\end{equation*}
+\end{definition}
+
+\subsection{Aggregation of job flows}
+
+\label{sec:technical:aggregate_flows}
+
+The aggregation of job flows is performed using growth rates to facilitate
+confidentiality protection. The rate of growth $JF$ for establishment $j$
+during period $t$ is estimated by:%
+\begin{equation}
+G_{jt}=\frac{{JF_{jt}}}{{\bar{E}_{jt}}}
+\end{equation}%
+For an arbitrary aggregate $k=$ ( $ownership\times$ $state\times$ $substate%
+\text{-}geography\times$ $industry\times$ $age\text{ }group\times sex$)
+cell, we have:%
+\begin{equation}
+G_{kt}=\frac{\sum\limits_{j\in \left\{ {K(j)=k}\right\} }{\bar{E}_{jt}\times
+G_{jt}}}{\bar{E}_{kt}}
+\end{equation}%
+where the function $K(j)$ indicates the classification associated with firm $%
+j$. We calculate the aggregate net job flow as%
+\begin{equation}
+JF_{kt}=\sum\limits_{j\in \left\{ {K(j)=k}\right\} }{JF_{jt}}.
+\end{equation}%
+Substitution yields%
+\begin{equation}
+JF_{kt}=\sum\limits_{j}{(\bar{E}_{jt}\times G_{jt})}=G_{kt}\times \bar{E}%
+_{kt},
+\end{equation}%
+so the aggregate job flow, as computed, is equivalent to the aggregate
+growth rate times aggregate employment. Gross job creation/destruction
+aggregates are formed from the job creation and destruction rates by
+analogous formulas substituting $JC$ or $JD$, as appropriate, for $JF$ \cite[%
+p. 189 for details]{DavisHaltiwangerSchuh}.
+
+\subsection{Measurement of employment churning}
+
+\label{sec:churning}
+
+The QWI measure employment churning (also called turnover) using the ratio
+formula:%
+\begin{equation}
+FT_{kt}=\frac{\left( FA_{kt}+FS_{kt}\right) /2}{F_{kt}}
+\end{equation}%
+for an arbitrary aggregate $k=$ ( $ownership\times$ $state\times$ $substate%
+\text{-}geography\times$ $industry\times$ $age\text{ }group\times sex$) 
+cell. In the actual production of the QWI, the three components of this
+ratio are computed as separate estimates and are released.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "QWI_methods"
+%%% End: 

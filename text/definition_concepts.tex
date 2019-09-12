@@ -1,0 +1,606 @@
+%TCIDATA{Version=5.50.0.2953}
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+                      
+%TCIDATA{ChildDefaults=chapter:1,page:1}
+
+
+% -*- latex -*- 
+%
+% Time-stamp: <05/04/06 23:54:02 vilhuber> 
+% Includes John Abowd mods 2005-04-05
+%              Automatically adjusted if using Xemacs
+%              Please adjust manually if using other editors
+%
+
+%\section{Fundamental Concepts}
+
+\subsection{Dates}
+
+\mindex{Dates}
+
+The QWI are a quarterly data system with calendar year timing. We use the
+notation \textit{yyyy:q} to refer to a year and quarter combination. For
+example, 1999:4 refers to the fourth quarter of 1999, which includes the
+months October, November, and December.
+
+\subsection{Employer}
+
+\mindex{Employer}
+
+An employer in the QWI system consists of a single Unemployment Insurance (UI%
+\index{UI}) account in a given state's UI wage reporting system. For
+statistical purposes the QWI system creates an employer identifier called a
+State Employer Identification Number (SEIN%
+\index{SEIN}) recoded from the UI-account number and information about the
+state (FIPS%
+\index{FIPS} code). Thus, within the QWI system, the SEIN is a unique
+identifier within and across states but the entity to which it refers is a
+UI account.
+
+\subsection{Establishment}
+
+\mindex{Establishment}
+
+For a given employer in the QWI system, an SEIN, each physical location
+within the state is assigned a unit number, called the SEINUNIT. This
+SEINUNIT is recoded from the reporting unit in the ES-202 files supplied by
+the states. All QWI statistics are produced by aggregating statistics
+calculated at the establishment level. Single-unit SEINs are UI accounts
+associated with a single reporting unit in the state. Thus, single-unit
+SEINs have only one associated SEINUNIT in every quarter. Multi-unit SEINs
+have two or more SEINUNITs associated for some quarters. Since the UI wage
+records are not coded down to the SEINUNIT, SEINUNITs are multiply imputed
+as described in Section \ref{sec:u2w} on the unit-to-worker imputation. A
+feature of this imputation system is that it does not permit SEINUNIT to
+SEINUNIT movements within the same SEIN. Thus, for multi-unit SEINs, the
+definitions below produce the same flow estimates at the SEIN level whether
+the definition is applied to the SEIN\ or the SEINUNIT.
+
+\subsection{Employee}
+
+\mindex{Employee}
+
+Individual employees are identified by their Social Security Numbers (SSN%
+\index{SSN}) on the UI wage records that provide the input to the QWI. To
+protect the privacy of the SSN and the individual's name, a different branch
+of the Census Bureau, removes the name and replaces the SSN with an internal
+Census identifier called a Protected Identification Key (PIK%
+\index{PIK}).
+
+\subsection{Job}
+
+\mindex{Job}
+
+The QWI system definition of a job is the association of an individual (PIK%
+\index{PIK})\ with an establishment (SEINUNIT 
+\index{SEINUNIT}) in a given year and quarter. The QWI system stores the
+entire history of every job that an individual holds. Estimates are based on
+the definitions presented below, which formalize how the QWI system
+estimates the start of a job (accession), employment status (beginning- and
+end-of-quarter employment), continuous employment (full-quarter employment),
+the end of a job (separation), and average earnings for different groups.
+
+\subsection{Unemployment Insurance wage records (the QWI system universe)}
+
+\mindex{Universe}
+
+The Quarterly Workforce Indicators are built upon concepts that begin with
+the report of an individual's UI%
+\index{UI}-covered earnings by an employing entity (SEIN%
+\index{SEIN}). An individual's {UI} wage record enters the QWI system if at
+least one employer reports earnings of at least one dollar for that
+individual\ (PIK%
+\index{PIK}) during the quarter. Thus, the job must produce at least one
+dollar of {UI}-covered earnings during a given quarter to count in the QWI
+system. The presence of this valid {UI} wage record in the QWI system
+triggers the beginning of calculations that estimate whether that individual
+was employed at the beginning of the quarter, at the end of the quarter, and
+continuously throughout the quarter. These designations are discussed below.
+Once these point-in-time employment measures have been estimated for the
+individual, further analysis of the individual's wage records results in
+estimates of full-quarter employment, accessions, separations (point-in-time
+and full-quarter), job creations and destructions, and a variety of
+full-quarter average earnings measures.
+
+\subsection{Employment at a point in time}
+
+\mindex{Employment!point in time}
+
+Employment is estimated at two points in time during the quarter,
+corresponding to the first and last calendar days. An individual is defined
+as employed at the beginning of the quarter when that individual has valid UI%
+\index{UI} wage records for the current quarter and the preceding quarter.
+Both records must apply to the same employer (SEIN%
+\index{SEIN}). An individual is defined as employed at the end of the
+quarter when that individual has valid {UI} wage records for the current
+quarter and the subsequent quarter. Again, both records must show the same
+employer. The QWI system uses beginning and end-of-quarter employment as the
+basis for constructing worker and job flows. In addition, these measures are
+used to check the external consistency of the data, since a variety of
+employment estimates are available as point-in-time measures. Many federal
+statistics are based upon estimates of employment as of the 12th day of
+particular months. The Census Bureau uses March 12 as the reference date for
+employment measures contained in its Business Register and on the Economic
+Censuses and Surveys. The BLS%
+\index{BLS} \textquotedblleft Covered Employment and Wages (CEW\mindex{CEW}%
+)\textquotedblright\ series, which is based on the QCEW, formerlyES-202%
+\index{ES-202}, data, use the 12th of each month as the reference date for
+employment. The QWI system cannot use exactly the same reference date as
+these other systems because {UI} wage reports do not specify additional
+detail regarding the timing of these payments. LEHD research has shown that
+the point-in-time definitions used to estimate beginning and end-of-quarter
+employment track the CEW month-one employment estimates well at the level of
+an employer ({SEIN}). For single-unit SEINs, there is no difference between
+an employer-based definition and an establishment-based definition of
+point-in-time employment. For multi-unit SEINs, the unit-to-worker
+imputation model assumes that unit-to-unit transitions within the same SEIN
+cannot occur. So, point in time employment defined at either the SEIN or
+SEINUNIT level produces the same result.
+
+\subsection{Employment for a full quarter}
+
+\mindex{Employment!full quarter}
+
+The concept of full-quarter employment estimates individuals who are likely
+to have been continuously employed throughout the quarter at a given
+employer. An individual is defined as full-quarter-employed if that
+individual has valid UI%
+\index{UI}-wage records in the current quarter, the preceding quarter, and
+the subsequent quarter at the same employer (SEIN%
+\index{SEIN}). That is, in terms of the point-in-time definitions, if the
+individual is employed at the same employer at both the beginning and end of
+the quarter, then the individual is considered full-quarter employed in the
+QWI system.
+
+Consider the following example. Suppose that an individual has valid {UI}
+wage records at employer \textit{A} in 1999:2, 1999:3, and 1999:4. This
+individual does not have a valid {UI} wage record at employer \textit{A} in
+1999:1 or 2000:1. Then, according to the definitions above, the individual
+is employed at the end of 1999:2, the beginning and end of 1999:3, and the
+beginning of 1999:4 at employer \textit{A}. The QWI system treats this
+individual as a full-quarter employee in 1999:3 but not in 1999:2 or 1999:4.
+Full-quarter status is not defined for either the first or last quarter of
+available data.
+
+\subsection{Point-in-time estimates of accession and separation}
+
+\mindex{Accessions!point-in-time} \mindex{Separations!point-in-time}
+
+An accession occurs in the QWI system when it encounters the first valid UI%
+\index{UI} wage record for a job (an individual (PIK%
+\index{PIK})-employer (SEIN%
+\index{SEIN}) pair). Accessions are not defined for the first quarter of
+available data from a given state. The QWI definition of an accession can be
+interpreted as an estimate of the number of new employees added to the
+payroll of the employer ({SEIN}) during the quarter. The individuals who
+acceded to a particular employer were not employed by that employer during
+the previous quarter but received at least one dollar of {UI}-covered
+earnings during the quarter of accession.
+
+A separation occurs in the current quarter of the QWI system when it
+encounters no valid {UI} wage record for an individual-employer pair in the
+subsequent quarter. This definition of separation can be interpreted as an
+estimate of the number of employees who left the employer during the current
+quarter. These individuals received {UI}-covered earnings during the current
+quarter but did not receive any {UI}-covered earnings in the next quarter
+from this employer. Separations are not defined for the last quarter of
+available data.
+
+\subsection{Accession and separation from full-quarter employment}
+
+\mindex{Accessions!full-quarter} \mindex{Separations!full-quarter}
+
+Full-quarter employment is not a point-in-time concept. Full-quarter
+accession refers to the quarter in which an individual first attains
+full-quarter employment status at a given employer. Full-quarter separation
+occurs in the last full-quarter that an individual worked for a given
+employer.
+
+As noted above, full-quarter employment refers to an estimate of the number
+of employees who were employed at a given employer during the entire
+quarter. An accession to full-quarter employment, then, involves two
+additional conditions that are not relevant for ordinary accessions. First,
+the individual (PIK%
+\index{PIK}) must still be employed at the end of the quarter at the same
+employer (SEIN%
+\index{SEIN}) for which the ordinary accession is defined. At this point
+(the end of the quarter where the accession occurred and the beginning of
+the next quarter) the individual has acceded to continuing-quarter status.
+An accession to continuing-quarter status means that the individual acceded
+in the current quarter and is end-of-quarter employed. Next the QWI system
+must check for the possibility that the individual becomes a full-quarter
+employee in the subsequent quarter. An accession to full-quarter status
+occurs if the individual acceded in the previous quarter, and is employed at
+both the beginning and end of the current quarter. Consider the following
+example. An individual's first valid UI%
+\index{UI} wage record with employer \textit{A} occurs in 1999:2. The
+individual, thus acceded in 1999:2. The same individual has a valid wage
+record with employer \textit{A} in 1999:3. The QWI system treats this
+individual as end-of-quarter employed in 1999:2 and beginning of quarter
+employed in 1999:3. The individual, thus, acceded to continuing-quarter
+status in 1999:2. If the individual also has a valid {UI} wage record at
+employer \textit{A} in 1999:4, then the individual is full-quarter employed
+in 1999:3. Since 1999:3 is the first quarter of full-quarter employment, the
+QWI system considers this individual an accession to full-quarter employment
+in 1999:3.
+
+Full-quarter separation works much the same way. One must be careful about
+the timing, however. If an individual separates in the current quarter, then
+the QWI system looks at the preceding quarter to determine if the individual
+was employed at the beginning of the current quarter. An individual who
+separates in a quarter in which that person was employed at the beginning of
+the quarter is a separation from continuing-quarter status in the current
+quarter. Finally, the QWI system checks to see if the individual was a
+full-quarter employee in the preceding quarter. An individual who was a full
+quarter employee in the previous quarter is treated as a full-quarter
+separation in the quarter in which that person actually separates. Note,
+therefore, that the definition of full-quarter separation preserves the
+timing of the actual separation (current quarter) but restricts the estimate
+to those individuals who were full-quarter status in the preceding quarter.
+\ For example, suppose that an individual separates from employer \textit{A}
+in 1999:3. This means that the individual had a valid {UI} wage record at
+employer \textit{A} in 1999:3 but did not have a valid {UI} wage record at
+employer \textit{A} in 1999:4. The separation is dated 1999:3. Suppose that
+the individual had a valid {UI} wage record at employer \textit{A} in
+1999:2. Then, a separation from continuing quarter status occurred in
+1999:3. Finally, suppose that this individual had a valid {UI} wage record
+at employer \textit{A} in 1999:1. Then, this individual was a full-quarter
+employee at employer \textit{A} in 1999:2. The QWI system records a
+full-quarter separation in 1999:3.
+
+\subsection{Point-in-time estimates of new hires and recalls}
+
+\mindex{New hires!point-in-time} \mindex{Recalls!point-in-time}
+
+The QWI system refines the concept of accession into two subcategories:\ new
+hires and recalls. In order to do this, the QWI system looks at a full year
+of wage record history prior to the quarter in which an accession occurs. If
+there are no valid wage records for this job (PIK%
+\index{PIK}-SEIN%
+\index{SEIN}) during the four quarters preceding an accession, then the
+accession is called a new hire; otherwise, the accession is called a recall.
+Thus, new hires and recalls sum to accessions. For example, suppose that an
+individual accedes to employer \textit{A} in 1999:3. Recall that this means
+that there is a valid UI%
+\index{UI} wage record for the individual 1 at employer \textit{A} in 1999:3
+but not in 1999:2. If there are also no valid {UI} wage records for
+individual 1 at employer \textit{A} for 1999:1, 1998:4 and 1998:3, then the
+QWI system designates this accession as a new hire of individual 1 by
+employer \textit{A} in 1999:3. Consider a second example in which individual
+2 accedes to employer \textit{B} in 2000:2. Once again, the accession
+implies that there is not a valid wage record for individual 2 at employer 
+\textit{B} in 2000:1. If there is a valid wage record for individual 2 at
+employer \textit{B} in 1999:4, 1999:3, or 1999:2, then the QWI system
+designates the accession of individual 2 to employer \textit{B} as a recall
+in 2000:2. New hire and recall data, because they depend upon having four
+quarters of historical data, only become available one year after the data
+required to estimate accessions become available.
+
+\subsection{New hires and recalls to and from full-quarter employment}
+
+\mindex{New hires!full-quarter} \mindex{Recalls!full-quarter}
+
+Accessions to full-quarter status can also be decomposed into new hires and
+recalls. The QWI system accomplishes this decomposition by classifying all
+accessions to full-quarter status who were classified as new hires in the
+previous quarter as new hires to full-quarter status in the current quarter.
+Otherwise, the accession to full-quarter status is classified as a recall to
+full-quarter status. For example, if individual 1 accedes to full-quarter
+status at employer \textit{A} in 1999:4 then, according to the definitions
+above, individual 1 acceded to employer \textit{A} in 1999:3 and reached
+full-quarter status in 1999:4. Suppose that the accession to employer 
+\textit{A} in 1999:3 was classified as a new hire, then the accession to
+full quarter status in 1999:4 is classified as a full-quarter new hire. For
+another example, consider individual 2 who accedes to full-quarter status at
+employer \textit{B} in 2000:3. Suppose that the accession of individual 2 to
+employer \textit{B} in 2000:2, which is implied by the full-quarter
+accession in 2000:3, was classified by the QWI system as a recall in 2000:2;
+then, the accession of individual 2 to full-quarter status at employer 
+\textit{B} in 2000:3 is classified as a recall to full-quarter status.
+
+\subsection{Job creations and destructions}
+
+\mindex{Job creation} \mindex{Job destruction} Job creations and
+destructions are defined at the employer (SEIN%
+\index{SEIN}) level and not at the job (PIK%
+\index{PIK}-{SEIN}) level. For single-unit employers, there is never more
+than one SEINUNIT per quarter, so the definition at the employer level and
+the definition at the establishment level are equivalent. For multi-unit
+employers, the QWI system performs the calculations at the establishment
+level (SEINUNIT); however, the statistical model for imputing establishment
+described in Section \ref{sec:u2w} does not permit
+establishment-to-establishment flows. Hence, although the statistics are
+estimated at the establishment level, the sum of job creations and
+destructions at a given employer in a given quarter across all
+establishments active that quarter is exactly equal to the measure of job
+creations that would have been estimated by using employer-level inputs
+(SEIN) directly.
+
+To construct an estimate of job creations and destructions, the QWI system
+totals beginning and ending employment for each quarter for every employer
+in the UI%
+\index{UI} wage record universe, that is, for an employer who has at least
+one valid {UI} wage record during the quarter. The QWI system actually uses
+the \cite{DavisHaltiwangerSchuh} formulas for job creation and destruction
+(see definitions in Appendix~\ref{cha:definitions}, also available at \href{http://www.nber.org/books/dunno5-1}%
+{www.nber.org/books/dunno5-1}.). Here, we use a simplified definition. If
+end-of-quarter employment is greater than beginning-of-quarter employment,
+then the employer has created jobs. The QWI system sets job creations in
+this case equal to end-of-quarter employment less beginning-of-quarter
+employment. The estimate of job destructions in this case is zero. On the
+other hand, if beginning-of-quarter employment exceeds end-of-quarter
+employment, then this employer has destroyed jobs. The QWI system computes
+job destructions in this case as beginning-of-period employment less
+end-of-period employment. The QWI system sets job creations to zero in this
+case. Notice that either job creations are positive or job destructions are
+positive, but not both. Job creations and job destructions can
+simultaneously be zero if beginning-of-quarter employment equals
+end-of-quarter employment. There is an important subtlety regarding job
+creations and destructions when they are computed for different sex and age
+groups within the same employer. There can be creation and destruction of
+jobs for certain demographic groups within the employer without job creation
+or job destruction occurring overall. \ That is, jobs can be created for
+some demographic groups and destroyed for others even at enterprises that
+have no change in employment as a whole.
+
+Here is a simple example. Suppose employer \textit{A} has 250 employees at
+the beginning of 2000:3 and 280 employees at the end of 2000:3. Then,
+employer \textit{A} has 30 job creations and zero job destructions in
+2000:3. Now suppose that of the 250 employees 100 are men and 150 are women
+at the beginning of 2000:3. At the end of the quarter suppose that there are
+135 men and 145 women. Then, job creations for men are 35 and job
+destructions for men are 0 in 2000:3. For women in 2000:3 job creations are
+0 and job destructions are 5. Notice that the sum of job creations for the
+employer by sex (35 + 0) is not equal to job creations for the employer as a
+whole (30) and that the sum of job destructions by sex (0 + 5) is not equal
+to job destructions for the employer as a whole.
+
+\subsection{Net job flows}
+
+\mindex{Job flows!net} 
+\index{Net job flows|see{Job flows}}
+
+Net job flows are also only defined at the level of an employer (SEIN%
+\index{SEIN}). Once again, the QWI\ system computes these statistics at the
+establishment level but does not allow establishment-to-establishment flows.
+Hence, the estimates for a given employer (SEIN) are the sum of the
+estimates for that employer's establishments (SEINUNIT) that are active in
+the given quarter. Net job flows are the difference between job creations
+and job destructions. Net job flows are, thus, always equal to
+end-of-quarter employment less beginning of quarter employment.
+
+Returning to the example in the description of job creations and
+destructions. Employer \textit{A} has 250 employees at the beginning of
+2000:3 and 280 employees at the end of 2000:3. Net job flows are 30 (job
+creations less job destructions or beginning-of-quarter employment less
+end-of-quarter employment). Suppose, once again that employment of men goes
+from 100 to 135 from the beginning to the end of 2000:3 and employment of
+women goes from 150 to 145. Notice, now, that net job flows for men (35)
+plus net job flows for women ($-5$) equals net job flows for the employer as
+a whole (30). Net job flows are additive across demographic groups even
+though gross job flows (creations and destructions) are not.
+
+Some useful relations among the worker and job flows include:
+
+\begin{itemize}
+\item Net job flows = job creations - job destructions 
+\index{Job flows!net}%
+\index{Job creation}%
+\index{Job destruction}
+
+\item Net job flows = end-of-quarter employment - beginning-of-period
+employment 
+\index{Job flows!net}%
+\index{Employment!point in time}
+
+\item Net job flows = accessions - separations 
+\index{Job flows!net} 
+\index{Accessions!point-in-time} 
+\index{Separations!point-in-time}
+\end{itemize}
+
+These relations hold for every demographic group and for the employer as a
+whole. Additional identities are shown in Appendix~\ref{cha:definitions}.
+
+\subsection{Full-quarter job creations, job destructions and net job flows}
+
+\mindex{Job flows!full-quarter} \mindex{Accessions!full-quarter} %
+\mindex{Separations!full-quarter}
+
+The QWI system applies the same job flow concepts to full-quarter employment
+to generate estimates of full-quarter job creations, full-quarter job
+destructions, and full-quarter net job flows. Full-quarter employment in the
+current quarter is compared to full-quarter employment in the preceding
+quarter. If full-quarter employment has increased between the preceding
+quarter and the current quarter, then full-quarter job creations are equal
+to full-quarter employment in the current quarter less full-quarter
+employment in the preceding quarter. In this case full-quarter job
+destructions are zero. If full-quarter employment has decreased between the
+previous and current quarters, then full-quarter job destructions are equal
+to full-quarter employment in the preceding quarter minus full-quarter
+employment in the current quarter. In this case, full-quarter job
+destructions are zero. Full-quarter net job flows equal full-quarter job
+creations minus full-quarter job destructions. The same identities that hold
+for the regular job flow concepts hold for the full-quarter concepts.
+
+\subsection{Average earnings of end-of-period employees}
+
+\mindex{Earnings!employees!end-of-period} 
+\index{Average earnings|see{Earnings}}
+
+The average earnings of end-of-period employees is estimated by first
+totaling the UI%
+\index{UI} wage records for all individuals who are end-of-period employees
+at a given employer in a given quarter. Then, the total is divided by the
+number of end-of-period employees for that employer and quarter.
+
+\subsection{Average earnings of full-quarter employees}
+
+\mindex{Earnings!employees!full-quarter}
+
+Measuring earnings using UI%
+\index{UI} wage records in the QWI system presents some interesting
+challenges. The earnings of end-of-quarter employees who are not present at
+the beginning of the quarter are the earnings of accessions during the
+quarter. The QWI system does not provide any information about how much of
+the quarter such individuals worked. The range of possibilities goes from 1
+day to every day of the quarter. Hence, estimates of the average earnings of
+such individuals may not be comparable from quarter to quarter unless one
+assumes that the average accession works the same number of quarters
+regardless of other conditions in the economy. Similarly, the earnings of
+beginning-of-quarter workers who are not present at the end of the quarter
+represent the earnings of separations. These present the same comparison
+problems as the average earnings of accessions; namely, it is difficult to
+model the number of weeks worked during the quarter. If we consider only
+those individuals employed at the employer in a given quarter who were
+neither accessions nor separations during that quarter, we are left,
+exactly, with the full-quarter employees, as discussed above.
+
+The QWI system measures the average earnings of full-quarter employees by
+summing the earnings on the {UI} wage records of all individuals at a given
+employer who have full-quarter status in a given quarter then dividing by
+the number of full-quarter employees. For example, suppose that in 2000:2
+employer \textit{A} has 10 full-quarter employees and that their total
+earnings are $\$300,000.$ Then, the average earnings of the full-quarter
+employees at \textit{A} in 2000:2 is $\$30,000.$ Suppose, further that 6 of
+these employees are men and that their total earnings are $\$150,000$. So,
+the average earnings of full-quarter male employees is $\$25,000$ in 2000:2
+and the average earnings of female full-quarter employees is $\$37,500$ $%
+\left( =\$150,000/4\right) $.
+
+\subsection{Average earnings of full-quarter accessions}
+
+\mindex{Earnings!accessions!full-quarter}
+
+As discussed above, a full-quarter accession is an individual who acceded in
+the preceding quarter and achieved full-quarter status in the current
+quarter. The QWI system measures the average earnings of full-quarter
+accessions in a given quarter by summing the UI%
+\index{UI}\ wage record earnings of all full-quarter accessions during the
+quarter and dividing by the number of full-quarter accessions in that
+quarter.
+
+\subsection{Average earnings of full-quarter new hires}
+
+\mindex{Earnings!new hires!full-quarter} 
+\mindex{New
+hires!Earnings!full-quarter}
+
+Full-quarter new hires are accessions to full-quarter status who were also
+new hires in the preceding quarter. The average earnings of full-quarter new
+hires are measured as the sum of UI%
+\index{UI} wage records for a given employer for all full-quarter new hires
+in a given quarter divided by the number of full-quarter new hires in that
+quarter.
+
+\subsection{Average earnings of full-quarter separations}
+
+\mindex{Earnings!separations!full-quarter}
+
+Full-quarter separations are individuals who separate during the current
+quarter who were full-quarter employees in the previous quarter. The QWI
+system measures the average earnings of full-quarter separations by summing
+the earnings for all individuals who are full-quarter status in the current
+quarter and who separate in the subsequent quarter. This total is then
+divided by full-quarter separations in the subsequent quarter. The average
+earnings of full-quarter separations is, thus, the average earnings of
+full-quarter employees in the current quarter who separated in the next
+quarter. Note the dating of this variable.
+
+\subsection{Average periods of non-employment for accessions, new hires, and
+recalls}
+
+\mindex{Non-employment!accessions} \mindex{Non-employment!new hires} %
+\mindex{Non-employment!recalls} 
+\index{Average periods of non-employment|see{Non-employment}}
+
+As noted above an accession occurs when a job starts; that is, on the first
+occurrence of an SEIN%
+\index{SEIN}-PIK%
+\index{PIK} pair following the first quarter of available data. When the QWI
+system detects an accession, it measures the number of quarters (up to a
+maximum of four) that the individual spent non-employed in the state prior
+to the accession. The QWI system estimates the number of quarters spent
+non-employed by looking for all other jobs held by the individual at any
+employer in the state in the preceding quarters up to a maximum of four. If
+the QWI system doesn't find any other valid UI%
+\index{UI}-wage records in a quarter preceding the accession it augments the
+count of non-employed quarters for the individual who acceded, up to a
+maximum of four. Total quarters of non-employment for all accessions is
+divided by accessions to estimate average periods of non-employment for
+accessions.
+
+Here is a detailed example. Suppose individual 1 and individual 2 accede to
+employer \textit{A} in 2000:1. In 1999:4, individual \textit{A} does not
+work for any other employers in the state. In 1999:1 through 1999:3
+individual 1 worked for employer \textit{B}. Individual 1 had one quarter of
+non-employment preceding the accession to employer \textit{A} in 2000:1.
+Individual 2 has no valid {UI} wage records for 1999:1 through 1999:4.
+Individual 2 has four quarters of non-employment preceding the accession to
+employer \textit{A} in 2000:1. The accessions to employer \textit{A} in
+2000:1 had an average of 2.5 quarters of non-employment in the state prior
+to accession.
+
+Average periods of non-employment for new hires and recalls are estimated
+using exactly analogous formulas except that the measures are estimated
+separately for accessions who are also new hires as compared with accession
+who are recalls.
+
+\subsection{Average number of periods of non-employment for separations}
+
+\mindex{Non-employment!separations}
+
+Analogous to the average number of periods of non-employment for accessions
+prior to the accession, the QWI system measures the average number of
+periods of non-employment in the state for individuals who separated in the
+current quarter, up to a maximum of four. When the QWI system detects a
+separation, it looks forward for up to four quarters to find valid UI%
+\index{UI} wage records for the individual who separated among other
+employers in the state. Each quarter that it fails to detect any such jobs
+is counted as a period of non-employment, up to a maximum of four. The
+average number of periods of non-employment is estimated by dividing the
+total number of periods of non-employment for separations in the current
+quarter by the number of separations in the quarter.
+
+\subsection{Average changes in total earnings for accessions and separations}
+
+\mindex{Earnings!accessions!changes} \mindex{Earnings!separations!changes}
+
+The QWI system measures the change in total earnings for individuals who
+accede or separate in a given quarter. For an individual accession in a
+given quarter, the QWI system computes total earnings from all valid wage
+records for all of the individual's employers in the preceding quarter. The
+system then computes the total earnings for the same individual for all
+valid wage records and all employers in the current quarter. The acceding
+individual's change in earnings is the difference between the current
+quarter earnings from all employers and the preceding quarter earnings from
+all employers. The average change in earnings for all accessions is the
+total change in earnings for all accessions divided by the number of
+accessions.
+
+The QWI system computes the average change in earnings for separations in an
+analogous manner. The system computes total earnings from all employers for
+the separating individual in the current quarter and subtracts total
+earnings from all employers in the subsequent quarter. The average change in
+earnings for all separations is the total change in earnings for all
+separations divided by the number of separations.
+
+Here is an example for the average change in earnings of accessions. Suppose
+individual 1 accedes to employer \textit{A} in 2000:3. Earnings for
+individual 1 at employer \textit{A} in 2000:3 are $\$8,000$. Individual 1
+also worked for employer \textit{B} in 2000:2 and 2000:3. Individual 1's
+earnings at employer \textit{B} were $\$7,000$ and $\$3,000$ in in 2000:2
+and 2000:3, respectively. Individual 1's change in total earnings between
+2000:3 and 2000:2 was $\$4,000$ $\left( =\$8,000+\$3,000-\$7,000\right) .$
+Individual 2 also acceded to employer \textit{A} in 2000:3. Individual 2
+earned $\$9,000$ from employer \textit{A} in 2000:3. Individual 2 had no
+other employers during 2000:2 or 2000:3. Individual 2's change in total
+earnings is $\$9,000.$ The average change in earnings for all of employer 
+\textit{A}'s accessions is $\$6,500$ $\left( =\left( \$4,000+\$9,000\right)
+/2\right) ,$ the average change in total earnings for individuals 1 and 2.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "qwi-overview"
+%%% TeX-master: "qwi-overview"
+%%% End: 

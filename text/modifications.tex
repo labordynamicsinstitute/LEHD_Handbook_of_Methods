@@ -1,0 +1,239 @@
+% $Id: modifications.tex 461 2008-09-03 19:46:44Z vilhu001 $
+% $URL: https://repository.vrdc.cornell.edu/private/lv39_Papers/LEHD_definitions_revisions/text/modifications.tex $
+% Time-stamp: <08/09/03 15:33:37 vilhuber>
+
+
+\subsection{Stable jobs}
+
+We currently have the FQ definitions (see equations \ref{eq:fijt},
+\ref{eq:a3ijt}, and \ref{eq:s3ijt}), and they are applied to flows as
+well. The full-quarter definitions are internally consistent (see
+Definitions in Section \ref{sec:identities}), and are
+treated much like the point-in-time measures; compare
+
+\begin{definition}
+Evolution of end of period employment 
+
+(using $E_{jt - 1}$ instead of
+$B_{jt}$ for clarity)
+\begin{equation*}
+E_{jt} = E_{jt - 1} + A_{jt} - S_{jt}
+\end{equation*}
+\end{definition}
+
+and
+
+\begin{definition}
+Evolution of full-quarter employment 
+\begin{equation*}
+F_{jt} = F_{jt - 1} + FA{\ }_{jt} - FS_{jt}
+\end{equation*}
+\end{definition}
+
+and associated flow and creation/destruction identities. Note however that
+if we write the evolution of {\it beginning of period employment}, there are
+timing differences in the notation:
+
+\begin{definition}
+Evolution of beginning of period employment 
+
+\begin{equation*}
+B_{jt} = B_{jt - 1} + A_{jt-1} - S_{jt-1}
+\end{equation*}
+\end{definition}
+
+Thus, for contemporaneous beginning of period employment, it is the flows
+from the previous quarter that must be taken into account.
+
+To provide a modified concept of ``stable jobs'' that relate more
+``naturally'' to ``non-stable'' flow concepts (separations, accessions), we
+will want them to be in sync with equations \ref{eq:s2ijt} and
+\ref{eq:a2ijt}:
+
+\paragraph{Accessions to consecutive quarter status}
+
+\mindex{Accessions!to consecutive quarter status}
+
+$\left( a_{2}\right) $: for $qfirst<t<qlast$, individual $i$ transited from
+accession to consecutive-quarter status at $j$ at the end of $t$ and the
+beginning of $t+1$ (accession in $t$ and still employed at the end of the
+quarter)%
+\begin{equation*}
+a_{2ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }a_{1ijt}=1\;\&\;m_{ijt+1}=1 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.  (\ref{eq:a2ijt})
+\end{equation*}
+
+\paragraph{Separations from consecutive quarter status}
+
+
+$\left( s_{2}\right) $: for $qfirst<t<qlast$, individual $i$ separated from $%
+j$ during $t$ with consecutive-quarter status at the start of $t$%
+\begin{equation*}
+s_{2ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }s_{1ijt}=1\;\&\;m_{ijt-1}=1 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.   (\ref{eq:s2ijt})  
+\end{equation*}
+
+Note that equivalently, $a_{2ijt}=1$ if $b_{ijt}=0$ and $e_{ijt}=1$, and
+$s_{2ijt}=1$ if $b_{ijt}=1$ and $e_{ijt}=0$. 
+
+Let's start with the above, expressed in terms of the relevant $f$
+variable:
+
+\paragraph{Accessions to stable job}
+
+
+$\left( a_{4}\right) $: for $qfirst<t<qlast-1$, individual $i$ acceded to a
+``stable job'' with $j$ during $t$  (accession in $t$ and still employed at
+the end of the next quarter)%
+\begin{equation}
+a_{4ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }a_{1ijt}=1\;\&\;f_{ijt+1}=1 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.  
+\end{equation}
+
+or equivalently, $a_{4ijt}=1$ if $f_{ijt+1}=1$ and $b_{ijt}=0$. Note that
+by construction, $A_4<A_1$ (and also $A_4<A_2$)
+
+\paragraph{Separations from stable jobs}
+
+
+$\left( s_{4}\right) $: for $qfirst+1<t<qlast$, individual $i$ separated
+from a stable job with $j$ during $t$ 
+
+\begin{equation*}
+s_{4ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }s_{1ijt}=1\;\&\;f_{ijt-1}=1 \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.   
+\end{equation*}
+
+
+or equivalently, $s_{4ijt}=1$ if $f_{ijt-1}=1$ and $e_{ijt}=0$. Note that
+by construction again, $S_4<S_1$ (and also $S_4<S_2$)
+
+\paragraph{Stable jobs}
+
+Stable jobs are jobs that ever achieve FQ status. It is sufficient to check
+adjacent quarters, in addition to the contemporaneous one. Equivalently,
+stable jobs are jobs that last at least three quarters. It is desirable to
+have them be a subset of end-of-quarter jobs to get consistent flows.
+
+
+
+\begin{equation}
+sj_{ijt}=\left\{ 
+\begin{array}{l}
+1,\text{ if }e_{ijt}=1 \text{ and }
+  \left ( 
+      f_{ijt-1} = 1 
+      \text{ or } f_{ijt-1} = 1
+      \text{ or } f_{ijt+1} = 1
+   \right )
+   \\ 
+0,\text{ otherwise.}%
+\end{array}%
+\right.   \label{eq:sjijt}
+\end{equation}
+
+Essentially, the relationship between stable jobs and full-quarter jobs is
+graphically obvious:
+
+\paragraph{Stable jobs active}
+
+\begin{tabular}{cccccc}
+  m & 0 & 1 & 1 & 1 & 0 \\
+  f & 0 & 0 & 1 & 0 & 0 \\
+  e & 0 & 1 & 1 & 0 & 0 \\
+ sj & 0 & 1 & 1 & 0 & 0 \\
+\hline
+ a1 & 0 & 1 & 0 & 0 & 0 \\
+ a2 & 0 & 1 & 0 & 0 & 0 \\
+ a3 & 0 & 0 & 1 & 0 & 0 \\
+ a4 & 0 & 1 & 0 & 0 & 0 \\
+\hline
+ s1 & 0 & 0 & 0 & 1 & 0 \\
+ s2 & 0 & 0 & 0 & 1 & 0 \\
+ s3 & 0 & 0 & 0 & 1 & 0 \\
+ s4 & 0 & 0 & 0 & 1 & 0 \\
+\hline
+\end{tabular}
+\paragraph{Stable jobs inactive}
+
+\begin{tabular}{cccccc}
+  m & 0 & 1 & 1 & 0 & 0 \\
+  f & 0 & 0 & 0 & 0 & 0 \\
+  e & 0 & 1 & 0 & 0 & 0 \\
+ sj & 0 & 0 & 0 & 0 & 0 \\
+\hline
+ a1 & 0 & 1 & 0 & 0 & 0 \\
+ a2 & 0 & 1 & 0 & 0 & 0 \\
+ a3 & 0 & 0 & 0 & 0 & 0 \\
+ a4 & 0 & 0 & 0 & 0 & 0 \\
+\hline
+ s1 & 0 & 0 & 0 & 1 & 0 \\
+ s2 & 0 & 0 & 0 & 1 & 0 \\
+ s3 & 0 & 0 & 0 & 0 & 0 \\
+ s4 & 0 & 0 & 0 & 0 & 0 \\
+\hline
+\end{tabular}
+
+\paragraph{Stable job flow identities}
+
+Note that 
+
+\begin{equation}
+SJ_{jt}=sj_{\cdot jt}
+\end{equation}
+
+Because it is defined as a subset of $e$, the flows and identities carry
+through, with the appropriate modifications:
+
+
+\paragraph{Net stable job flows}
+
+(change in employment) for establishment $j$ during period $t$%
+\begin{equation}
+JF_{4jt}=SJ_{jt}-SJ_{jt-1}  \label{eq:JF4jt}
+\end{equation}
+
+The identity holds
+
+\begin{definition}
+Evolution of stable job employment 
+\begin{equation*}
+SJ_{jt} = SJ_{jt-1} + A_{4jt} - S_{4jt}
+\end{equation*}
+\end{definition}
+
+\paragraph{Average stable  employment}
+
+for establishment $j$ between periods $t-1$ and $t$%
+\begin{equation}
+\bar{SJ}_{jt}=\frac{\left( SJ_{jt-1}+SJ_{jt}\right) }{2}  \label{eq:sjbarjt}
+\end{equation}
+
+and appropriate job creation and destruction definitions can be derived.
+
+
+\subsection{Caveats}
+
+The above is defined in terms of end-of-quarter jobs. The published numbers
+on the website are beginning-of-quarter jobs. Confusion may arise.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "lehd_definitions_revisions"
+%%% End: 

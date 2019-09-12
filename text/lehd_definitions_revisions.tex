@@ -1,0 +1,161 @@
+% Authors: John A, Bryce S, Lars V, others.
+% Time-stamp: <08/09/03 15:39:54 vilhuber>
+% $Id: lehd_definitions_revisions.tex 1373 2013-10-31 18:06:24Z vilhu001 $
+% based on  NBER conference Empirical Labor Economics
+% Authors: John A, Paul L, Lars V
+%==================== DO NOT EDIT WITH SCIWORD ====================
+%++++++++++++++++++++ do not modify these lines++++++++++++++++++ +
+\documentclass[titlepage,12pt,letterpaper]{report}                 % +
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ +
+
+%++++++++++++++++++++ Adjust this as necessary ++++++++++++++++++++
+%-------------------- Start of title info -------------------------
+% Use these definitions, since they are also used in headers, PDF info,
+% etc. 
+\newcommand{\mytitle}{LEHD Handbook of Methods} 
+\newcommand{\myshorttitle}{LEHD/ QWI Overview }
+\newcommand{\myauthors}{Lars Vilhuber (Maintainer of online version)}
+%\newcommand{\myversion}{January 22 2002}
+%\papernumber{2002-02}
+%\newcommand{\myversion}{January 16, 2008}  %alternate version
+\newcommand{\myversion}{\today}  %alternate version
+
+\title{\mytitle %\\
+%\bf Preliminary - Do not cite or quote without authorization by the authors
+}
+\author{\myauthors%
+\thanks{
+This document is based in part on
+ LEHD Technical Paper
+TP-2006-01 \citep{tp-2006-01}. 
+%
+This research is a part of the U.S. Census Bureau's Longitudinal
+Employer-Household Dynamics Program (LEHD), which is partially supported by
+the National Science Foundation Grant SES-9978093 to Cornell University
+(Cornell Institute for Social and Economic Research), the National
+Institute on Aging Grant R01~AG018854, and the Alfred P. Sloan
+Foundation. This
+  research is also partially supported by the National Science Foundation
+  Information Technologies Research Grant SES-0427889, which provides
+  financial resources to the Census Research Data Centers.
+This document reports the results of research and analysis
+undertaken by  U.S. Census Bureau staff. It has undergone a Census
+Bureau review more limited in scope than that given to official Census
+Bureau publications. This document is released to inform interested
+parties of ongoing research and to encourage discussion of work in
+progress. The views expressed herein are attributable only to the
+authors and do not represent the views of the U.S. Census Bureau, its
+program sponsors, Cornell University, or data providers. Some or all of 
+the data used in this paper are confidential data from the LEHD Program. 
+The U.S. Census Bureau supports external researchers' use of these data 
+through the Research Data Centers (see \href{http://www.ces.census.gov}{http://www.ces.census.gov}). \href{http://lehd.ces.census.gov}{http://lehd.ces.census.gov}.
+}}
+\date{\myversion}
+
+%============== beyond here no changes necessary ====================
+
+% other packages may be loaded by formats.tex
+
+
+%-------------------- External info is stored in this file ---
+\input{formats}
+%\renewcommand\chaptername{Section}
+
+%-------------------- Start of document --------------------
+\begin{document}
+%\layout
+\maketitle  % create title info/page
+\renewcommand{\thepage}{\roman{page}}
+\begin{abstract}
+  All LEHD definitions in a single place. This is a draft document with potentially out-of-date definitions. New definitions will be added. The sources can be freely downloaded here:
+\end{abstract}
+
+% used during editing. Comment out afterwards.
+%\tableofcontents
+%\newpage
+%\listoftables
+%\newpage
+%\listoffigures
+%\newpage
+
+% % main section
+ \renewcommand{\thepage}{\arabic{page}}
+% \doublespace
+ \setcounter{page}{1}
+ \chapter{Introduction}
+ \label{sec:intro}
+ \input{qwi-intro.tex}
+% 
+% \chapter{Possible modifications}
+% \label{sec:modifications}
+% \input{modifications.tex}
+% 
+% \chapter{Infrastructure Files}
+% \label{sec:infra_files}
+% \input{infrastructure-files.tex}
+% 
+% \chapter{Completing the Missing Job-level Data}
+% \label{sec:aux}
+% \input{auxiliary-files.tex}
+% 
+% \chapter{Forming Aggregated Estimates: QWI}
+% \label{sec:aggregate}
+% \input{computing_qwi}
+% 
+% \chapter{Disclosure Avoidance Procedures for the QWI}
+% \label{sec:disclosure-proofing}
+% \label{sec:confidentiality}
+% \input{disclosure-proofing}
+% 
+% \chapter{Analysis of the QWI Files}
+% \label{sec:analysis}
+% \input{analysis}
+% 
+% \chapter{Public-use and Restricted-access Files}
+% \label{sec:public}
+% \input{public}
+% 
+% \chapter{Concluding Remarks}
+% \label{sec:conclusion}
+% \input{conclusion}
+%
+%\clearpage
+%
+\bibliography{abbrev,paper,lehdtp}
+\bibliographystyle{\mybibstyle}
+
+\clearpage
+
+\singlespace
+
+% -------------------- start of appendix --------------------
+%
+\newpage
+\appendix
+ \setcounter{equation}{0}
+ \setcounter{definition}{0}
+\doublespace
+\chapter{Definitions of Fundamental LEHD Concepts\label{app:concepts}
+\label{cha:concept}
+\label{sec:concept}}
+
+\section{Fundamental concepts}
+\label{sec:fundamental_concepts}
+\input{definition_concepts.tex}
+
+\section{Definitions of job flow, worker flow, and earnings
+  Statistics\label{app:definitions}
+\label{cha:definitions}}
+\input{definition_technical.tex}
+
+\section{List of inputs to this document}
+\input{list_of_files.tex}
+
+
+\clearpage
+{\footnotesize
+\begin{verbatim}
+         This version: $Id: lehd_definitions_revisions.tex 1373 2013-10-31 18:06:24Z vilhu001 $
+\end{verbatim}
+}
+\end{document}
