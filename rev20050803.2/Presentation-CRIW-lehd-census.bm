@@ -1,0 +1,168 @@
+\HAPbookmark{}{section.1}{Introduction}{2}{}
+\HAPbookmark{-}{section.1.1}{What are QWI?}{3}{section.1}
+\HAPbookmark{}{overlay}{What are QWI?}{4}{section.1.1}
+\HAPbookmark{}{overlay}{What are QWI?}{5}{section.1.1}
+\HAPbookmark{}{overlay}{What are QWI?}{6}{section.1.1}
+\HAPbookmark{}{overlay}{What are QWI?}{7}{section.1.1}
+\HAPbookmark{}{overlay}{What are QWI?}{8}{section.1.1}
+\HAPbookmark{}{overlay}{What are QWI?}{9}{section.1.1}
+\HAPbookmark{-}{section.1.2}{What is it?}{10}{section.1}
+\HAPbookmark{}{overlay}{What is it?}{11}{section.1.2}
+\HAPbookmark{}{overlay}{What is it?}{12}{section.1.2}
+\HAPbookmark{}{overlay}{What is it?}{13}{section.1.2}
+\HAPbookmark{}{overlay}{What is it?}{14}{section.1.2}
+\HAPbookmark{}{overlay}{What is it?}{15}{section.1.2}
+\HAPbookmark{}{overlay}{What is it?}{16}{section.1.2}
+\HAPbookmark{-}{section.1.3}{In this paper}{17}{section.1}
+\HAPbookmark{}{overlay}{In this paper}{18}{section.1.3}
+\HAPbookmark{}{overlay}{In this paper}{19}{section.1.3}
+\HAPbookmark{}{overlay}{In this paper}{20}{section.1.3}
+\HAPbookmark{}{overlay}{In this paper}{21}{section.1.3}
+\HAPbookmark{}{overlay}{In this paper}{22}{section.1.3}
+\HAPbookmark{}{section.2}{Input Files}{23}{}
+\HAPbookmark{-}{section.2.1}{Wage records: UI}{24}{section.2}
+\HAPbookmark{}{overlay}{Wage records: UI}{25}{section.2.1}
+\HAPbookmark{}{overlay}{Wage records: UI}{26}{section.2.1}
+\HAPbookmark{}{overlay}{Wage records: UI}{27}{section.2.1}
+\HAPbookmark{}{overlay}{Wage records: UI}{28}{section.2.1}
+\HAPbookmark{-}{section.2.2}{Employer reports: ES202}{29}{section.2}
+\HAPbookmark{}{overlay}{Employer reports: ES202}{30}{section.2.2}
+\HAPbookmark{}{overlay}{Employer reports: ES202}{31}{section.2.2}
+\HAPbookmark{}{overlay}{Employer reports: ES202}{32}{section.2.2}
+\HAPbookmark{}{overlay}{Employer reports: ES202}{33}{section.2.2}
+\HAPbookmark{}{overlay}{Employer reports: ES202}{34}{section.2.2}
+\HAPbookmark{-}{section.2.3}{Demographics}{35}{section.2}
+\HAPbookmark{}{overlay}{Demographics}{36}{section.2.3}
+\HAPbookmark{}{section.3}{Infrastructure Files}{37}{}
+\HAPbookmark{-}{section.3.1}{EHF: Employment History Files}{38}{section.3}
+\HAPbookmark{}{overlay}{EHF: Employment History Files}{39}{section.3.1}
+\HAPbookmark{}{overlay}{EHF: Employment History Files}{40}{section.3.1}
+\HAPbookmark{-}{section.3.2}{ICF: Individual Characteristics File}{41}{section.3}
+\HAPbookmark{}{overlay}{ICF: Individual Characteristics File}{42}{section.3.2}
+\HAPbookmark{}{overlay}{ICF: Individual Characteristics File}{43}{section.3.2}
+\HAPbookmark{}{overlay}{ICF: Individual Characteristics File}{44}{section.3.2}
+\HAPbookmark{}{overlay}{ICF: Individual Characteristics File}{45}{section.3.2}
+\HAPbookmark{}{overlay}{ICF: Individual Characteristics File}{46}{section.3.2}
+\HAPbookmark{}{overlay}{ICF: Individual Characteristics File}{47}{section.3.2}
+\HAPbookmark{}{overlay}{ICF: Individual Characteristics File}{48}{section.3.2}
+\HAPbookmark{}{overlay}{ICF: Individual Characteristics File}{49}{section.3.2}
+\HAPbookmark{}{overlay}{ICF: Individual Characteristics File}{50}{section.3.2}
+\HAPbookmark{-}{section.3.3}{ECF: Employer Characteristics File}{51}{section.3}
+\HAPbookmark{}{overlay}{ECF: Employer Characteristics File}{52}{section.3.3}
+\HAPbookmark{}{overlay}{ECF: Employer Characteristics File}{53}{section.3.3}
+\HAPbookmark{}{overlay}{ECF: Employer Characteristics File}{54}{section.3.3}
+\HAPbookmark{}{overlay}{ECF: Employer Characteristics File}{55}{section.3.3}
+\HAPbookmark{}{overlay}{ECF: Employer Characteristics File}{56}{section.3.3}
+\HAPbookmark{}{overlay}{ECF: Employer Characteristics File}{57}{section.3.3}
+\HAPbookmark{}{overlay}{ECF: Employer Characteristics File}{58}{section.3.3}
+\HAPbookmark{}{overlay}{ECF: Employer Characteristics File}{59}{section.3.3}
+\HAPbookmark{}{overlay}{ECF: Employer Characteristics File}{60}{section.3.3}
+\HAPbookmark{-}{section.3.4}{GAL: Geocoded Address List}{61}{section.3}
+\HAPbookmark{}{overlay}{GAL: Geocoded Address List}{62}{section.3.4}
+\HAPbookmark{}{overlay}{GAL: Geocoded Address List}{63}{section.3.4}
+\HAPbookmark{}{overlay}{GAL: Geocoded Address List}{64}{section.3.4}
+\HAPbookmark{}{overlay}{GAL: Geocoded Address List}{65}{section.3.4}
+\HAPbookmark{}{overlay}{GAL: Geocoded Address List}{66}{section.3.4}
+\HAPbookmark{}{overlay}{GAL: Geocoded Address List}{67}{section.3.4}
+\HAPbookmark{}{overlay}{GAL: Geocoded Address List}{68}{section.3.4}
+\HAPbookmark{}{overlay}{GAL: Geocoded Address List}{69}{section.3.4}
+\HAPbookmark{}{overlay}{GAL: Geocoded Address List}{70}{section.3.4}
+\HAPbookmark{}{overlay}{GAL: Geocoded Address List}{71}{section.3.4}
+\HAPbookmark{-}{section.3.5}{Flow so far}{72}{section.3}
+\HAPbookmark{}{overlay}{Flow so far}{73}{section.3.5}
+\HAPbookmark{}{overlay}{Flow so far}{74}{section.3.5}
+\HAPbookmark{}{section.4}{Forming Aggregated Estimates: QWI}{75}{}
+\HAPbookmark{-}{section.4.1}{Correction of spurious worker flows}{76}{section.4}
+\HAPbookmark{}{overlay}{Correction of spurious worker flows}{77}{section.4.1}
+\HAPbookmark{}{overlay}{Correction of spurious worker flows}{78}{section.4.1}
+\HAPbookmark{}{overlay}{Correction of spurious worker flows}{79}{section.4.1}
+\HAPbookmark{}{overlay}{Correction of spurious worker flows}{80}{section.4.1}
+\HAPbookmark{}{overlay}{Correction of spurious worker flows}{81}{section.4.1}
+\HAPbookmark{}{overlay}{Correction of spurious worker flows}{82}{section.4.1}
+\HAPbookmark{}{overlay}{Correction of spurious worker flows}{83}{section.4.1}
+\HAPbookmark{-}{section.4.2}{Solution: Successor-Predecessor File}{84}{section.4}
+\HAPbookmark{}{overlay}{Solution: Successor-Predecessor File}{85}{section.4.2}
+\HAPbookmark{}{overlay}{Solution: Successor-Predecessor File}{86}{section.4.2}
+\HAPbookmark{}{overlay}{Solution: Successor-Predecessor File}{87}{section.4.2}
+\HAPbookmark{-}{section.4.3}{Attaching establishment characteristics to jobs}{88}{section.4}
+\HAPbookmark{}{overlay}{Attaching establishment characteristics to jobs}{89}{section.4.3}
+\HAPbookmark{}{overlay}{Attaching establishment characteristics to jobs}{90}{section.4.3}
+\HAPbookmark{}{overlay}{Attaching establishment characteristics to jobs}{91}{section.4.3}
+\HAPbookmark{}{overlay}{Attaching establishment characteristics to jobs}{92}{section.4.3}
+\HAPbookmark{}{overlay}{Attaching establishment characteristics to jobs}{93}{section.4.3}
+\HAPbookmark{}{overlay}{Attaching establishment characteristics to jobs}{94}{section.4.3}
+\HAPbookmark{}{overlay}{Attaching establishment characteristics to jobs}{95}{section.4.3}
+\HAPbookmark{}{overlay}{Attaching establishment characteristics to jobs}{96}{section.4.3}
+\HAPbookmark{}{overlay}{Attaching establishment characteristics to jobs}{97}{section.4.3}
+\HAPbookmark{}{overlay}{Attaching establishment characteristics to jobs}{98}{section.4.3}
+\HAPbookmark{-}{section.4.4}{U2W: Unit to Worker Impute}{99}{section.4}
+\HAPbookmark{}{overlay}{U2W: Unit to Worker Impute}{100}{section.4.4}
+\HAPbookmark{}{overlay}{U2W: Unit to Worker Impute}{101}{section.4.4}
+\HAPbookmark{}{overlay}{U2W: Unit to Worker Impute}{102}{section.4.4}
+\HAPbookmark{}{overlay}{U2W: Unit to Worker Impute}{103}{section.4.4}
+\HAPbookmark{}{overlay}{U2W: Unit to Worker Impute}{104}{section.4.4}
+\HAPbookmark{}{overlay}{U2W: Unit to Worker Impute}{105}{section.4.4}
+\HAPbookmark{}{overlay}{U2W: Unit to Worker Impute}{106}{section.4.4}
+\HAPbookmark{}{overlay}{U2W: Unit to Worker Impute}{107}{section.4.4}
+\HAPbookmark{}{overlay}{U2W: Unit to Worker Impute}{108}{section.4.4}
+\HAPbookmark{}{overlay}{U2W: Unit to Worker Impute}{109}{section.4.4}
+\HAPbookmark{-}{section.4.5}{Probability Model}{110}{section.4}
+\HAPbookmark{}{overlay}{Probability Model}{111}{section.4.5}
+\HAPbookmark{}{overlay}{Probability Model}{112}{section.4.5}
+\HAPbookmark{}{overlay}{Probability Model}{113}{section.4.5}
+\HAPbookmark{}{overlay}{Probability Model}{114}{section.4.5}
+\HAPbookmark{}{overlay}{Probability Model}{115}{section.4.5}
+\HAPbookmark{}{overlay}{Probability Model}{116}{section.4.5}
+\HAPbookmark{}{overlay}{Probability Model}{117}{section.4.5}
+\HAPbookmark{-}{section.4.6}{Implementation}{118}{section.4}
+\HAPbookmark{}{overlay}{Implementation}{119}{section.4.6}
+\HAPbookmark{}{overlay}{Implementation}{120}{section.4.6}
+\HAPbookmark{}{overlay}{Implementation}{121}{section.4.6}
+\HAPbookmark{-}{section.4.7}{Implementation}{122}{section.4}
+\HAPbookmark{}{overlay}{Implementation}{123}{section.4.7}
+\HAPbookmark{}{overlay}{Implementation}{124}{section.4.7}
+\HAPbookmark{}{overlay}{Implementation}{125}{section.4.7}
+\HAPbookmark{}{overlay}{Implementation}{126}{section.4.7}
+\HAPbookmark{-}{section.4.8}{Computing the statistics}{127}{section.4}
+\HAPbookmark{}{overlay}{Computing the statistics}{128}{section.4.8}
+\HAPbookmark{}{overlay}{Computing the statistics}{129}{section.4.8}
+\HAPbookmark{}{overlay}{Computing the statistics}{130}{section.4.8}
+\HAPbookmark{}{overlay}{Computing the statistics}{131}{section.4.8}
+\HAPbookmark{}{overlay}{Computing the statistics}{132}{section.4.8}
+\HAPbookmark{}{overlay}{Computing the statistics}{133}{section.4.8}
+\HAPbookmark{}{overlay}{Computing the statistics}{134}{section.4.8}
+\HAPbookmark{}{overlay}{Computing the statistics}{135}{section.4.8}
+\HAPbookmark{}{overlay}{Computing the statistics}{136}{section.4.8}
+\HAPbookmark{}{overlay}{Computing the statistics}{137}{section.4.8}
+\HAPbookmark{}{overlay}{Computing the statistics}{138}{section.4.8}
+\HAPbookmark{}{overlay}{Computing the statistics}{139}{section.4.8}
+\HAPbookmark{}{overlay}{Computing the statistics}{140}{section.4.8}
+\HAPbookmark{}{section.5}{Disclosure-proofing the QWI}{141}{}
+\HAPbookmark{-}{section.5.1}{Noise-infusion }{142}{section.5}
+\HAPbookmark{}{overlay}{Noise-infusion }{143}{section.5.1}
+\HAPbookmark{}{overlay}{Noise-infusion }{144}{section.5.1}
+\HAPbookmark{}{overlay}{Noise-infusion }{145}{section.5.1}
+\HAPbookmark{}{overlay}{Noise-infusion }{146}{section.5.1}
+\HAPbookmark{}{overlay}{Noise-infusion }{147}{section.5.1}
+\HAPbookmark{}{overlay}{Noise-infusion }{148}{section.5.1}
+\HAPbookmark{-}{section.5.2}{Item suppression}{149}{section.5}
+\HAPbookmark{}{overlay}{Item suppression}{150}{section.5.2}
+\HAPbookmark{}{overlay}{Item suppression}{151}{section.5.2}
+\HAPbookmark{}{overlay}{Item suppression}{152}{section.5.2}
+\HAPbookmark{}{overlay}{Item suppression}{153}{section.5.2}
+\HAPbookmark{}{overlay}{Item suppression}{154}{section.5.2}
+\HAPbookmark{}{overlay}{Item suppression}{155}{section.5.2}
+\HAPbookmark{}{section.6}{Publicly available files}{156}{}
+\HAPbookmark{-}{section.6.1}{Publicly available files}{157}{section.6}
+\HAPbookmark{}{overlay}{Publicly available files}{158}{section.6.1}
+\HAPbookmark{}{overlay}{Publicly available files}{159}{section.6.1}
+\HAPbookmark{}{overlay}{Publicly available files}{160}{section.6.1}
+\HAPbookmark{}{overlay}{Publicly available files}{161}{section.6.1}
+\HAPbookmark{}{overlay}{Publicly available files}{162}{section.6.1}
+\HAPbookmark{}{overlay}{Publicly available files}{163}{section.6.1}
+\HAPbookmark{}{overlay}{Publicly available files}{164}{section.6.1}
+\HAPbookmark{}{section.7}{Conclusion}{165}{}
+\HAPbookmark{-}{section.7.1}{Flow so far}{166}{section.7}
+\HAPbookmark{}{overlay}{Flow so far}{167}{section.7.1}
+\HAPbookmark{}{overlay}{Flow so far}{168}{section.7.1}
+\HAPbookmark{}{overlay}{Flow so far}{169}{section.7.1}

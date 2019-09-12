@@ -1,0 +1,199 @@
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+
+% -*- latex -*- 
+%
+% Time-stamp: <02/07/26 13:43:51 vilhuber> 
+%              Automatically adjusted if using Xemacs
+%              Please adjust manually if using other editors
+%
+% jobflow_analysis.tex
+% Responsible: John/Paul/Bryce
+% Part of QWI_methods.tex
+
+%\section{Overview}
+%\index{employment status}
+%\index{point-in-time}
+%\index{full-quarter}
+%\index{accession}
+%\index{separation}
+%\index{job flows}
+%\index{new hires}
+%\index{job creation}
+%\index{job destruction}
+%\index{earnings}
+%\index{earnings!change}
+
+The detailed description that follows makes explicit the links to the sets
+of files described earlier.
+The statistics calculated in this section are based on definitions  summarized in \Cite{AbowdCorbelKramarz99} and
+\Cite{DavisHaltiwanger99}. 
+As mentioned before, employment is measured at two points in
+time (beginning and end of  
+quarter) and according to two concepts (any employment status and 
+full-quarter employment status). Worker flows are captured by accessions and 
+separations with respect to both employment status concepts. Job flows are 
+captured by gross job creation and destruction at the firm level, again 
+according to both employment concepts. Accessions are further separated into 
+new hires and recalls. Earnings and earnings change statistics are 
+calculated for each of the worker flow categories as well as for both 
+employment statuses.
+
+%\subsection{Calculation of statistics}
+
+The worker and employment flow statistics reported at the county and 
+SIC division level are calculated through a multi-step 
+\index{county}\index{SIC}
+process.%
+%
+%\footnote{Details on the program sequence used to create the job 
+%low statistics are available in Appendix~\Vref{app:jobflow_technical}.}
+%
+The EHF\index{EHF} (see Subsection~\ref{cha:ehf}), which contains individual
+work and earnings histories, is combined with information from the
+ICF\index{ICF} (see Subsection~\ref{cha:icf}) to incorporate demographic
+characteristics of workers such as age and sex. For each worker in each
+year and quarter, an array of jobs at various SEINs\index{SEIN} is stored.
+The statistics listed in Subsection~\Vref{cha:definitions} are computed, when
+appropriate, for each individual/job/quarter combination. The statistics
+are then aggregated to the SEIN level by age and sex to create a file of
+totals for each SEIN/year/quarter/agegroup/sexgroup combination. Both the
+Workforce Investment Act (WIA)\index{WIA} and CPS\index{CPS} age groups are
+used. The totals are stored by age/sex group as well as further aggregated
+within SEIN over age and sex group to produce the overall total for the
+SEIN as well as marginal totals for sex and age (for example, the total for
+females of all ages).  All totals are then aggregated twice more: once to
+the industry level and once to the county level. At this point the
+statistics are in their final form except for the handling of disclosure
+issues, as discussed below.
+
+\subsection{Examples}
+
+The following tables provide an example of how the flow statistics are
+computed for four hypothetical individuals who work at three hypothetical
+employers over a two year sample period. All individuals and firms in this
+example are fictitious. Table~\Vref{table1} summarizes the earnings history
+\index{earnings history} of each individual as it would appear in the
+employment history file\index{EHF}.  Table~\Vref{table2} presents the
+individual level employment flow statistics that can be computed from the
+individual work histories. Note that individual 1 leaves employer
+\textit{X} at some point during the second quarter of 1995, and that she
+begins working for employer \textit{Y} during the same quarter. In
+Table~\ref{table2}, employment flow statistics as defined in
+Subsection~\ref{cha:definitions} have been computed for every quarter of every
+job worked by Person~\textit{1}. Person~\textit{1} is considered to be
+employed at employer \textit{X} from 1994:1 -- 1995:2.  Hence, \textit{e=1}
+from 1994:1 through 1995:1 since she is still employed at \textit{X} at the
+end of each of these quarters. Similarly, \textit{b=1} from 1994:2 through
+1995:2 since she is employed at \textit{X} from the very beginning of these
+quarters. Note that \textit{b} is missing in 1994:1. The first quarter of
+the analysis is out-of-scope for \textit{b}, since it depends on employment
+information from the previous quarter. Also note that for in-scope periods,
+end-of-quarter employment\index{employment!point-in-time} at time
+\textit{t} is equal to beginning-of quarter employment at time \textit{t +
+  1}. In Subsection~\ref{cha:definitions}, this identity (Identity
+\ref{identity:1}) is defined for aggregates, but as shown in the example it
+holds at the individual level as well.
+
+\input{\mypath/jobflow_analysis.table1.tex}
+
+Moving on, \textit{f=1} for Person \textit{1}/Employer \textit{X} from
+1994:2-1995:1, but \textit{f} is missing during 1994:1, which is
+out-of-scope, and \textit{f=0} during 1995:2 because she is no longer
+employed at \textit{X} in 1995:3. In 1995:2 \textit{s=1} and \textit{fs=1}
+for Person~\textit{1}/ Employer~\textit{X} because she separates from
+Employer~\textit{X} sometime during this quarter and appears to have been
+in this job for the entire preceding quarter (1995:1).  In 1995:2,
+\textit{a=1} for Person~\textit{1} and Employer~\textit{Y} because she
+enters a relationship with Employer~\textit{Y} sometime during this
+quarter, and \textit{fa=1} in 1995:3 because this is her first full quarter
+\index{employment!full-quarter} at Employer~\textit{Y}. New hires\index{New
+  hires}, \textit{h}, is also 1 because she has no previous relationship
+with Employer~\textit{Y} in the last four quarters, and recalls\index{recall}
+\textit{r=0} for the same reason. A variety of wage measures are also
+calculated for each individual: \textit{w1} is simply the wage earned at
+each job each quarter, while measures such as \textit{w2}, \textit{w3},
+\textit{wa} are calculated as an individual's wage if he or she meets a
+certain criteria (\textit{e=1} for \textit{w2}, \textit{f=1} for
+\textit{w3}, \textit{etc}.).
+
+\input{\mypath/jobflow_analysis.table2.tex}
+
+In Table~\Vref{table3}, the individual statistics are aggregated to the
+employer level by summing individual statistics by SEIN. \textit{E} for
+Employer~\textit{X} in 95:1, then, is the sum of \textit{e} over all
+individuals working at \textit{X} in 1995:1 (in this case individuals 1 and
+4). Since \textit{e=1} for Individual~\textit{1}, who remains with
+Employer~\textit{X} the next quarter, and \textit{e=0} for
+Individual~\textit{4}, who has no wage record with Employer~\textit{X} the
+next quarter, \textit{E=1}. Similarly, since \textit{a=0} for both
+individuals this quarter (both worked at \textit{X} last quarter also),
+\textit{A=0}. The job flow\mindex{job flow} at Employer~\textit{X}, defined
+as the net increase in employment over that quarter, is calculated as the
+difference between the number of end-of-quarter jobs held and the number of
+beginning-of quarter jobs held. Thus, $JF = E -- B$, or 1 -- 2 = -1 in this
+case. Because there was a negative net job flow of 1 this quarter, job
+creation\index{job creation} \textit{JC= 0} and job destruction\index{job
+  destruction} \textit{JD=1}. Total payroll \textit{W1} is also computed
+for each employer; for Employer~\textit{X} in 1995:1 it is simply the sum
+of the wages paid to individuals 1 and 4: {\$}5000 + {\$}4000 = {\$}9000.
+Individual~1 also had end-of-quarter wages \textit{w2=5000} because she was
+end-of-quarter employed at \textit{X} this period. For
+Individual~\textit{4}, \textit{w2=0} because \textit{e=0} at \textit{X} in
+1995:1. Total end of quarter wages \textit{W2} for Employer~\textit{X} in
+1995:1 is then calculated as the sum of wages at all end-of-quarter jobs.
+In this case, it is simply {\$}5000 since Individual~1 has the only
+end-of-quarter job at \textit{X} in 1995:1.
+
+\input{\mypath/jobflow_analysis.table3.tex}
+
+%\marginpar{\tiny This paragraph (and chapter) might need to be tagged for the index!!}
+Several identities from Subsection~\ref{cha:definitions} are illustrated in
+Table~\ref{table3}.  Once again Identity~\ref{identity:1} ($B_{jt} = E_{jt
+  - 1} )$ is noticeable just from glancing at the columns of numbers B and
+E.  Identity~\ref{identity:3}, $E_{jt} = B_{jt} + A_{jt} - S_{jt} $ also
+holds whenever all four variables are in-scope. For example, for
+Employer~\textit{X} in 1995:1, \textit{E = 1 = 2 + 0 -- 1}. For this
+employer in 1995:2, \textit{E = 0 = 1 + 0 -- 1}. Identity~\ref{identity:4},
+$JF_{jt} = JC_{jt} - JD_{jt}$ is also true: for \textit{X} in 1995: 1
+\textit{JF = -1 = 0 -- 1}. Identity~\ref{identity:5}, $E_{jt} = B_{jt} +
+JC_{jt} - JD_{jt} $ , (\textit{X} in 1995:1 : \textit{E = 1 = 2 + 0 -- 1})
+and Identity~\ref{identity:6}, $A_{jt} - S_{jt} = JC_{jt} - JD_{jt} $,
+(\textit{X} in 1995: 1 : \textit{A -- S = 0 -- 1 = 0 -- 1 = JC -- JD}).
+Finally, Identity~\ref{identity:15}, the total payroll identity ($W_{1jt} =
+W_{2jt} + WS_{jt} )$ is met in all cases. For example, for SEIN \textit{X}
+in 1995: 2, \textit{W1 = {\$}9000 = 5000 + 4000 = W2 + WS}. When \textit{WS
+  is missing}, as in most cases, \textit{W1} and \textit{W2} are simply
+equal because every wage is an end-of-quarter wage.
+
+\input{\mypath/jobflow_analysis.table4.tex}
+
+In Table~\Vref{table4}, the SEIN-level statistics are aggregated in a
+similar way to create total flows and average wages. These can be thought
+of as county totals if the hypothetical universe includes just a single
+county. The total flows are computed exactly as the employer level flows in
+Table~\ref{table3}. For 1995:1, total jobs at the end of quarter, total
+\textit{E}, is just the sum of \textit{E} for \textit{X}, \textit{Y}, and
+\textit{Z}: 1 + 0 + 1 = 2. Note that this is the same as the sum of all
+individual \textit{e} in Table\ref{table2} for 1995:1. Total accessions are computed
+similarly (\textit{A = 0 + 0 + 0}) as are total wages (\textit{W1 = 9000 +
+  2000 + 6000 = 17000}).  Average wages (for example, \textit{Z\_W2},
+\textit{Z\_WA}) are computed by summing total wages for \textit{X},
+\textit{Y}, and \textit{Z}, and dividing by the total number of individuals
+used to calculate the particular wage measure. For example, \textit{Z\_W2}
+for 1995: 1 is computed as the sum of \textit{W2} for \textit{X},
+\textit{Y}, and \textit{Z} where defined (5000 + 6000) divided by the total
+number of end-of-quarter positions (\textit{E = 2}) for an average
+end-of-quarter wage of \textit{Z\_W2} = {\$}5500. \textit{Z\_WA} is
+undefined for this quarter because there are no accessions this quarter. In
+1995:2 they are computed as the sum of \textit{WA} for \textit{X},
+\textit{Y}, and \textit{Z} where defined (2000, since \textit{WA} is only defined
+for \textit{Y} this quarter) divided by the total number of accessions this
+quarter (1) so the average wage to accessions in 1995:2 is simply {\$}2000.
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "qwi-overview"
+%%% End: 

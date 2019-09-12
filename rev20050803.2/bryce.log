@@ -1,0 +1,228 @@
+This is pdfTeX, Version 3.14159-1.10b (Web2C 7.4.5) (format=pdflatex 2004.10.4)  12 MAR 2005 23:41
+**bryce.tex
+(./bryce.tex{/var/lib/texmf/pdftex/config/pdftex.cfg}
+LaTeX2e <2001/06/01>
+Babel <v3.7h> and hyphenation patterns for american, french, german, ngerman, n
+ohyphenation, loaded.
+(/usr/share/texmf/tex/latex/base/article.cls
+Document Class: article 2001/04/21 v1.4e Standard LaTeX document class
+(/usr/share/texmf/tex/latex/base/size10.clo
+File: size10.clo 2001/04/21 v1.4e Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texmf/tex/latex/misc/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count87
+\float@exts=\toks14
+\float@box=\box26
+\@float@everytoks=\toks15
+\@floatcapt=\box27
+)
+(/usr/share/texmf/tex/latex/base/makeidx.sty
+Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
+)
+(/usr/share/texmf/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2002/01/22 v2.2d
+
+(/usr/share/texmf/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2001/10/25 v2.2f
+\@emptytoks=\toks16
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 132.
+))
+(/usr/share/texmf/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip43
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texmf/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/usr/share/texmf/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks17
+\ex@=\dimen103
+))
+(/usr/share/texmf/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen104
+)
+(/usr/share/texmf/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count88
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count89
+\leftroot@=\count90
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count91
+\DOTSCASE@=\count92
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box28
+\strutbox@=\box29
+\big@size=\dimen105
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count93
+\c@MaxMatrixCols=\count94
+\dotsspace@=\muskip10
+\c@parentequation=\count95
+\dspbrk@lvl=\count96
+\tag@help=\toks18
+\row@=\count97
+\column@=\count98
+\maxfields@=\count99
+\andhelp@=\toks19
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
+\@envbody=\toks20
+\multlinegap=\skip44
+\multlinetaggap=\skip45
+\mathdisplay@stack=\toks21
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+\c@theorem=\count100
+
+(/usr/local/share/texmf/tex/latex/tcilatex.tex
+TCILATEX Macros for Scientific Word 3.0 <05 August 1998>.
+NOTICE: This macro file is NOT proprietary and may be freely copied and distrib
+uted.
+\@hour=\count101
+\@minute=\count102
+\GRAPHICSTYPE=\count103
+\draft=\count104
+\dispkind=\count105
+\c@chapter=\count106
+\theight=\dimen112
+LaTeX Info: Redefining \rm on input line 556.
+LaTeX Info: Redefining \sf on input line 557.
+LaTeX Info: Redefining \tt on input line 558.
+LaTeX Info: Redefining \bf on input line 559.
+LaTeX Info: Redefining \it on input line 560.
+LaTeX Info: Redefining \sl on input line 561.
+LaTeX Info: Redefining \sc on input line 562.
+\c@equationnumber=\count107
+amsmath already loaded) (/usr/share/texmf/tex/latex/misc/index.sty
+Style-Option: `index' v3.02 <15 September 1993> (dmj)
+\@indexbox=\insert233
+\indexproofstyle=\toks22
+) (./bryce.aux)
+\openout1 = `bryce.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+ (./impute_description_bryce_edits.tex
+LaTeX Font Info:    Try loading font information for U+msa on input line 58.
+
+(/usr/share/texmf/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 58.
+
+(/usr/share/texmf/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for U+euf on input line 60.
+
+(/usr/share/texmf/tex/latex/amsfonts/ueuf.fd
+File: ueuf.fd 2002/01/19 v2.2g AMS font definitions
+) [1
+
+{/var/lib/texmf/dvips/config/pdftex.map}]
+Overfull \hbox (18.07417pt too wide) in paragraph at lines 106--112
+/cmmi10/y[];$ $[]$ /cmr10/is the appropriately-dimensioned vec-tor of the $[][]
+/cmmi10/;$ /cmr10/and $/cmmi10/x$ /cmr10/is the appropriately-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 126--126
+[]/cmr8/Is the ref-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 126--126
+/cmr8/er-ence here
+ []
+
+
+LaTeX Warning: Reference `u2w:p(a|N)' on page 2 undefined on input line 129.
+
+
+Underfull \hbox (badness 3635) in paragraph at lines 136--136
+[]/cmr8/Refernce to (a-
+ []
+
+
+LaTeX Warning: Reference `u2w:a-def' on page 2 undefined on input line 142.
+
+[2]
+Overfull \hbox (24.72765pt too wide) detected at line 153
+[] /cmmi10/p [] /msam10/_ [] [] [] [] /cmmi10/d[] []
+ []
+
+
+LaTeX Warning: Reference `log-posterior' on page 3 undefined on input line 157.
+
+
+[3] [4] [5]) [6] (./bryce.aux)
+
+LaTeX Warning: There were undefined references.
+
+ )
+(\end occurred when \ifx on line 769 was incomplete) 
+Here is how much of TeX's memory you used:
+ 1546 strings out of 95437
+ 16530 string characters out of 1190247
+ 68705 words of memory out of 1000001
+ 4549 multiletter control sequences out of 10000+50000
+ 12127 words of font info for 47 fonts, out of 500000 for 1000
+ 14 hyphenation exceptions out of 1000
+ 27i,11n,24p,203b,202s stack positions out of 1500i,500n,5000p,200000b,5000s
+ 67 PDF objects out of 300000
+ 0 named destinations out of 131072
+ 0 words of extra memory for PDF output out of 65536
+{/usr/share/texmf/dvips/tet
+ex/f7b6d320.enc}</usr/share/texmf/fonts/type1/bluesky/cm/cmr6.pfb>{/usr/share/t
+exmf/dvips/tetex/74afc74c.enc}</usr/share/texmf/fonts/type1/bluesky/cm/cmti10.p
+fb></usr/share/texmf/fonts/type1/bluesky/cm/cmr8.pfb></usr/share/texmf/fonts/ty
+pe1/bluesky/symbols/msam10.pfb>{/usr/share/texmf/dvips/tetex/bbad153f.enc}</usr
+/share/texmf/fonts/type1/bluesky/cm/cmsy7.pfb></usr/share/texmf/fonts/type1/blu
+esky/cm/cmex10.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmsy5.pfb></usr/sha
+re/texmf/fonts/type1/bluesky/cm/cmr7.pfb>{/usr/share/texmf/dvips/tetex/aae443f0
+.enc}</usr/share/texmf/fonts/type1/bluesky/cm/cmmi5.pfb></usr/share/texmf/fonts
+/type1/bluesky/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/bluesky/euler/eufm10
+.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmmi7.pfb></usr/share/texmf/fonts
+/type1/bluesky/cm/cmmi10.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmbx10.pf
+b></usr/share/texmf/fonts/type1/bluesky/cm/cmbx12.pfb></usr/share/texmf/fonts/t
+ype1/bluesky/cm/cmr10.pfb>
+Output written on bryce.pdf (6 pages, 110399 bytes).

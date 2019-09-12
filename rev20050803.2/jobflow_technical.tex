@@ -1,0 +1,76 @@
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+
+% -*- latex -*- 
+%
+% Time-stamp: <02/04/09 11:08:32 vilhuber> 
+%              Automatically adjusted if using Xemacs
+%              Please adjust manually if using other editors
+%
+% jobflow_technical.tex
+% Responsible: Paul/Bryce
+% Part of QWI_methods.tex
+
+The following briefly describes the programs used in the production of the
+QWI estimates. 
+
+\paragraph{jobflow01.sas }
+
+(a) use EHF\index{EHF} (Appendix~\Vref{app:ehf_technical}) and
+ICF\index{ICF} (Appendix~\Vref{app:icf_technical}) to create a complete
+work history for each individual; (b) define age categories over which to
+compute job and worker flows; (c) compute individual-level flow statistics.
+
+\paragraph{jobflow02.sas }
+
+Calculate job flow statistics at the ``firm-level,'' i.e. for each \textit{SEIN}, by 
+year and quarter and by sex and age group.
+
+\paragraph{jobflow03.sas }
+
+(a) generate all intermediate statistics necessary for computing final 
+statistics; (b) check identities for all relevant job and worker flow 
+statistics.
+
+\paragraph{jobflow04.sas }
+
+(a) add UI-system county and industry information for each firm (\textit{SEIN%
+}) from the employer characteristics file (ECF)\index{ECF}; (b) create a new series of
+variables equal to the original variables multiplied by \textit{SEIN}
+specific noise (or fuzz) factors.\index{fuzz factor}
+
+\paragraph{jobflow05.sas }
+
+Produce actual and noise adjusted flow statistics at the county and industry 
+level.
+
+\paragraph{jobflow06.sas }
+
+(a) for each file (year-quarter-county and year-quarter-industry), produce
+disclosure status flags for each variable; (b) calculate the percentage
+difference between true and noisy values for each variable.
+
+\paragraph{jobflow07a.sas -- jobflow07f.sas}
+
+\index{raking} Rake employment dynamic estimates to be consistent with
+BLS\index{BLS} published county and state totals from CEW\index{CEW}.
+Output data files contain observations by year and quarter for: (a)
+non-missing county codes (e.g., codes which do not correspond missing
+county identifiers or other measures of geography), (b) valid county codes
+for which the BLS raking totals are positive in the current and subsequent
+period, and (c) state totals (indicated by county='000').  Tabulated
+estimates are flagged where cell suppression\index{cell suppression} or
+distortion\index{distortion} occurs.
+
+\paragraph{jobflow08a.sas - jobflow08f.sas}
+
+\index{raking} Rake employment dynamic estimates to be consistent with BLS
+published industry division and state totals.  Output data files contain
+observations by year and quarter for: (a) all industry divisions including
+``other'' and (b) state totals (indicated by \textit{sic\_division}=' ',
+blank).  Tabulated estimates are flagged where cell suppression\index{cell
+  suppression} or distortion\index{distortion} occurs.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "QWI_methods"
+%%% End: 

@@ -1,0 +1,117 @@
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+                      
+
+% -*- latex -*- 
+%
+% Time-stamp: <02/04/03 20:39:49 vilhuber> 
+%              Automatically adjusted if using Xemacs
+%              Please adjust manually if using other editors
+%
+% pcf_technical.tex
+% Responsible: Martha
+% Part of QWI_methods.tex
+
+\index{PCF|(mainref}
+
+As part of the initial processing of state UI\index{UI} files, a list of
+unique PIKs\index{PIK} is given to PRED\index{PRED} and extracts from the
+master PCF and CPR\index{CPR} GEO files are created.  To this point, there
+has been no standardized way of obtaining these extracts.  Sometimes LEHD
+has prepared the list of PIKs and sent them to PRED.  Other times, PRED has
+prepared the list of PIKs themselves.
+
+
+\section{Files received}
+\label{sec:pcf:files_received}
+
+
+After the extracts have been created, two sets of files are returned to
+LEHD.  The first set of files have the prefix CPRGEO\index{CPRGEO} and the
+second set of files have the prefix LEHDPCF\index{LEHDPCF}.  Usually there
+are 20 data sets for each prefix (although there have been exceptions to
+this general rule as well).  These files are registered and then put in the
+\begin{center}
+  /data/master/pcfcpr/received
+\end{center}
+and the appropriate sub-directory (date received).  They are then
+symbolically linked to 
+\begin{center}
+  /data/master/pcfcpr/rawdata/
+\end{center}
+and are given iteration
+numbers.  For example, the first time we received one large CPRGEO file, it
+was called  CPRGEO\_01.  The next time we received extracts, they came in
+pieces and were mapped to CPRGEO\_02\_01-CPRGEO\_02\_20.  Each time we receive
+extracts, the files are mapped to the next iteration number.
+
+After the files have been registered and symbolically linked to the
+appropriate names, a program is run to merge the extracts to the master
+CPRGEO and LEHDPCF files.  The master files contain a list of all PIKs ever
+found in any state or SIPP\index{SIPP} or CPS\index{CPS} survey as well as
+the relevant geography or SSA Numident\index{Numident} information.  The
+master files contain flags to indicate the states and/or surveys in which
+the PIK appeared.
+
+\section{Program sequence}
+
+The merging programs call one of three possible macros: 
+\begin{itemize}
+\item 00.flagcreate.sas,
+\item 00.flagexist.sas, and 
+\item 00.flagmerge.sas. 
+\end{itemize}
+These macros are written to handle three different possible formats for the
+arriving data.  Each macros standardizes the data and creates the
+appropriate state and/or survey flags.  The resulting data set is then
+merged by PIK to the master data base.  A brief description of each macro
+follows.
+
+\begin{description}
+\item{00.flagcreate.sas:} The assumption in this macro is that all the data come from the same state or survey and no flag exists.  The user 
+gives the macro the following parameters: 
+\begin{itemize}
+\item \texttt{batch = iteration number} assigned to the files received from PRED and included in the raw data file name 
+\item \texttt{type = CPRGEO or LEHDPCF} 
+\item \texttt{rawdatalib = /data/master/cprpcf/rawdata/} (usually)
+\item \texttt{master=  /data/master/cprpcf/sasdata/} (usually). Defines home of the master CPRGEO and
+LEHPCF files 
+\item \texttt{piksource = 2-digit FIPS state code/ CPS/ SIPP}.
+ Identifier for the source of the PIK.
+\item \texttt{merged = yes} if all 20 files have been combined into 1 file; otherwise no.
+\end{itemize}
+
+\item{00.flagmerge.sas:} In this macro, the assumption is that the data
+come from one or more states and surveys and that flags exist on a
+previously created data set which indicate the source of each PIK.  The
+program follows the same steps as in 00.flagcreate.sas but the flag is
+merged on instead of being created.
+
+\item{00.flagexist.sas:} Here, the assumption is that the flag indicating the source of each PIK is already on the file.
+\end{description}
+
+In all three macros, the first part ensures the existence of the source
+flag, either by creating or merging on the flag, or by using an already
+existing flag.  The second part sorts the resulting data set and then
+merges this file onto the master CPRGEO /LEHDPCF file.  All variables are
+kept during this merging process.
+
+For each extract, the programs \texttt{create\_cpr\_master.sas} and
+\texttt{create\_pcf\_master.sas} are run.  The first number on the program refers to
+the absolute order in which all the programs in
+/data/master/cpfpcf/conversions were run.  The second number refers to the
+program number and is repeated for each extract.  Program 01. is for the
+\texttt{cpr\_master} creation and 02. is for the \texttt{pcf\_master} creation.
+
+If the extracts are sent to LEHD in a format not currently handled in one
+of the three macros described above, the user will have to create a new
+macro which creates the source flag and merges the extract onto the LEHD
+master files.
+
+
+
+\index{PCF|)mainref}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "QWI_methods"
+%%% End: 

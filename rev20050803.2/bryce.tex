@@ -1,0 +1,49 @@
+
+\documentclass{article}
+\usepackage{float}
+\usepackage{makeidx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%TCIDATA{OutputFilter=LATEX.DLL}
+%TCIDATA{Created=Thursday, March 07, 2002 14:11:39}
+%TCIDATA{LastRevised=Thursday, March 07, 2002 14:14:32}
+%TCIDATA{<META NAME="GraphicsSave" CONTENT="32">}
+%TCIDATA{<META NAME="DocumentShell" CONTENT="General\SW\Blank - Standard LaTeX Article">}
+%TCIDATA{CSTFile=LaTeX article (bright).cst}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{solution}[theorem]{Solution}
+\newtheorem{summary}[theorem]{Summary}
+\newtheorem{identity}[theorem]{Identity}
+\newenvironment{proof}[1][Proof]{\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+\newenvironment{steps}{\renewcommand{\theenumi}{Step \arabic{enumi}}%
+  \begin{enumerate}}{\end{enumerate}\renewcommand{\theenumi}{\arabic{enumi}.}}
+\newenvironment{notes}{\renewcommand{\theenumi}{Note \arabic{enumi}}%
+  \begin{enumerate}}{\end{enumerate}\renewcommand{\theenumi}{\arabic{enumi}.}}
+\input{tcilatex}
+\usepackage{index}
+
+\begin{document}
+
+\input{impute_description_bryce_edits.tex}
+
+\end{document}

@@ -1,0 +1,169 @@
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+                      
+
+% -*- latex -*- 
+%
+% Time-stamp: <02/04/03 22:18:14 vilhuber> 
+%              Automatically adjusted if using Xemacs
+%              Please adjust manually if using other editors
+%
+% es202-technical.tex
+% Responsible: Bahattin/Kevin/Lars
+% Part of QWI_methods.tex
+
+\index{ES-202|(mainref}
+\section{Input Files}
+
+The ES 202 data from the states is the primary input to the ECF\index{ECF} file
+creation process. The data is (typically) received as a custom extract for
+LEHD, based on the standard ES-202 file format as sent to BLS\index{BLS}.
+
+\section{Reading the ES 202 files}
+
+Reading the data has been the hardest part of the ECF creation, as they
+have historically come in widely differing formats. As the files are
+received in a more standard format this process should become easier.
+Files  received from the states are checked in and  placed in
+\begin{center}
+\textbf{\textit{/data/master/ui/SS/received/YYYY-MM-DD.}}   
+\end{center}
+where \textit{YYYY-MM-DD} is the date the files were received at
+Census, and \textit{SS} is the two-letter postal abbreviation for the state.
+
+Files are kept as is (except for compression). In order to standardize
+processing, and to manage file updates, the  directory 
+\begin{center}
+  \textbf{\textit{/data/master/ui/SS/rawdata}}
+\end{center}
+contains symbolic links%
+%
+\footnote{The unix command 'ln' can be used to create a symbolic link. For instance, the following  was used to create a link in the North Carolina rawdata directory:
+\begin{center}
+\textbf{\textit{ln -s /data/ui/nc/received/2001-11-30/Y1997.gz /data/master/ui/rawdata/nces19971.dat.gz }}
+\end{center}
+
+Or a simple script at the command line will allow you to create symbolic links for all the data.
+
+\begin{tabular}{ll}
+$dsbu02:=>$& date=2001-11-30 \\
+$dsbu02:=>$& year=1990 \\
+$dsbu02:=>$& while [[ \$year -le 2000 ]]\\
+$>$& do\\
+$>$& ln -s ../../received/\$date/\${year}.gz nces\${year}1.dat.gz\\
+$>$& let year+=1\\
+$>$& done\\
+\end{tabular}
+}
+%
+to the actual files in \textit{../received}. These
+symbolic links have a standard format detailed in the LEHD Data standards,%
+%
+\footnote{See /data/doc/Datastand.pdf }
+%
+and always point to the most recent update:
+\begin{center}
+\begin{verbatim}
+              [ss][project letters][yyyy][q].dat.[compression extension]
+\end{verbatim}
+\end{center}
+where [ss] is the two-character state postal abbreviation and [project
+letters] is the abbreviated project name, [yyyy] is a Y2K compliant year
+numeral, [q] is a single digit indicating the calendar year quarter. All
+links have the .dat extension, followed by a [compression extension] that
+indicates to readin programs which applications to use to extract the
+programs. In our example, $<nc>$ is the state abbreviation, $<es>$ is the
+projects letters, $<1997>$ is the year and $<1>$ is the quarter 1, $<gz>$
+indicates that the compressed archive contains only a single file, rather
+than multiple files contained in a $<zip>$ archive.
+
+
+% Once you have rawdata set up, you need to figure out the layout and record structure of the files.  Are they constant across the time period??  
+% 
+%  A program called fileinfo has been written to help you determine what is on ASCII files.  
+% \
+%  Example:   The two sets of commands below are equivalent.  
+%  {\footnotesize
+% \begin{center}
+% \begin{verbatim}
+%  gzfileinfo nces19971.dat.gz    
+% OR
+% gunzip nces19971.dat 
+% fileinfo nces19971.dat 
+% gzip nces19971.dat 
+% 
+% Sample output from fileinfo 
+% 
+% Fileinfo 0.5 
+% Using 'cat' to access files. 
+% Fileinfo is calculating the file statistics 
+% Filename:  runall
+% _____________________________________________________  
+% Number of Records:        875304  
+%  Maximum Record Length:   543  
+%   Minimum Record Length:   1   
+%  Calculating Number of Zero Length Records    
+%  Number of Zero Length Records:             0              
+%   Calculating Records with Zero Length First Token 
+%  Number of Records with Zero Length First Token:    0 
+%  \end{verbatim}\end{center}}
+%
+%The key information to look at is the record length of the file.  This information might be available from the register scripts, which computes the record length. You can access this information from \textbf{\textit{/data/master/ui/received/}}, and look for the files ending in ".recl.txt". 
+
+Next, the layout needs to be  determined. The degree of difficulty of this
+task  depends on the extent of the documentation
+accompanying the data. A repository of layouts can be found in
+\textbf{\textit{/programs/projects/auxiliary/Layouts}}.  If the layout of
+the state does not match one of the formats in the repository, then a new
+layout is created, and added to the repository.%
+%
+\footnote{The default layout is called $<es.00.01.layout.sas >$. Subsequent
+  modifications are numbered $<es.00.02.layout.sas>$,
+  $<es.00.03.layout.sas>$, etc. To modify the standard layout,  copy that
+  file (es.00.01.layout.sas) to the next free sequence number and adjust accordingly.
+ Make a comment at the top of the file what state you are adapting it to.
+}
+
+
+\section{Program sequence}
+\label{sec:es202:programs}
+
+All programs should be patterned on the the latest version of the readin
+sequence. The DAF\index{DAF} might give some hints, as might a directory
+listing, about the most current readin. SAS files are copied from the
+\textit{conversions/ES} subdirectory of
+\textit{/data/master/ui/SS}. Normally, they require very little
+modification. Each of the programs passes arguments to a standard macro. A
+help text is printed when including the program file that defines the macro
+(the \textit{\%include} statement).
+
+\begin{steps}
+\item Modify/set up \textit{configSS.sas}, where \textit{SS} again is a
+  placeholder for the postal state abbreviation. Only the lines definining
+  the state abbreviation as well as the time spans covered by the data
+  should need to be modified here (but see also
+  Section~\Vref{app:ui_technical}). In particular, the existence of the
+  directories referenced in the libname statements should be verified.
+
+\item Modify and run \textbf{\textit{01.01.es-readin.sas}}. This program  reads the data from ASCII into SAS format.
+Verify its contents, modify dates and state abbreviation appropriately, and
+run. These programs can take very long.
+
+\item Modify and run \textbf{\textit{02.02.es-stats.sas}}. This program
+  creates statistics for quality assurance and documentation.
+\end{steps}
+
+
+\section{Output files}
+The data is stored in file locations of the format 
+\begin{center}
+\textit{/data/master/ui/SS/YYYY/SSesYYYY.sas7bdat}
+\end{center}
+where SS= a two letter state abbreviation, YYYY= a 4 digit year, all in lower case.
+
+
+\index{ES-202|)mainref}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "QWI_methods"
+%%% End: 

@@ -1,0 +1,1888 @@
+%%%  +--< LEHD-QWI ecf 3.1.49 2005-01-26 schwa305            >--+  %%%
+%%%  +--< Location: /programs/production/dev1/current/ecf    >--+  %%%
+%%%  +--< File: doc/ECFv31.tex                               >--+  %%%
+\subsection{General Overview}
+
+The Employer Characteristics File (ECF) consolidates most firm level
+information (size, location, industry, etc.) into two easily accessible
+files. The firm or SEIN level file contains one record for every YEAR
+QUARTER a firm is present in either the ES-202 or the UI, with more detailed
+information available for the establishments of multi-unit firms in the SEIN
+SEINUNIT file. The SEIN file is built up from the SEINUNIT file and contains
+no additional information, but should be viewed merely as an easier and/or
+more efficient way to access firm level data.
+
+{\small
+\begin{description}
+\item[SEIN level file unique record identifier:] SEIN YEAR QUARTER
+\item[SEIN level file sort order:] SEIN YEAR QUARTER
+\item[SEIN level file indexes:] SEIN, SEIN{\_}YEAR{\_}QUARTER
+\item[SEINUNIT level file unique record identifier:] SEIN SEINUNIT YEAR QUARTER
+\item[SEINUNIT level file sort order:] SEIN SEINUNIT YEAR QUARTER
+\item[SEINUNIT level file indexes:] SEIN,
+  SEIN{\_}SEINUNIT{\_}YEAR{\_}QUARTER, \newline
+SEIN{\_}YEAR{\_}QUARTER, SEIN{\_}YEAR{\_}QUARTER{\_}SEINUNIT
+\end{description}
+}
+
+
+
+\subsection{Input Files}
+
+\begin{itemize}
+\item The ES202 data from the states is the primary input to the ECF file
+creation process. 
+%This data is stored in file locations of the format
+%/data/master/ui/SS/YYYY/SSesYYYY.sas7bdat (SS= a two letter state
+%abbreviation, YYYY= a 4 digit year, all in lower case). Brought in at
+%program 01{\_}read{\_}all.sas
+
+\item UI data is also used to supplement information on the ES202. As part of the
+creation of the Employment History File (EHF), {\tt ehf\_sein\_employment}
+is created.
+%a file for each state is
+%placed in /data/master/Employer/sasdata/uitotals/sein{\_}employment{\_}%
+%SS.sas7bdat. 
+This file contains E (end of period employment), B (beginning
+of period employment), M (employed anytime in the quarter), and W1 ( total
+wages) calculated similarly to the same measures on the QWI. 
+%Brought in at 04{\_}sein{\_}totals.sas
+
+% Longitudinal Employer Geography (LEG) file (leg{\_}{\&}st..sas7bdat),
+% located in /data/master/geo/LEG. Contains lat/long coordinates of the
+% establishments, plus county, wib and pmsa geo also. Brought in at 09{\_}%
+% seinunit{\_}wide.sas
+
+\item GAL data containing  lat/long coordinates of the
+establishments, plus county, wib and pmsa geo also. 
+
+\item Existing fuzz files must be available if data for the state has been
+officially released. 
+%Fuzz files( SEIN and SEINUNIT are located in
+%/data/master/ECF/fuzz are brought in at 19{\_}seinunit{\_}fuzz.sas
+
+\item SIC and NAICS impute datasets: 
+  \begin{enumerate}
+  \item  3 digit (parms\_us\_imp\_sic\_sic3, formerly called sic3{\_}impute) and 2 digit 
+         (parms\_us\_imp\_sic\_sic2, formerly called sic2{\_}impute.sas7bdat) SIC impute datasets are used in 
+          %01{\_}read{\_}all.sas,
+         the first modules, 
+  \item 6 digit NAICS to 4 digit SIC probabilistic crosswalk 
+        (parms\_us\_imp\_ncs1997\_sic, formerly called naics{\_}sic{\_}9,
+        and parms\_us\_imp\_sic\_ncs1997) is used 
+%in 10{\_}fill{\_}sync.sas
+after the merge to the GAL.
+  \item NAICS 2002 to 1997 crosswalks are used 
+    (parms\_naics\_imp\_ncs1997\_ncs2002 and 
+    parms\_naics\_imp\_ncs2002\_ncs1997)
+  \end{enumerate}
+  
+
+\item Various formats are used: 
+  \begin{enumerate}
+  \item multiformats for SIC and NAICS are used from
+the format library, 
+  \item  SIC division formats, 
+  \item  EIN checking routine, 
+  \item  county formats that vary from state to state. 
+  \end{enumerate}
+  Format files are all
+located in /programs/projects/auxiliary/Formats.
+
+\item BLS-derived control totals, produced by the EHF.
+%BLS totals dataset created by Melissa. Melissa's dataset is read-in and
+%restructured by a program named blstotals.sas. The data and program reside
+%in /programs/projects/ECF/v3.1/inputs/BLS. Brought in at 18{\_}weight{\_}calc%
+%{\_}02.sas.
+\end{itemize}
+
+% \subsection{Directory Structure}
+% 
+% Data is located in /data/master/ECF/v3.1 (subdirectories follow)
+% 
+% Fuzz -- contains the fuzz factor datasets
+% 
+% Leg{\_}structure -- contains the record structure and assorted other
+% variables. These files are output by 08{\_}distribute.sas and are used by
+% the LEG and pred/succ.
+% 
+% Uitotals -- SEIN YEAR QUARTER employment and payroll totals from the job
+% flows sequence.
+% 
+% Uitotals{\_}old -- SEIN YEAR QUARTER employment and payroll totals from the
+% creation of the ECF. Used in v1.0 and v2.x. Most v3.0 states use the files
+% in the uitotals directory.
+% 
+% \noindent v1.0 -- My first efforts at building an ECF. Each state has a
+% different set of programs depending on the level of development at the time
+% the state's data was received. There are many valuable programs that
+% investigate ES202 data in the address, duprecs, and multiunits
+% subdirectories. The run{\_}expansion subdirectories contain my first
+% attempts at version 3.0 (SEINUNIT based file).
+% 
+% \noindent v2.0 and v2.1 -- My first attempt at combining all the different
+% versions of the ECF programs into one consistent set of code that is used
+% for all states. This set of code is generally known as version 2.2 (also
+% added employment weighted SIC and COUNTY).
+% 
+% \noindent v3.0 -- Represents the version of the ECF used for the first
+% officially released version of the QWI
+% 
+% \noindent v3.1 -- The current version of the ECF
+% 
+% Links to v3.1 data files are located in /data/master/ECF/current
+% 
+% Programs and other files are located in /programs/projects/ECF/
+% (subdirectories follow)
+% 
+% There is a separate subdirectory of the same name (v2.1,v3.0,\ldots .) as
+% the directories in /data/master/ECF for the programs that create each
+% version of the ECF.
+% 
+% Within this subdirectory are various other directories.
+% 
+% Aux -- anciliary programs used to investigate data quality issues
+% 
+% States -- contains the ECF code for each state
+% 
+% Inputs -- contains the NAICS and SIC impute datasets along with the BLS
+% totals dataset used to create the weights.
+
+\subsection{Program Overview}
+
+First data is read in from the yearly ES202 files and stacked one on top of
+the other. General and state specific consistency checks are then performed.
+The COUNTY, NAICS, and EIN data are checked for invalid values. The SIC
+invalid check is a little more sophisticated. If a 4 digit SIC code is
+present, but is not valid, then the SIC code undergoes a conditional impute
+based on the first 2 or 3 digits. If the first 2 or 3 digits are not valid
+either, then SIC is set to missing (this value will eventually be filled).
+
+The ES202 data contains a ``master'' record for multi-unit firms that must
+be removed. Information in the master record is preserved if data is not
+available in the establishment records (I initially allocate the data
+equally to each establishment). Various inconsistencies in the record
+structure are also dealt with, such as 2 records (master and establishment)
+appearing for a single-unit.
+
+The UI data is integrated with the ES202 data and totals are calculated at the
+SEIN YEAR QUARTER level.
+
+Using both UI and ES202 data I create a ``best'' series of variables for
+payroll and employment.
+
+The allocation process implemented above (master to establishments) does not
+incorporate any information on the structure of the firm. A flat prior is
+used in the allocation process (each establishment is assumed to have equal
+employment and payroll). I improve on this by examining firms with allocated
+data that previously reported as a multi-unit. I then use the structure of
+their reports from a previous quarter to allocate payroll and employment.
+The new records are integrated back into the data, hopefully improving
+longitudinal consistency at the establishment level.
+
+At this point, the SEIN YEAR QUARTER SEINUNIT dataset record structure is
+finalized.
+% and available for other jobs such as the LEG to access.
+%
+%The LEG is brought into the ECF.
+
+The GAL is brought into the ECF (this used to be the separate LEG process).
+
+The COUNTY, SIC, NAICS, and EIN data are transformed from long to wide
+format for each SEINUNIT. I use this dataset to fill missing values in these
+variables with information from other periods for the same establishment.
+
+The modal COUNTY, SIC, NAICS, OWNER{\_}CODE, and EIN are calculated (both
+establishment and employment weighted) for each SEIN in a given YEAR and
+QUARTER.
+
+The SEIN level mode variables (SIC, NAICS, etc) are then transformed from
+long to wide and the missing values are filled with data from the closest
+YEAR and QUARTER, if available.
+
+At this point, if an SEIN mode variable has a missing value, then that
+missing value must be present for every YEAR and QUARTER. The distribution
+of employment across 4 digit SIC in 1997 is calculated and is used to impute
+the industry code for each SEIN with missing SIC. These SIC codes are also
+assigned to the SEINUNIT level data.
+
+The weights are calculated, based on the expanded BLS controltotals
+acquired from the EHF.
+
+The final step is to apply fuzz factors to each dataset. The fuzz factor
+process is done separately for the SEIN and the SEINUNIT data. Once this is
+completed the datasets are written to their final location and the master
+fuzz files are updated.
+
+% \subsection{User's Guide}
+% 
+% The program sequence is designed to require the minimum possible interaction
+% from the user. All configuration information is stored in config{\_}%
+% dates.sas and config{\_}param.sas. If these files are set up properly than
+% no further user intervention should be required, except for checking that
+% the output looks sensible. Executing runall1.ksh starts the first stage of
+% the program sequence. Once this stage has completed, the structure of the
+% ECF is fixed and the LEG can be created. When LEG processing is finished
+% stage two can be executed using runall2.ksh.
+% 
+% \subsubsection{Steps to Set-Up Programs for a new state}
+% 
+% Insure the EHF program sequence completed properly. The
+% state-work-history-05.sas and state-work-history-06.sas programs produce
+% useful information about the concordance between the UI and the ES202.
+% 
+% \begin{enumerate}
+% \item Create a temporary working directory of your own choosing. Currently
+% this is /saswork10/ECF{\_}intermediate/ss. A simple script named create{\_}%
+% all.ksh in that directory creates subdirectories for each state. This script
+% only needs to be run once if you move the temp directory.
+% 
+% \item Run the script new{\_}state.ksh with the 2 letter state postal
+% abbreviation as the only argument. The script is located in the states
+% subdirectory. The script creates a new directory, copies all the required
+% files, and adds a line to the file update{\_}file.ksh in the master
+% directory. ONLY CREATE A NEW DIRECTORY WITH THIS SCRIPT. If any other method
+% is used to setup a state, then code changes made in master will not be
+% propagated to each state when the update{\_}all.ksh script is run from the
+% master directory.
+% 
+% \item The file config{\_}dates.sas contains all of the state specific
+% configuration information. This file is NOT copied or updated when the update%
+% {\_}all.ksh script is run, thus preventing you from accidentally erasing the
+% configuration information. However, the file is copied when the new{\_}%
+% state.ksh script is run.
+% 
+% \item Edit config{\_}dates.sas
+% 
+% \item Set up the macro variables ymin, ymax, st, yfirst, qfirst, ylast, and
+% qlast.
+% 
+% \item Set the macro variable einavail=ein if EIN is available (empty string
+% if not available).
+% 
+% \item Set the macro variable listsize={number}.
+% Number should be large enough that at least some records for even small
+% categories will show up in print statements (maybe 10-20{\%} of the data).
+% 
+% \item DO NOT alter the ltrim and utrim unless you are sure you know what you
+% are doing.
+% 
+% \item Set up the following libnames
+% 
+% \noindent working (temp directory).
+% 
+% \noindent mastsein (final output for SEIN based file).
+% 
+% \noindent mastunit (final output for SEINUNIT based file).
+% 
+% \noindent uidata (location of UI SEIN YEAR QUARTER totals).
+% 
+% \noindent fuzz (location of master fuzz files for each SEIN/SEINUNIT)
+% 
+% \noindent emphist (location of the EHF)
+% 
+% \noindent geoout (location of ECF structure file)
+% 
+% \noindent geoin (location of the LEG)
+% 
+% \noindent sicimp (location of 4 digit SIC totals)
+% 
+% \noindent naicsic (location of NAICS to SIC crosswalk)
+% 
+% \noindent bls (location of BLS totals dataset)
+% 
+% The unedited ES202 data directories are automatically assigned a libname as
+% long as the standard naming convention is used.
+% 
+% \item The program uses a format as a filter for invalid county codes. Every
+% state has a set of formats in the file
+% /programs/projects/auxiliary/Formats/format{\_}ss.sas. A format needs to be
+% added to the file named cty{\_}temp. Look at an existing state file for the
+% exact layout and make sure to have the value ``OTHER'' in the format so all
+% invalid codes are assigned ``ZZZ''. These should be automatically be created
+% as part of the GEO process.
+% 
+% \item If the ES202 read in completed properly, this step should not need to
+% be performed, but the instructions are left in `just in case.' The next step
+% may require some trial and error to correctly implement. The first program
+% ``01{\_}read{\_}all.sas'' reads in the ES202 data, stacks each year file,
+% and checks for any inconsistencies. Run this program by itself to check for
+% problems before executing the whole sequence. Depending on the structure and
+% quality of the data you may have to do some tweaking of config{\_}param.sas
+% to get everything to work. Config{\_}param.sas contains the edits for ALL
+% states. Unlike config{\_}dates.sas which is different for each state, there
+% should be only one config{\_}param.sas. For example, if modifications need
+% to be made for North Carolina, do not edit the config{\_}param.sas in North
+% Carolina, edit the ``master'' config{\_}param.sas. The ``master'' config{\_}%
+% param.sas currently resides in Illinois, but can reside anywhere. Once an
+% edit is done in the ``master'' config{\_}param.sas then use update{\_}%
+% all.ksh or update{\_}file.ksh to push the changes to ALL the states. If used
+% properly, config{\_}param.sas becomes a central repository the
+% idiosyncrasies of each state's data.
+% 
+% Virtually all macros used by the programs are located in config{\_}%
+% param.sas. Sets of code specific to each state can be added to the following
+% macro's to handle special situations.
+% 
+% For instance, for North Carolina we add the following modification in config{%
+% \_}param.sas file:
+% 
+% \ \ {\%}if {\&}st=nc {\%}then {\%}do;
+% 
+% \ \ \ \ \ \ \noindent if trim(naics)=''0'' then naics=''999999'';
+% 
+% \ \ \ {\%}end;
+% 
+% Macro SET{\_}ES handles the data read in. If the unedited ES202 files have
+% non-standard names for the key variables then they must be renamed
+% appropriately. The standard statements that are executed conditional on a
+% certain state can be used as a guide.
+% 
+% Macro CLEANUP removes any invalid values from COUNTY, SIC, NAICS, and EIN.
+% Modify as necessary.
+% 
+% The first two digits of an EIN are compared with a list of known valid IRS
+% revenue district codes. This list is currently up to date, but it would be a
+% good idea to check periodically to see if new codes have been added.
+% 
+% Check the output of 01{\_}read{\_}all.sas and if everything talked about
+% above looks OK, then check for duplicate records (duplicates should all be
+% fixed in the ES202 read-in, but this method can be used if you are in a
+% rush). The variable DUPREC identifies duplicate records (SEIN YEAR QUARTER
+% SEINUNIT should be unique. If not then something went wrong with the ES202
+% read in). Examine the list file and see if there is a common rule that can
+% be used to eliminate the duplicates and investigate what went wrong with the
+% ES202 read in.
+% 
+% Macro KEEPREC in config{\_}param.sas is where you would place the code that
+% eliminates the duplicates. This step should no longer be needed. All
+% duplicates should now be eliminated by the ES202 read in process.
+% 
+% \item The fuzz parameters are located in config{\_}param.sas, but they
+% should never need to be changed. Execute runall1.ksh. The test.ksh script
+% searches for errors in the log files. If no errors are found, then examine 08%
+% {\_}distribute.lst to see if the data looks OK (make sure that employment
+% and payroll totals are consistent across quarters). If everything looks good
+% let the GEO team know so the LEG can be created. Once the LEG is ready, the
+% second stage can be run using runall2.ksh. Check for errors and if
+% everything is OK create new links in /data/master/ECF/current.
+% 
+% \item The script run{\_}info.ksh will give you an overview of the process
+% and how the programs are preceeding. By default, output is sent to the
+% screen, likely too fast for the user to assimilate. Instead, execute 
+% {\tt run{\_}info.ksh > run{\_}info.ksh.log} to place the output into a file
+% for easier viewing.
+% 
+% \item The script update{\_}links.ksh located in /data/master/ECF/current is
+% used to maintain all the links to the ECF files. Create an entry in the
+% script for each state. The entry calls the linkset function that creates the
+% actual links (see the script for more information on how to call the
+% function). Run the script every time you would like any new ECF's to be
+% available to other users.
+% \end{enumerate}
+% 
+% None of the intermediate files are deleted during normal processing. Once
+% you are satisfied the programs have completed properly the files should be
+% removed.
+
+\subsection{SAS Program legacy name mapping}
+
+Please note that program names have been changed since legacy version 3.1.0. Table~\ref{table:namechanges} lists a
+correspondence of the old descriptive names to the numeric names in the
+production system. The old descriptive names are also coded in the first
+line of every program.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Name conversion between legacy programs, NAICS-adapted, and current programs}
+  \label{table:namechanges}
+  \begin{tabular}{rclcl}
+\\
+\hline
+Legacy name (3.1.0) && NAICS (3.1.08-kev) && 3.1.15+ \\
+\hline
+\hline
+                01\_read\_all & $\rightarrow$   & 01\_read\_es202               & $\rightarrow$ & 01\_ecf\\
+                              & NEW             & 02\_naics\_clean              & $\rightarrow$ & 02\_ecf\\ 
+                              & NEW             & 03\_naics\_aux\_clean         & $\rightarrow$ & 03\_ecf\\ 
+                              & NEW             & 04\_sic\_clean                & $\rightarrow$ & 04\_ecf\\
+                              & NEW             & 05\_merge\_ind                & $\rightarrow$ & 05\_ecf\\
+             02\_num\_records & $\rightarrow$   & 06\_num\_records              & $\rightarrow$ & 06\_ecf\\          
+               03\_rm\_master & $\rightarrow$   & 07\_rm\_master                & $\rightarrow$ & 07\_ecf\\  
+             04\_sein\_totals & $\rightarrow$   & 08\_sein\_totals              & $\rightarrow$ & 08\_ecf\\          
+               05\_best\_vars & $\rightarrow$   & 09\_best\_vars                & $\rightarrow$ & 09\_ecf\\  
+          06\_select\_records & $\rightarrow$   & 10\_select\_records           & $\rightarrow$ & 10\_ecf\\          
+          07\_special\_handle & $\rightarrow$   & 11\_special\_handle           & $\rightarrow$ & 11\_ecf\\          
+              08\_distribute  & $\rightarrow$   & 12\_distribute                & $\rightarrow$ & 12\_ecf\\          
+                 01\_leg      & $\rightarrow$   & 13\_leg1                      & $\rightarrow$ & 13\_ecf\\          
+                 02\_leg      & $\rightarrow$   & 14\_leg2                      & $\rightarrow$ & 14\_ecf\\          
+                 03\_leg      & $\rightarrow$   & 16\_leg3                      & $\rightarrow$ & 15\_ecf\\          
+                 04\_leg      & $\rightarrow$   & 16\_leg4                      & $\rightarrow$ & 16\_ecf\\          
+                              & NEW             & 17\_naics\_ldb\_clean         & $\rightarrow$ & 17\_ecf\\ 
+           09\_seinunit\_wide & $\rightarrow$   & 18\_seinunit\_wide            & $\rightarrow$ & 18\_ecf\\          
+               10\_fill\_sync & $\rightarrow$   & 19\_seinunit\_fill            & $\rightarrow$ & 19\_ecf\\          
+                              & SPLIT           & 20\_seinunit\_sync            & $\rightarrow$ & 20\_ecf\\ 
+         11\_sein\_mode\_calc & $\rightarrow$   & 21\_sein\_mode\_calc          & $\rightarrow$ & 21\_ecf\\          
+               12\_sein\_wide & $\rightarrow$   & 22\_sein\_wide                & $\rightarrow$ & 22\_ecf\\  
+               13\_sein\_fill & $\rightarrow$   & 23\_sein\_fill                & $\rightarrow$ & 23\_ecf\\  
+   14\_impute\_sein\_industry & $\rightarrow$   & 24\_impute\_sein\_industry    & $\rightarrow$ & 24\_ecf\\         
+15\_impute\_seinunit\_industry& $\rightarrow$   & 25\_impute\_seinunit\_industry& $\rightarrow$ & 25\_ecf\\         
+      16\_seinunit\_yq\_chars & $\rightarrow$   & 26\_seinunit\_yq\_chars       & $\rightarrow$ & 26\_ecf\\         
+         17\_weight\_calc\_01 & $\rightarrow$   & 27\_weight\_calc\_01          & $\rightarrow$ & 27\_ecf\\          
+         18\_weight\_calc\_02 & $\rightarrow$   & 28\_weight\_calc\_02          & $\rightarrow$ & 28\_ecf\\          
+           19\_seinunit\_fuzz & $\rightarrow$   & 29\_seinunit\_fuzz            & $\rightarrow$ & 29\_ecf\\          
+               20\_sein\_file & $\rightarrow$   & 30\_sein\_file                & $\rightarrow$ & 30\_ecf\\  
+             21\_fuzz\_update & $\rightarrow$   & 31\_fuzz\_update              & $\rightarrow$ & 31\_ecf\\         
+\\
+01\_legqa &&$\rightarrow$ &&01\_ecfqa\\
+02\_legqa &&$\rightarrow$ &&02\_ecfqa\\
+03\_legqa &&$\rightarrow$ &&03\_ecfqa\\
+04\_legqa &&$\rightarrow$ &&04\_ecfqa\\
+\hline
+  \end{tabular}
+\end{table}
+
+% \subsubsection{Config{\_}dates.sas} 
+% 
+% Configuration parameters that vary by
+% state are stored here.
+% 
+% See the User's Guide for more information.
+% 
+% \subsubsection{Config{\_}param.sas}
+% 
+% Macros are stored here.
+% 
+% This file is placed in a {\%}include statement at the beginning of each
+% program below to make available a standard set of macros and macro variables.
+
+% \subsubsection{01{\_}read{\_}all.sas}
+% 
+% Standardizes and reads in state ES202
+% data.
+% 
+% The first step is to clean up and standardize the data. I allow both state
+% specific and general standardization rules. Any state specific data cleanup
+% rules are placed in config{\_}param.sas and the generic rules are contained
+% in 01{\_}read{\_}all.sas. The idea is that all modifications are made to
+% config{\_}param.sas and none of the actual programs should have to be
+% modified.
+% 
+% A large portion of the data quality checking now occurs in the ES202 read in
+% before the data ever reaches the ECF. Some of the error checking code could
+% probably be removed from the ECF at some point in the future.
+% 
+% I check the following variables; SIC, NAICS, county, SEIN, and EIN.
+% 
+% SIC missing and 0000 are coded to 9999
+% 
+% NAICS missing and 000000 are coded 999999
+% 
+% County missing, 000, 900,994,995,996,998 are coded to 999
+% 
+% SEIN is checked for characters other then 0-9. Some SEIN's contain letters
+% and the variable sein{\_}bad=1 allows you to determine when that is the case
+% (these SEIN's are often related to another SEIN in the data).
+% 
+% EIN is also checked for characters other than 0-9. Letters and other ASCII
+% codes are not allowed for the EIN. If any of these characters are
+% encountered then ein{\_}bad=1. I also check to see if the first two digits
+% of the EIN correspond with a valid 2 digit IRS Revenue district code. The
+% current list of codes is derived from the SSEL and information from the IRS.
+% The SSEL contains clean EIN's to the best of my knowledge. EIN's on our
+% state data that are a member of the set of 2 digit IRS Revenue district
+% codes have a positive probability of matching to the SSEL. This list may
+% need to be updated as the IRS adds additional codes over time. I also create
+% an ein{\_}defect variable that indicates what problems if any are found with
+% the EIN.
+% 
+% \subsubsection{02{\_}num{\_}records.sas}
+% 
+%  Count the number of records for each
+% SEIN in a given year and quarter. Check whether data is missing for all the
+% records of an SEIN in a given year and quarter.
+% 
+% This program creates many of the measures that will be used later to
+% determine the record structure for an SEIN. Unfortunately, the record
+% structure of a multi-unit SEIN is not consistent. An seinunit equal to
+% ``00000'' is either the only record for a single unit or the master record
+% for a multi-unit. The sub-units of an SEIN should be in the range ``00001''
+% to ``99999''.
+% 
+% However, the data we actual receive contains many variations on the above
+% theme. The variables created here will allow me to create a consistent data
+% structure from the variations on the intended structure that we actually
+% receive from the states.
+% 
+% For the first record of an SEIN I set up initial values for the variables
+% and check whether seinunit=''00000''. If seinunit$\sim $=''00000'' then I
+% assume that there is no master record and the record represents information
+% about an establishment. This distinction is important when creating the all{%
+% \_}miss{\_}XX series of variables. These variables are intended to represent
+% when all of the data for a given SEIN is missing except for the data in the
+% master record. I will handle the data in the master record separately in the
+% next program.
+% 
+% \subsubsection{03{\_}rm{\_}master.sas} 
+% 
+% Eliminate the master record while
+% preserving any information in the subunit records. Create multi-unit
+% indicator and establishment counts.
+% 
+% This program is extremely important since it creates the record structure
+% that will be used from this point forward. If this process is not done
+% carefully then important information about the SEIN may be destroyed.
+% 
+% I break the processing tasks up into three distinct groups.
+% 
+% 1. SEIN's with only one record
+% 
+% 2. The first record for SEIN's with more than one record
+% 
+% 3. The second record and beyond for SEIN's with more than one record
+% 
+% Detailed Explanation
+% 
+% SEIN's with only one record must be single units. Therefore I set the num{\_}%
+% estabs=1 and initialize all other variables. If all{\_}miss{\_}XX=1 then I
+% set no{\_}XX=1 ( the subunit is the master record in this case). There is
+% also no need to allocate master record information to the subunits.
+% 
+% For the other cases, initialize all variables and if the master record is
+% present then store any information in the master record in the master{\_}XX
+% variables. Calculate the number of establishments if there is a master
+% record present by subtracting one from the number of records calculated
+% previously. If the number of records is equal to two and one of the records
+% is a master record then this situation is inconsistent with the defined
+% record structure. The number of establishments is set equal to one in this
+% case. This situation likely occurs when a multi-unit shrinks and only one
+% unit is left. The master record is not removed immediately since it is
+% unclear whether the SEIN will remain a single unit or return to multi-unit
+% status. If there is information in the master record and there is no
+% information in the subunits then set the impute{\_}XX flag=1. If there is no
+% information in the master and the subunits then set the no{\_}XX flag=1.
+% Finally, if there is no master record then calculate the number of
+% establishments as equal to the number of records. If the number of
+% establishments is greater than one then set multi{\_}unit=1.
+% 
+% The second record and beyond are output without modification unless the
+% impute{\_}XX flag=1. In this case, information from the master record is
+% allocated to the subunits. Since I have no additional information at this
+% point about the structure of the SEINUNITS I allocate any payroll or
+% employment equally across the subunits. Further along in the sequence I use
+% additional information available in years and quarters when the subunits
+% report payroll and employment to improve the allocation.
+% 
+% \subsubsection{04{\_}sein{\_}totals.sas} 
+% 
+% Create the SEIN level totals,
+% indicators for the appearance of wage and employment data, and merge the
+% result with the UI SEIN level data.
+% 
+% In the previous program I created an establishment level dataset. Now I am
+% able to sum over the establishment level records and create SEIN totals. I
+% also want to check and see if the SEIN was ever active during the time
+% period that we observe the firm. This information will be used later when I
+% improve my allocation of master record information to the subunits.
+% 
+% Next, I merge UI SEIN totals with SEIN totals from the ES202 and create
+% indicators for each SEIN YEAR QUARTER showing what data is available.
+% 
+% Finally, I merge the combined UI and ES202 data with a list of the SEIN's that
+% appear on the ES202. This allows me to create an indicator showing whether an
+% SEIN ever appeared on the ES202. The ES202, not the UI contains information on
+% the structure of employment at the subunits, thus it is important to know
+% whether that information may be available.
+% 
+% \subsubsection{05{\_}best{\_}vars.sas} 
+% 
+% Create a set of best{\_}XXX variables.
+% 
+% The best{\_}(wages and employment) variables incorporate information from
+% both the UI and the ES202. This analysis is done at the SEINUNIT level.
+% 
+% I examine each record to find out what type of information is available on
+% the ES202. I classify a record into one of four possible categories using
+% the variable info{\_}202.
+% 
+% I look at single-unit and multi-unit records separately. For single-units it
+% is relatively easy to fill wages and employment with information from the
+% UI. For multi-units I do a naive allocation that is improved upon for some
+% firms in 07{\_}special{\_}handle.sas.
+% 
+% UI data is used in the following situations
+% 
+% ES202 employment is missing, but ES202 payroll is reported, then UI
+% employment is used (if ES202 employment is zero, then UI employment is NOT
+% used since this may be a correct report and I do not have enough information
+% to determine if it is incorrect).
+% 
+% ES202 payroll is zero and ES202 employment is positive then UI payroll is
+% used.
+% 
+% If ES202 payroll and employment are zero then UI payroll and employment are
+% used.
+% 
+% If both ES202 payroll and employment are missing then UI payroll and
+% employment are used.
+% 
+% \subsubsection{06{\_}select{\_}records.sas} 
+% 
+% Select the records that have
+% enough information available to enable subunit structure to be imputed.
+% 
+% There are four main classes of records that may benefit from using
+% information on subunit structure in other quarters.
+% 
+% Records that appear only in the UI in a given year and quarter but appear
+% previously in the ES202 as a multi unit.
+% 
+% Records that appear only in the ES202 and master record data was allocated to
+% the subunits.
+% 
+% Records that appear in both the UI and the ES202 but have no information in
+% the ES202 and are a multi unit.
+% 
+% Records that appear in both the UI and the ES202 and master record data was
+% allocated to the subunits.
+% 
+% However, not every case that meets the conditions above will have enough
+% prior information to allow an impute to take place. The firm must have been
+% a multi-unit prior to the date that a record met one of the conditions
+% above. The firm must also have valid data in another quarter than can be
+% used for the impute. Only about half of the candidate records contain valid
+% data in Illinois.
+% 
+% All SEINUNIT records selected for imputation are consolidated to SEIN YEAR
+% QUARTER records.
+% 
+% The complete firm history for any SEIN that meets the criteria for special
+% handling is kept in a separate dataset and is indexed for easy access
+% (special{\_}handle{\_}history{\_}06.sas7bdat).
+% 
+% \subsubsection{07{\_}special{\_}handle.sas} 
+% 
+% Look for subunit structure in off
+% years and quarters.
+% 
+% For each SEIN YEAR QUARTER record selected for structure imputation I look
+% in both previous and future quarters for a period where the firm reported
+% payroll and/or employment for the SEINUNITs. The closest quarter is kept for
+% further processing. In Illinois about 80{\%} are found within +/- four
+% quarters.
+% 
+% \subsubsection{08{\_}distribute.sas} 
+% 
+% Use the record structure identified in
+% the previous program to allocate payroll and employment. Interleave the new
+% record structure with the existing data.
+% 
+% The process of imputing the record structure of an SEIN in a given year and
+% quarter is completed here. I use SEIN level information on employment and
+% payroll from the CURRENT quarter combined with distribution of employment /
+% payroll across the SEINUNIT's information learned from off quarter reports
+% to allocate payroll and employment to the subunits. I combine the newly
+% imputed record structure with the old data to create the final record
+% structure.
+% 
+% NOTE: The best{\_}flag variable when combined with the structure{\_}fix
+% variable can be used to identify the type of edits and data source of the
+% best{\_}xx variables.
+% 
+% The record structure file {\&}st.{\_}leg{\_}structure.sas7bdat is created
+% here. This file is used to determine the final structure of the LEG and by
+% the pred/succ programs.
+% 
+% \subsubsection{09{\_}seinunit{\_}wide.sas} 
+% 
+% Read in the geography data and
+% transform the data from long into wide format.
+% 
+% Geography data is brought into the ECF program sequence and checked to
+% ensure the proper record structure is returned. Each GEO variable is also
+% output into a separate file so that the mode value can be calculated in step
+% 11.
+% 
+% Filling missing values requires a transformation of the data into wide
+% format (one record for each SEIN SEINUNIT with the YEAR QUARTER values for a
+% variable stored in arrays). The wide file is used in later programs to make
+% available the complete history for each SEIN SEINUNIT (used to fill missing
+% values).
+% 
+% The following variables are transformed into wide format; SIC, NAICS,
+% county, ownership code, and EIN.
+% 
+% \subsubsection{10{\_}fill{\_}sync.sas} 
+% 
+% Missing values are filled and NAICS
+% values are used to impute SIC.
+% 
+% The variables in program 09 that were transformed into wide format are
+% filled, if missing, with the closest value from another YEAR QUARTER.
+% 
+% If SIC is missing and NAICS is available then impute the SIC value using the
+% NAICS code. A probability based impute is used to assign the SIC if a NAICS
+% code maps to multiple SIC codes.
+% 
+% \subsubsection{11{\_}sein{\_}mode{\_}calc.sas} 
+% 
+% Calculate the modal SIC,
+% NAICS, and county for each SEIN YEAR QUARTER.
+% 
+% In programs 09 and 10, each variable that will have the mode calculated was
+% placed into a separate fill along with a measure of employment. The
+% resulting datasets are relatively narrow and thus less costly to sort then
+% the complete dataset (each dataset or variable requires a different sort
+% order).
+% 
+% Using SIC as an example, the data is first sorted by SEIN YEAR QUARTER SIC.
+% The number of SEINUNIT's or employment is calculated for each set of
+% subunits that are in the same industry. The SIC code with the most
+% SEINUNIT's or EMPLOYMENT is the mode.
+% 
+% The unit and employment weighted modal values are calculated over a
+% different universe since not every SEINUNIT in the ES202 has positive
+% employment. Thus, the unit weighted mode is still available even when the
+% firm is inactive.
+% 
+% The modal values for each SEIN YEAR QUARTER are merged together to create
+% one dataset containing all the mode variables.
+% 
+% \subsubsection{12{\_}sein{\_}wide.sas} 
+% 
+% Transform the modes calculated in
+% program 11 into wide format.
+% 
+% Filling any remaining missing values requires a transformation of the data
+% into wide format (one record for each SEIN with the YEAR QUARTER values for
+% a variable stored in arrays). The wide file is then merged by SEIN with the
+% data in the standard ``long'' format. The complete history for each SEIN
+% SEINUNIT is then available to fill any missing values.
+% 
+% The following variables are transformed into wide format; mode{\_}es{\_}sic,
+% mode{\_}es{\_}naics, mode{\_}es{\_}county, mode{\_}es{\_}owner{\_}code, mode{%
+% \_}es{\_}ein, mode{\_}leg{\_}wib, mode{\_}leg{\_}msapmsa, mode{\_}leg{\_}%
+% state, mode{\_}leg{\_}county, mode{\_}leg{\_}subctygeo. There are actually
+% two variables for each variable in the previous list, one for the unit
+% weighted mode and an additional one for the employment weighted mode.
+% 
+% \subsubsection{13{\_}sein{\_}fill.sas} 
+% 
+% Fill missing values in the SEIN level
+% mode variables.
+% 
+% The variables in program 12 that were transformed into wide format are
+% filled, if missing, with the closest value from another YEAR QUARTER.
+% 
+% The same logic is used in this program as in program 10. Missing values need
+% to be filled for the GEO variables at the SEIN level even though they
+% contain no missing values at the SEINUNIT level. For quarters where no
+% SEINUNITS are active, the employment weighted mode will be missing. This
+% value is filled, if available, with information from another quarter.
+% 
+% \subsubsection{14{\_}impute{\_}sein{\_}industry.sas} 
+% 
+% Fill missing SEIN values
+% with the unit weighted mode if available. SIC, if still missing is imputed.
+% 
+% Missing SEIN YEAR QUARTER values for SIC, NAICS, county, ownership code, and
+% EIN are filled with the unit weighted mode.
+% 
+% SIC, must not have any missing values for QWI processing to proceed. Any SIC
+% missing values that remain are for firms that never reported either a NAICS
+% or SIC code over the entire time period. Since we have little information,
+% the distribution of employment across 4 digit SIC is used. A random number
+% is drawn that determines the actual imputed SIC. SIC codes with a larger
+% share of employment are more at risk for assignment than those with a
+% relatively small share. The SIC is imputed once for each SEIN and thus
+% remains constant across time.
+% 
+% \subsubsection{15{\_}impute{\_}seinunit{\_}industry.sas} 
+% 
+% Fill the missing
+% SEINUNIT records using the SEIN values.
+% 
+% This is a simple program that fills the SEINUNIT missing values with the
+% SEIN mode. Except for SIC, some missing values will still remain for firms
+% that never reported any information for that variable.
+% 
+% \subsubsection{16{\_}seinunit{\_}yq{\_}chars.sas} Bring all the data
+% together, apply variable labels, and perform some minor clean-up.
+% 
+% Programs 09 through 16 have been focused on filling industry and location
+% missing values. The results of this effort are merged back onto the
+% employment and earnings variables from step 08.
+% 
+% Variable lengths are set to minimize storage space
+% 
+% Variable labels are defined.
+% 
+% Create new aggregated industry classifications based on the detailed 4 digit
+% SIC and 6 digit NAICS
+% 
+% Perform final clean up on ownership code and some of the geography variables.
+% 
+% \subsubsection{17{\_}weight{\_}calc{\_}01.sas} 
+% 
+% Creation of the weights, step
+% 1.
+% 
+% First, the sample over which the weights will be positive (and therefore
+% which units will be included in any calculations) is determined. If a unit
+% has ever appeared on the ES202 and is in the UI then it is eligible for a
+% positive weight.
+% 
+% Additional restrictions are imposed for the actual calculation of the
+% overall adjustment. The overall adjustment factor is calculated for private
+% firms (es{\_}owner{\_}code=5 and the first digit of es{\_}sic not equal to
+% 9). This adjustment is later applied to public firms as well.
+% 
+% The second component of the weights is based on the difference between UI
+% and ES202 employment at the SEIN level. These differences are calculated and
+% trimmed if necessary. The bounds for the trim at the time of this documents
+% creation are .7 and 1.3.
+% 
+% See the technical paper on the weights for more information.
+% 
+% \subsubsection{18{\_}weight{\_}calc{\_}02.sas} 
+% 
+% Creation of the weights, step
+% 2.
+% 
+% Calculate the UI totals necessary to create the overall adjustment.
+% 
+% The UI totals are combined with the BLS totals and the SEIN level adjustment
+% to create the final weight.
+% 
+% See the technical paper on the weights for more information.
+% 
+% \subsubsection{19{\_}seinunit{\_}fuzz.sas} 
+% 
+% Attach fuzz factors to the ECF.
+% 
+% An SEIN and SEINUNIT has a constant fuzz factor over time. The two are
+% related such that if the SEIN fuzz factor is less than one then all SEINUNIT
+% fuzz factors for that firm are also less then one. A fuzz factor, once
+% assigned, never changes.
+% 
+% When applying fuzz factors, if the SEIN SEINUNIT was previously part of the
+% ECF then the existing fuzz factor is used. If not, then the fuzz factor is
+% calculated using both the triangle (ramp) and beta distributions and stored
+% in a temporary file for use by program 21.
+% 
+% The fuzz factor for each SEIN and SEIN SEINUNIT are stored in separate files
+% in the fuzz directory and should NEVER be removed. The first time this
+% program is run for a state a new empty file is created. This file will be
+% filled in program 21.
+% 
+% \subsubsection{20{\_}sein{\_}file.sas} 
+% 
+% Output an SEIN level file.
+% 
+% Some data users only require information at the firm level. To make data
+% access easier, a subset of the variables that do not vary within an SEIN
+% YEAR QUARTER are output to a separate file.
+% 
+% \subsubsection{21{\_}fuzz{\_}update.sas} 
+% 
+% Update the master fuzz factor
+% dataset.
+% 
+% The first step is to calculate the largest update number on the fuzz factor
+% dataset. The new additions to the fuzz file receive an update number one
+% larger than the current max value, unless the file is empty and the number
+% for all records is set to 0.
+% 
+% In addition to the update number, the date the fuzz factor was created is
+% added to the master fuzz file. These two pieces allow for the auditing and
+% tracking of all additions to the master fuzz file.
+% 
+% The new fuzz factors are merged onto the master fuzz factor file. If a new
+% fuzz factor has the same SEIN or SEIN SEINUNIT as an existing record then
+% processing is immediately halted, thus preventing any pollution of the
+% existing fuzz factors.
+
+%\subsection{Scripts}
+%
+%\subsubsection{new{\_}state.ksh}
+%
+%Sets up the run directory for a new state. Give the 2 letter state postal
+%abbreviation in lower case as the only argument. All necessary files and
+%scripts are copied to the appropriate directory in ECF/v3.1/states/ss. THIS
+%SCRIPT IS THE ONLY WAY TO SET UP A DIRECTORY FOR A NEW STATE. An entry in
+%update{\_}file.ksh that insures any code changes made to master are
+%correctly pushed down to the state run directories. The config{\_}dates.sas
+%file must still be edited before the ECF programs can be run.
+%
+%\subsubsection{runall.ksh}
+%
+%Executes all the SAS programs necessary to create the ECF. Temp files are
+%NOT cleaned up and links are NOT created in /data/master/ECF/current.
+%
+%\subsubsection{runall1.ksh}
+%
+%Executes stage 1 of the ECF program sequence.
+%
+%\subsubsection{runall2.ksh}
+%
+%Executes stage 2 of the ECF program sequence.
+%
+%\subsubsection{size.ksh}
+%
+%Reports the size in lines, words, and bytes of each program file. Useful for
+%determining if a program has been modified.
+%
+%\subsubsection{test.ksh}
+%
+%Reports any errors in the log files
+%
+%\subsubsection{run{\_}info.ksh}
+%
+%Produces a summary report of each program's run results. This script should
+%be run after the SAS programs have completed. All output is sent to the
+%screen by default. This will likely scroll by too fast for easy viewing so
+%redirect the output to a file (run{\_}info.ksh > run{\_}info.ksh.log).
+%
+%\subsubsection{update{\_}all.ksh}
+%
+%Copies all the SAS program files in states/master automatically to each
+%state directory. If a code change is necessary, this script can easily
+%update the code in each state's run directory.
+%
+%\subsubsection{update{\_}file.ksh}
+%
+%Called by update{\_}all.ksh. The only required argument is the name of the
+%file to update. Copies the requested file from /states/master to each state
+%subdirectory. The list of state directories is kept current by the use of
+%the new{\_}state.ksh script.
+%
+%\subsubsection{update{\_}links.ksh}
+%
+%Used to create the links in /data/master/ECF/current. The program first
+%removes ALL existing links. New links are created and a contents file is
+%created for each file link. A call to the function linkset must be present
+%in the script for each state. The function requires two arguments. The name
+%of the directory within /data/master/ECF where the ECF is located and the
+%name of the directory where the fuzz files are located.
+%
+%\subsubsection{update{\_}contents.ksh}
+%
+%Called by update{\_}links.ksh. Requires one argument, the data file name. A
+%proc contents is run for each file along with a short proc print of the
+%first 50 observations.
+
+\subsection{Files Created}
+
+Most temporary SAS datasets have the number of the program that created them
+in the name. Some final output datasets were renamed, see
+Table~\ref{table:datachanges}.
+
+\begin{table}[htbp]
+  \centering
+\caption{Changed dataset names}  \label{table:datachanges}
+  \begin{tabular}{rcl}
+\\
+\hline
+sic3\_impute                             & $\rightarrow$  & parms\_us\_sic3impute               \\
+                                         & $\rightarrow$  & parms\_us\_imp\_sic\_sic3               \\
+sic2\_impute                             & $\rightarrow$  & parms\_us\_sic2impute               \\
+                                         & $\rightarrow$  & parms\_us\_imp\_sic\_sic2               \\
+naics\_sic\_9                             & $\rightarrow$  & parms\_us\_naics\_sic                \\
+                                          & $\rightarrow$  & parms\_us\_imp\_ncs1997\_sic                \\
+INPUTS.\&state.\_master\_sein\_fuzz         & $\rightarrow$  & INPUTS.ecf\_\&state.\_fuzz\_sein      \\
+INPUTS.\&state.\_master\_seinunit\_fuzz     & $\rightarrow$  & INPUTS.ecf\_\&state.\_fuzz\_seinunit  \\
+OUTPUTS.\&state.\_master\_sein\_fuzz        & $\rightarrow$  & OUTPUTS.ecf\_\&state.\_fuzz\_sein     \\
+OUTPUTS.\&state.\_master\_seinunit\_fuzz    & $\rightarrow$  & OUTPUTS.ecf\_\&state.\_fuzz\_seinunit \\
+OUTPUTS.ecf\_seinunit\_\&state.            & $\rightarrow$  & OUTPUTS.ecf\_\&state.\_seinunit      \\
+OUTPUTS.ecf\_sein\_\&state.                & $\rightarrow$  & OUTPUTS.ecf\_\&state.\_sein          \\
+\&state.\_leg\_structure                   & $\rightarrow$  & OUTPUTS.ecf\_\&state.\_leg\_structure \\
+                                          & $\rightarrow$  & eliminated (3.1.12)\\
+leg\_\&state.                             & $\rightarrow$  & OUTPUTS.ecf\_\&state.\_leg                   \\
+xwlk\_e\&year                             & $\rightarrow$  & gal\_\&state.\_xwlk\_e\&year           \\
+gal\_us\_subcty                           & $\rightarrow$  & parms\_us\_wib\_subcty                     \\         
+\hline
+  \end{tabular}
+
+\end{table}
+
+
+\subsubsection{ecf{\_}ST{\_}seinunit.sas7bdat}
+
+Created by 19{\_}seinunit{\_}fuzz.sas
+
+The final version of the SEIN SEINUNIT YEAR QUARTER ECF.
+
+\subsubsection{ecf{\_}ST{\_}sein.sas7bdat}
+
+Created by 20{\_}sein{\_}file.sas
+
+The final version of the SEIN YEAR QUARTER ECF.
+
+\subsubsection{ecf{\_}ST{\_}fuzz{\_}sein.sas7bdat}
+
+Created by 21{\_}fuzz{\_}update.sas
+
+If the SEIN file does not exist it is created, otherwise the file is updated
+through a merge with new{\_}sein{\_}fuzz{\_}19.sas7bdat.
+
+\subsubsection{ecf{\_}ST{\_}fuzz{\_}seinunit.sas7bdat}
+
+Created by 21{\_}fuzz{\_}update.sas
+
+If the SEIN SEINUNIT file does not exist it is created, otherwise the file
+is updated through a merge with new{\_}seinunit{\_}fuzz{\_}19.sas7bdat.
+
+\subsubsection{ecf{\_}ST{\_}leg.sas7bdat}
+
+The old LEG. Useful for research.
+
+\subsection{Details on intermediate files}
+
+\subsubsection{ecf{\_}stacked{\_}01.sas7bdat}
+
+Stacked data from the ES202. Contains master and subunits
+
+\subsubsection{count{\_}data{\_}02.sas7bdat}
+
+\noindent adds number of record counts and data availability flags to ecf{\_}%
+stacked{\_}01.sas7bdat
+
+\subsubsection{no{\_}master{\_}03.sas7bdat}
+
+Removes the master record. File is now in the form SEIN YEAR QUARTER SEINUIT
+
+\subsubsection{sein{\_}totals{\_}04.sas7bdat}
+
+SEIN YEAR QUARTER totals from the ES202
+
+\subsubsection{sein{\_}list{\_}ui{\_}04.sas7bdat}
+
+A list of the SEIN's that ever appear on the UI
+
+\subsubsection{sein{\_}list{\_}202{\_}04.sas7bdat}
+
+A list of the SEIn's that ever appear on the ES202
+
+\subsubsection{seinunit{\_}202{\_}UI{\_}04.sas7bdat}
+
+SEIN YEAR QUARTER SEINUNIT file containing payroll and employment totals
+from both the UI and ES202. If an observation is only from the UI then there
+is no SEINUNIT information.
+
+\subsubsection{best{\_}vars{\_}05.sas7bdat}
+
+Improved payroll and employment measures at the SEIN YEAR QUARTER SEINUNIT
+level.
+
+\subsubsection{special{\_}handle{\_}list{\_}06.sas7bdat}
+
+SEIN YEAR QUARTER records that will have SEINUNIT record structure imputed
+
+\subsubsection{alldata{\_}06.sas7bdat}
+
+A copy of best{\_}vars{\_}05.sas7bdat with several new variables added.
+
+\subsubsection{special{\_}handle{\_}history{\_}06.sas7bdat}
+
+SEIN YEAR QUARTER SEINUNIT dataset for each SEIN that has a record in special%
+{\_}handle{\_}list{\_}06.sas7bdat. The complete history of the SEIN is
+included in this dataset.
+
+\subsubsection{special{\_}handle{\_}07.sas7bdat}
+
+The new record structure created for records in special{\_}handle{\_}list{\_}%
+06.sas7bdat by using information from another quarter. The number of SEIN
+YEAR QUARTER records is unchanged.
+
+\subsubsection{ST{\_}employer{\_}char{\_}unit.sas7bdat}
+
+Created by 08{\_}distribute.sas
+
+The structure of the ECF is set when this file is created. The employment
+and payroll variables have been completed.
+
+% \subsubsection{ST{\_}leg{\_}structure.sas7bdat}
+% 
+% \noindent created by 08{\_}distribute.sas
+% 
+% The ECF structure file used by the LEG and pred/succ.
+
+\subsubsection{ST{\_}employer{\_}char{\_}unit2.sas7bdat}
+
+Created by 09{\_}seinunit{\_}wide.sas
+
+The geography variables have been brought in from the LEG.
+
+\subsubsection{seinunit{\_}county{\_}09.sas7bdat}
+
+SEIN SEINUNIT YEAR QUARTER file with LEG county and employment variables.
+Used to calculate the mode.
+
+\subsubsection{seinunit{\_}msapmsa{\_}09.sas7bdat}
+
+SEIN SEINUNIT YEAR QUARTER file with LEG msapmsa and employment variables.
+Used to calculate the mode.
+
+\subsubsection{seinunit{\_}state{\_}09.sas7bdat}
+
+SEIN SEINUNIT YEAR QUARTER file with LEG state and employment variables.
+Used to calculate the mode.
+
+\subsubsection{seinunit{\_}subctygeo{\_}09.sas7bdat}
+
+SEIN SEINUNIT YEAR QUARTER file with LEG subctygeo and employment variables.
+Used to calculate the mode.
+
+\subsubsection{seinunit{\_}wib{\_}09.sas7bdat}
+
+SEIN SEINUNIT YEAR QUARTER file with LEG wib codes and employment variables.
+Used to calculate the mode.
+
+\subsubsection{seinunit{\_}wide{\_}09.sas7bdat}
+
+SEIN SEINUNIT file with SIC, NAICS, county, ownership code, and EIN values
+placed in arrays. Used to fill missing values.
+
+\subsubsection{seinunit{\_}long{\_}09.sas7bdat}
+
+SEIN SEINUNIT YEAR QUARTER file containing the general structure of the data
+and employment variables. Used in program 10 to rebuild the structure from
+the wide file.
+
+\subsubsection{seinunit{\_}county{\_}10.sas7bdat}
+
+SEIN SEINUNIT YEAR QUARTER file with county codes and employment variables.
+Used to calculate the mode.
+
+\subsubsection{seinunit{\_}ein{\_}10.sas7bdat}
+
+SEIN SEINUNIT YEAR QUARTER file with the EIN and employment variables. Used
+to calculate the mode.
+
+\subsubsection{seinunit{\_}naics{\_}10.sas7bdat}
+
+SEIN SEINUNIT YEAR QUARTER file with NAICS codes and employment variables.
+Used to calculate the mode.
+
+\subsubsection{seinunit{\_}owner{\_}code{\_}10.sas7bdat}
+
+SEIN SEINUNIT YEAR QUARTER file with ownership codes and employment
+variables. Used to calculate the mode.
+
+\subsubsection{seinunit{\_}sic{\_}10.sas7bdat}
+
+SEIN SEINUNIT YEAR QUARTER file with SIC codes and employment variables.
+Used to calculate the mode.
+
+\subsubsection{seinunit{\_}long{\_}10.sas7bdat}
+
+SEIN SEINUNIT YEAR QUARTER file containing the missing filled data for SIC,
+NAICS, county, ownership code, and EIN.
+
+\subsubsection{sein{\_}modes{\_}11.sas7bdat}
+
+SEIN YEAR QUARTER file containing the modal values for SIC, NAICS, county,
+ownership code, EIN, wib, msapmsa, LEG state, LEG county, and subctygeo.
+
+\subsubsection{sein{\_}wide{\_}12.sas7bdat}
+
+SEIN file containing the mode variable values in arrays.
+
+\subsubsection{sein{\_}long{\_}12.sas7bdat}
+
+SEIN YEAR QUARTER file containing the structure of the data.
+
+\subsubsection{sein{\_}missing{\_}13.sas7bdat}
+
+File containing the list of SEIN's with missing values for SIC.
+
+\subsubsection{sein{\_}mode{\_}fill{\_}13.sas7bdat}
+
+SEIN YEAR QUARTER file containing the mode variables with filled missing
+values.
+
+\subsubsection{sein{\_}missing{\_}14.sas7bdat}
+
+Same record count as sein{\_}missing{\_}13.sas7bdat
+
+SEIN file containing imputed SIC.
+
+\subsubsection{sein{\_}long{\_}14.sas7bdat}
+
+SEIN YEAR QUARTER file containing missing filled mode variables.
+
+\subsubsection{sicfreq{\_}14.sas7bdat}
+
+File containing the employment in each 4 digit SIC
+
+\subsubsection{sicfreq2{\_}14.sas7bdat}
+
+Slightly transformed version of sicfreq{\_}14.sas7bdat. Contains the CDF of
+employment by SIC.
+
+\subsubsection{seinunit{\_}long{\_}15.sas7bdat}
+
+SEIN YEAR QUARTER SEINUNIT file containing the missing value cleaned SIC,
+NAICS, county, ownership code, and EIN.
+
+\subsubsection{il{\_}employer{\_}char{\_}unit3.sas7bdat}
+
+Created by 16{\_}seinunit{\_}yq{\_}chars.sas
+
+SEIN YEAR QUARTER SEINUNIT file containing all variables.
+
+\subsubsection{weights{\_}sein{\_}17.sas7bdat}
+
+YEAR QUARTER SEIN file containing the results of the first stage of the
+weights process.
+
+\subsubsection{weight{\_}totals{\_}ss{\_}18.sas7bdat}
+
+YEAR QUARTER summary file containing various totals necessary for the
+weights calculation.
+
+\subsubsection{weights{\_}sein{\_}18.sas7bdat}
+
+SEIN YEAR QUARTER file containing the final weights
+
+\subsubsection{il{\_}employer{\_}char{\_}unit4.sas7bdat}
+
+Created by 18{\_}weights{\_}calc{\_}02.sas
+
+SEIN SEINUNIT YEAR QUARTER file containing all variables plus the new
+weights.
+
+\subsubsection{new{\_}sein{\_}fuzz{\_}19.sas7bdat}
+
+SEIN file containing the new fuzz factors
+
+\subsubsection{new{\_}seinunit{\_}fuzz{\_}19.sas7bdat}
+
+SEIN SEINUNIT file containing the new fuzz factors
+
+
+%
+%------------------------------ VARIABLES ------------------------------
+%
+
+\subsection{Variables Created}
+Please note that program names in this section refer to the programs as
+present in the legacy version 3.1.0. Table~\ref{table:namechanges} lists a
+correspondence of the old descriptive names to the numeric names in the
+production system.
+
+NOTE to LARS: this should be replaced/augmented by PROC CONTENTS of the
+actual files. See the data codebook generating programs.
+
+\subsubsection{01{\_}read{\_}all.sas}
+
+\paragraph{sein}
+
+Variables read in from the ES202 yearly files.
+
+12 digit firm identifier (first 2 digits are the state FIPS code)
+
+\paragraph{year}
+
+\paragraph{quarter}
+
+\paragraph{seinunit}
+
+5 digit code identifying the establishment. Generally used in combination
+with the SEIN to uniquely identify an establihment. The identifier itself is
+only unique within a firm or SEIN.
+
+\paragraph{owner{\_}code}
+
+\noindent see ES{\_}OWNER{\_}CODE
+
+\paragraph{EIN}
+
+\paragraph{county}
+
+\paragraph{SIC}
+
+\paragraph{NAICS}
+
+\paragraph{empl{\_}month1}
+
+\paragraph{empl{\_}month2}
+
+\paragraph{empl{\_}month3}
+
+\paragraph{total{\_}wages}
+
+End of variables read in from the ES202 yearly files.
+
+\paragraph{Sein{\_}bad}
+
+0 = SEIN contains only characters 0-9
+
+1 = SEIN contains a character outside the above range
+
+\paragraph{Ein{\_}bad}
+
+0 = EIN contains only characters 0-9
+
+1 = EIN contains a character outside the above range
+
+\paragraph{Valid{\_}ein}
+
+0 = first 2 digits of EIN do not represent a valid IRS Revenue district code
+
+1 = first 2 digits are valid
+
+\paragraph{Ein{\_}defect}
+
+0 = no defect found
+
+1 = EIN it is all nines or all zeros
+
+2 = ein{\_}bad=1, EIN contains characters outside the range 0-9
+
+3 = EIN is a 7 digit or less number. An EIN must be at least eight characters
+
+4 = valid{\_}ein=0, the first two digits of the EIN do not represent a valid
+IRS Revenue district code
+
+\paragraph{Sic{\_}invalid}
+
+0 = SIC is OK
+
+1 = SIC not valid
+
+2 = first 2 digits valid, last 2 digits imputed
+
+3 = first 3 digits valid, last digit imputed
+
+\subsubsection{02{\_}num{\_}records.sas}
+
+\paragraph{NUM{\_}RECORDS}
+
+1-N = the number of records for each SEIN in a given year and quarter
+
+\paragraph{All{\_}miss{\_}(pay,emp1,emp2,emp3,sic,county)}
+
+0 = at least one or more subunits has data
+
+1 = all subunits have missing data
+
+\subsubsection{03{\_}rm{\_}master.sas}
+
+\paragraph{num{\_}estabs}
+
+1-N = the number of establishments for each SEIN in a given year and quarter
+
+\paragraph{multi{\_}unit}
+
+0 = not a multi unit
+
+1 = multi unit
+
+\paragraph{impute{\_}(wage,emp1,emp2,emp3,sic,county)}
+
+0 = data not available or imputation unnecessary
+
+1 = data available in master record and no data in subunits
+
+\paragraph{no{\_}(wages,emp1,emp2,emp3,sic,county)}
+
+0 = data available in either master record or subunits
+
+1 = no data in either master record or subunits
+
+\paragraph{master{\_}(wage,emp1,emp2,emp3,sic,county)}
+
+Information contained in the master record is stored here
+
+\paragraph{seinunit{\_}type}
+
+0 = seinunit=''00000''
+
+1 = seinunit$\sim $=''00000''
+
+\subsubsection{04{\_}sein{\_}totals.sas}
+
+\paragraph{seinsize{\_}m}
+
+\noindent variables read in from the UI SEIN YEAR QUARTER summary file.
+
+Count of PIK level wage records that appear at an SEIN in a given YEAR
+QUARTER.
+
+\paragraph{seinsize{\_}b}
+
+Count of PIK level wage records that appear at an SEIN in both the current
+and previous YEAR QUARTER
+
+\paragraph{seinsize{\_}e}
+
+Count of PIK level wage records that appear at an SEIN in both the current
+and subsequent YEAR QUARTER.
+
+\paragraph{Payroll}
+
+Sum of earnings for PIK level wage records at the SEIN in a given YEAR
+QUARTER.
+
+\paragraph{ever{\_}(multi,wages,emp1,emp2,emp3)}
+
+0 = the SEIN never reports data on the ES202
+
+1 = the SEIN is a multi unit at some time or reports payroll or employment
+at some time during the observed period on the ES202.
+
+\paragraph{sein{\_}(emp1,emp2,emp3,wages)}
+
+SEIN level totals for payroll and employment from the ES202
+
+\paragraph{multi{\_}first{\_}year}
+
+The first year when an SEIN appears as a multi unit on the ES202
+
+\paragraph{multi{\_}first{\_}quarter}
+
+The first quarter when an SEIN appears as a multi unit on the ES202
+
+\paragraph{in{\_}UI}
+
+0 = SEIN is not on the UI in a given year and quarter
+
+1 = SEIN appears on the UI in given year and quarter
+
+\paragraph{in{\_}202}
+
+0 = SEIN is not on the ES202 a given year and quarter
+
+1 = SEIN appears on the ES202 in a given year and quarter
+
+\paragraph{source}
+
+1 = UI only
+
+2 = ES202 only
+
+3 = both UI and ES202
+
+\paragraph{ever{\_}202}
+
+0 = not on ES202
+
+1 = SEIN appears on the ES202 at some time during observed period
+
+\paragraph{yr{\_}qtr}
+
+A 6 character sequential year variable. Format is YYYY:Q. A 4 digit year, a
+colon, and a 1 digit quarter.
+
+\subsubsection{05{\_}best{\_}vars.sas}
+
+\paragraph{emp(1,2,3){\_}UI}
+
+Attempt to create the best possible approximation of ES202 employment and
+payroll using UI data.
+
+Emp1{\_}UI = seinsize{\_}b if available, then seinsize{\_}e, and finally
+seinsize{\_}m.
+
+Emp2{\_}UI = seinsize{\_}b if available, then seinsize{\_}e, and finally
+seinsize{\_}m.
+
+Emp1{\_}UI = seinsize{\_}e if available, then seinsize{\_}b, and finally
+seinsize{\_}m.
+
+\paragraph{best{\_}(wages,emp1,emp2,emp3)}
+
+My best estimate of payroll and employment for a subunit using as much
+information available in the UI and ES202. I use both contemporaneous
+information and information about the firm in other years and quarters. If
+information is available in the ES202 then that data takes precedence over
+information in the UI.
+
+\paragraph{best{\_}flag}
+
+NOTE: The best{\_}flag variable when combined with the structure{\_}fix
+variable can be used to identify the type of edits and data source of the
+best{\_}xx variables.
+
+0 = no wage or employment information on the ES202 or UI
+
+1 = SU, ES202 wages, but ES202 employment is zero
+
+2 = SU, ES202 wages , but ES202 employment is missing
+
+3 = SU, no ES202 wages, but ES202 employment is available
+
+4 = SU, ES202 wages and employment is greater than zero
+
+5 = SU, no ES202 wages or employment, UI available
+
+6 = SU, not in ES202 and UI available
+
+7 = MU, ES202 wages, but ES202 employment is zero
+
+8 = MU, ES202 wages , but ES202 employment is missing
+
+9 = MU, no ES202 wages, but ES202 employment is available
+
+10 = MU, ES202 wages and employment is greater than zero
+
+11 = MU, no ES202 wages or employment, UI available
+
+\paragraph{info{\_}202}
+
+0 = no wages and employment on ES202
+
+1 = wages and no employment on ES202
+
+2 = wages and no employment on ES202
+
+3 = wages and employment on ES202
+
+\paragraph{noemp{\_}202}
+
+0 = positive ES202 employment
+
+1 = employment is not >0 on the ES202
+
+\paragraph{emp{\_}202{\_}miss}
+
+0 = not in the ES202 and non-missing ES202 employment
+
+1 = in the ES202 and all ES202 employment is missing.
+
+\subsubsection{06{\_}select{\_}records.sas}
+
+\paragraph{special{\_}handle}
+
+0 = no special handling required
+
+1 = in{\_}UI=1 and in{\_}202=0 and ever{\_}multi=1
+
+2 = in{\_}UI=0 and in{\_}202=1 and impute{\_}data=1
+
+3 = in{\_}UI=1 and in{\_}202=1 and no{\_}data=1 and multi{\_}unit=1
+
+4 = in{\_}UI=1 and in{\_}202=1 and impute{\_}data=1
+
+\paragraph{no{\_}get{\_}data}
+
+0 = get{\_}XX=1 for at least one variable
+
+1 = get{\_}XX=0 for all variables
+
+\paragraph{data{\_}avail}
+
+0 = no data available
+
+1 = in{\_}202=1 and some subunit data available that period
+
+\paragraph{impute{\_}data}
+
+0 = no allocation of master to subunit that period
+
+1 = allocation of master to subunit that period
+
+\paragraph{no{\_}data}
+
+0 = data available
+
+1 = no data in master or subunit available that period
+
+\paragraph{get{\_}(wages,emp1,emp2,emp3)}
+
+0 = special{\_}handle=0 or special{\_}handle=1 and no subunit wages
+available in other periods
+
+1 = special{\_}handle>0 and subunit data is available in other periods
+
+\paragraph{(wages,emp1,emp2,emp3){\_}202}
+
+Renamed sein{\_}XX variables on the special{\_}handle{\_}06.sas7bdat
+dataset. This is necessary in the next program when I match a record with
+missing subunit information the to another record in another year and
+quarter.
+
+\paragraph{Wages{\_}UI}
+
+Payroll is renamed similarly to emp(1,2,3,){\_}UI variables.
+
+\subsubsection{07{\_}special{\_}handle.sas}
+
+\paragraph{qtime{\_}master}
+
+Continuous quarter time from1985 quarter 1 for the record for which I am
+trying to determine subunit structure.
+
+\paragraph{qtime{\_}first}
+
+The first quarter in continuous time that an SEIN appears as a multi unit
+
+\paragraph{year{\_}found}
+
+The closest year that contains subunit structure
+
+\paragraph{quarter{\_}found}
+
+The closest quarter that contains subunit structure
+
+\paragraph{Stop}
+
+0 = record not found
+
+1 = record with subunit structure found
+
+\subsubsection{08{\_}distribute.sas}
+
+\paragraph{best{\_}(wages,emp1,emp2,emp3)}
+
+Update of original values computed in 05{\_}best{\_}vars.sas. My best
+estimate of payroll and employment for a subunit using as much information
+available in the UI and ES202. I use both contemporaneous information and
+information about the firm in other years and quarters. If information is
+available in the ES202 then that data takes precedence over information in the
+UI.
+
+\paragraph{sein{\_}best{\_}(wages, emp1, emp2, emp3)}
+
+SEIN YEAR QUARTER summaries of the best{\_}XX variables.
+
+\paragraph{structure{\_}fix}
+
+NOTE: The best{\_}flag variable when combined with the structure{\_}fix
+variable can be used to identify the type of edits and data source of the
+best{\_}xx variables.
+
+0 = record not selected for structure imputation
+
+1 = record selected for structure imputation
+
+\subsubsection{09{\_}seinunit{\_}wide.sas}
+
+\paragraph{leg{\_}state}
+
+See the LEG documentation for more information on these variables
+
+\paragraph{leg{\_}county}
+
+\paragraph{leg{\_}wib}
+
+\paragraph{leg{\_}msapmsa}
+
+\paragraph{leg{\_}geo{\_}qual}
+
+\paragraph{leg{\_}longitude}
+
+\paragraph{leg{\_}latitude}
+
+\paragraph{leg{\_}flag{\_}geo}
+
+\paragraph{es{\_}state}
+
+FIPS code of the state
+
+\subsubsection{10{\_}fill{\_}sync.sas}
+
+\paragraph{es{\_}ein}
+
+\noindent cleaned SEINUNIT EIN
+
+9 digit federal firm identifier. Generally not unique within a state. There
+may be multiple state level firms for a given federal firm identifier.
+
+\paragraph{es{\_}county}
+
+\noindent cleaned SEINUNIT county
+
+3 digit FIPS county code.
+
+\paragraph{es{\_}naics}
+
+\noindent cleaned SEINUNIT NAICS
+
+\paragraph{es{\_}owner{\_}code}
+
+\noindent cleaned SEINUNIT ownership code
+
+1 = Federal Government
+
+2 = State Government
+
+3 = Local Government
+
+5 = Private Sector
+
+\paragraph{es{\_}sic}
+
+\noindent cleaned SEINUNIT SIC
+
+\paragraph{es{\_}(sic, naics, county, owner{\_}code, ein){\_}miss}
+
+0 = Variable is not missing
+
+1 = Variable is missing before using information from other quarters.
+
+2 = Variable is not missing after search for off quarter information.
+
+\noindent mode{\_}es{\_}XXX{\_}emp+4 = Variable is missing, filled with the
+SEIN employment weighted mode value.
+
+\paragraph{es{\_}(sic, naics, county, owner{\_}code, ein){\_}flag}
+
+Missing = No information in other quarters
+
+0 = Variable is not missing in current quarter
+
+>0 = quarter after the current quarter where replacement value is found
+
+<0 = quarter before the current quarter where replacement value is found
+
+\subsubsection{11{\_}sein{\_}mode{\_}calc.sas}
+
+\paragraph{mode{\_}(es{\_}sic, es{\_}naics, es{\_}county, es{\_}owner{\_}%
+code, es{\_}ein, leg{\_}wib, leg{\_}msapmsa, leg{\_}state, leg{\_}county, leg%
+{\_}subctygeo)}
+
+The modal value of the variable in an SEIN YEAR QUARTER (unit weighted)
+
+\paragraph{mode{\_}( es{\_}sic, es{\_}naics, es{\_}county, es{\_}owner{\_%
+}code, es{\_}ein, leg{\_}wib, leg{\_}msapmsa, leg{\_}state, leg{\_}county,
+leg{\_}subctygeo){\_}emp}
+
+The modal value of the variable in an SEIN YEAR QUARTER (employment weighted)
+
+\subsubsection{12{\_}sein{\_}wide.sas}
+
+\paragraph{Place SIC, NAICS, COUNTY, ownership code, EIN and LEG SEIN
+level variables in arrays}
+
+\subsubsection{13{\_}sein{\_}fill.sas}
+
+\paragraph{mode{\_}es{\_}(sic, naics, county, owner{\_}code, ein){\_}miss%
+}
+
+0 = Variable is not missing
+
+1 = Variable is missing before using information from other quarters.
+
+2 = Variable is not missing after search for off quarter information.
+
+6 = Variable is missing, filled with imputed value. Currently only used for
+SIC.
+
+11 = variable missing, but value set to 5. Currently only used for owner{\_}%
+code. Assume records with missing ownership codes are private firms.
+
+\paragraph{mode{\_}es{\_}(sic, naics, county, owner{\_}code, ein){\_}emp{%
+\_}miss}
+
+0 = Variable is not missing
+
+1 = Variable is missing before using information from other quarters.
+
+2 = Variable is missing, filled with off quarter information.
+
+5 = Variable is missing, filled with the corresponding unit weighted value
+
+6 = Variable is missing, filled with imputed value. Currently only used for
+SIC.
+
+11 = variable missing, but value set to 5. Currently only used for owner{\_}%
+code. Assume records with missing ownership codes are private firms.
+
+\paragraph{mode{\_}es{\_}(sic, naics, county, owner{\_}code, ein){\_}flag%
+}
+
+Missing = No information in other quarters
+
+0 = Variable is not missing in current quarter
+
+>0 = quarter after the current quarter where replacement value is found
+
+<0 = quarter before the current quarter where replacement value is found
+
+\subsubsection{14{\_}impute{\_}sein{\_}industry.sas}
+
+SEIN mode variables missing values are replaced. Missing codes are adjusted.
+See program 13 for an explanation of valid values.
+
+\subsubsection{15{\_}impute{\_}seinunit{\_}industry.sas}
+
+SEINUNIT mode variables missing values are replaced. Missing codes are
+adjusted. See program 10 for an explanation of valid values.
+
+\subsubsection{16{\_}seinunit{\_}yq{\_}chars.sas}
+
+\paragraph{es{\_}sic{\_}div}
+
+SIC divisions (A, B, C, \ldots ., Z)
+
+\paragraph{ES{\_}SIC{\_}2}
+
+First 2 digits of the 4 digit SIC
+
+\paragraph{ES{\_}SIC{\_}3}
+
+First 3 digits of the 4 digit SIC
+
+\paragraph{ES{\_}NAICS{\_}2}
+
+First 2 digits of the 6 digit NAICS
+
+\paragraph{ES{\_}NAICS{\_}3}
+
+First 3 digits of the 6 digit NAICS
+
+\subsubsection{17{\_}weight{\_}calc{\_}01.sas}
+
+Only temporary variables used in the calculation of the weights are created.
+
+\subsubsection{18{\_}weight{\_}calc{\_}02.sas}
+
+\noindent qwi{\_}unit{\_}weight = Final ECF weight. See technical
+documentation for the weights for detailed information.
+
+\subsubsection{19{\_}seinunit{\_}fuzz.sas}
+
+\ifthenelse{\equal{\confidential}{yes}}%
+{%
+\paragraph{uniform{\_}(sein, seinunit)}
+
+\noindent a random draw from a [0,1] uniform distribution
+
+\paragraph{ramp{\_}(sein, seinunit)}
+
+\noindent a random draw from the ramp (triangle) distribution.
+
+\paragraph{beta{\_}(sein,seinunit)}
+
+\noindent a random draw from the BETA distribution.
+}{%
+\begin{center}\begin{tabular}{|c|}
+\hline
+Suppressed for confidentiality\\
+\hline
+\end{tabular}\end{center}}
+
+\subsubsection{20{\_}sein{\_}file.sas}
+
+No new variables are created.
+
+\subsubsection{21{\_}fuzz{\_}update.sas}
+
+\paragraph{DATE{\_}(SEIN, SEINUNIT){\_}FUZZ}
+
+SAS date value for when the fuzz factor was created.
+
+\paragraph{UPDATE{\_}NUMBER{\_}(SEIN, SEINUNIT)}
+
+Sequential update number. The first time the ECF is created all fuzz factors
+receive a value of 0. The value is incremented by 1 each time any fuzz
+factors are added to the master file.
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "ecf_master"
+%%% End: 
+

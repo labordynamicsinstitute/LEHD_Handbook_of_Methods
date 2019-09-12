@@ -1,0 +1,37 @@
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+                      
+%TCIDATA{ChildDefaults=chapter:1,page:1}
+
+
+% -*- latex -*- 
+%
+% Time-stamp: <05/08/03 13:36:30 vilhuber> 
+
+\begin{table}[htbp]
+  \centering
+  \caption{Disclosure flags in the QWI}
+  \label{tab:disclosure_flags}
+  \begin{tabular}{lp{4in}}
+Flag & Explanation \\
+\hline
+ -2 &no data available in this category for this quarter\\
+ -1 &data not available to compute this estimate\\
+ 0  &    no employment in this cell, or no positive denominator
+         (OK to disclose a 0 for sum or count, missing for ratio)\\
+ 1  &    OK, distorted value released\\
+% 2  &    less than 3 employees (value suppressed in publications)\\
+% 3  &    less than 3 employers (value suppressed in publications)\\
+% 4  &    for ratio and change variables, the value could not be computed
+%        because a denominator rounds to zero. \\ %This is not a legal
+%        code for sums and counts unless they are change variables.
+5   &    Value suppressed because it does not meet US Census Bureau publication
+         standards.\\
+ 9  &    data significantly distorted, distorted value released\\
+\hline
+  \end{tabular}
+\end{table}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "qwi-overview"
+%%% End: 

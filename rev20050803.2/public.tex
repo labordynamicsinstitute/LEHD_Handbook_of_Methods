@@ -1,0 +1,90 @@
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+
+% -*- latex -*- 
+%
+% Time-stamp: <05/03/15 14:21:22 vilhuber> 
+
+% publicly available files
+
+In this section, we describe the publicly available files, and how they
+differ from their internal correspondent files.
+
+
+\section{Public use files}
+\label{sec:public:public-use}
+
+The only public use product currently available on a regular basis are the
+QWI files proper. The public-use version differs from the Census-internal
+versions only in that the public-use version has been subject to the
+disclosure-proofing methods (coarsening and suppression) described in a
+previous section. 
+
+
+\section{Restricted-access files}
+\label{sec:public:restricted}
+
+A larger set of files are available within the protected environment
+provided by the Census Research Data Centers (RDCs). The only information
+missing on these files relative to their internal-use counterparts is any
+information related to the confidential portions of the disclosure-proofing
+methods. All of these files can be accessed for research purposes by
+submitting a research proposal to the Center for Economic Studies at the
+U.S. Census Bureau%
+%
+\footnote{\htmladdnormallink{http://www.ces.census.gov}{http://www.ces.census.gov}}%
+%
+.
+
+
+\subsection{ECF}
+\label{sec:LEHD-ECF}
+
+The version of the ECF available in the RDC environment, referred to as
+'LEHD-ECF'\index{LEHD-ECF|ECF}, differs only minimally from the internal
+use ECF. Only variables used in the disclosure-proofing of the QWI have
+been suppressed. More information, including a detailed description of the
+LEHD-ECF, is available on the CES
+website \citep{ip-lehd-ecf}.
+
+\subsection{Unit Flow Files - Firm-level QWI}
+\label{sec:LEHD-QWI}
+
+The SEINUNIT-level input files to the final aggregation step of the QWI,
+internally referred to as UFF(b)\index{UFF}, is available in the RDC
+environment under the reference 'LEHD-QWI'\index{LEHD-QWI|QWI}. The actual
+state-specific file is called {\tt qwi\_{STATE}\_SEINUNIT}. While the
+internal-use version contains all information necessary to compute the
+disclosable QWI statistics, these variables have been suppressed from the
+RDC version. All statistics available at aggregated levels in the
+public-use QWI are available on the LEHD-QWI for the establishment. More
+information is available on the CES website.
+
+\subsection{Business Register Bridge}
+\label{sec:BRB}
+\label{sec:LEHD-BRB}
+The Census Bureau maintains a list of establishments 
+to develop the frame for economic censuses and surveys. This list is called
+the  Business Register (BR), and is updated annually. 
+ The BR contains very reliable information on business 
+identifiers, business organizational structure, and business
+location. Unfortunately,  the establishment identification system for the Business Register 
+differs from the LEHD establishment identifier (SEINUNIT). As a consequence, there is no 
+single best way to form linkages between these data sources. 
+
+The LEHD Business Register Bridge (LEHD-BRB) available in the RDC network
+provides several ways to integrate the economic censuses and surveys with
+LEHD-provided data. The choice of link record is left to researchers, and
+the optimal choice will depend on the research objective. Available
+identifiers on the LEHD-BRB are the EIN, geographic information, and
+4-digit SIC, which are linked to SEIN and SEINUNIT at different levels of
+precision. A more detailed guide is available on the CES website \citep{ip-lehd-brb}.
+
+\subsection{Human Capital files}
+
+These files will contain firm-level distributions of human capital measures
+as initially developed in \citet{tp-2002-09}. It will become available in 2005.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "qwi-overview"
+%%% End: 

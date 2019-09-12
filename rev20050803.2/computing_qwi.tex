@@ -1,0 +1,134 @@
+%TCIDATA{Version=4.00.0.2321}
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+                      
+%TCIDATA{ChildDefaults=chapter:1,page:1}
+%
+% Time-stamp: <05/04/06 08:07:32 vilhuber>
+% Contains John Abowd mods 2005-04-05
+%
+%\section{Forming Aggregated Estimates}
+%\label{sec:aggregate}
+
+
+\section{What are the QWI statistics?}
+\label{sec:qwi:what}
+
+The Quarterly Workforce Indicators (QWI)%
+\index{QWI} provide detailed local statistics for a variety of indicators.
+Employment, earnings, gross job creation and destruction, and worker
+turnover are available at different levels of geography, typically down to
+the county or metro area. At each level of geography, they are available by
+detailed industry (SIC and NAICS), sex, and age of workers. At the time of
+writing of this article, QWI statistics for 31 states had been tabulated,
+and the program is still expanding with the goal of national coverage.
+
+
+\section{Computing the statistics}
+\label{sec:qwi:compute}
+
+The establishment of the LEHD Infrastructure Files was driven in large part,
+although not exclusively, by the needs of the QWI statistics. Completed and
+representative data were and are the primary concern for the QWI. The ICF
+(Section~\ref{cha:icf}) and the ECF (Section~\ref{cha:ecf}) draw on a large
+number of data sources, and use a set of imputation procedures, to provide a
+complete and detailed picture of each economic actor. The ECF also provides
+the input data for the weighting, which is explained in more detail in
+Section~\ref{sec:weights}. The Wage Record Edit (Section~\ref{sec:ssnedit})
+and the SPF (Section~\ref{sec:spf}) apply algorithmic and statistical
+matching rules to the proper longitudinal linking of entities. The U2W
+(Section~\ref{sec:u2w}) completes the picture, by attributing an employing
+establishment to each individual employed at some point during the time
+period covered by the multi-unit UI account under which the data were
+reported.
+
+These data are then combined and aggregated to compute the QWI statistics.
+The aggregation is a four step process:
+
+\begin{enumerate}
+\item A ``job'' -- a unique PIK%
+\index{PIK}-SEIN%
+\index{SEIN}-SEINUNIT%
+\index{SEINUNIT} combination -- is identified, and the job's complete
+activity history -- when the worker worked, and when not -- recorded. Note
+that each job history stems from an implicate of the U2W, and is weighted
+accordingly.
+
+\item Job-level variables are computed as a set of indicators. The
+computation of each of these variables is described in detail in Section~\ref%
+{sec:technical:individual}.
+
+  
+\item Job-level variables are aggregated to the establishment level
+(SEINUNIT), using appropriate implicate weights. The aggregation is done
+using formulae described in Section~\ref{sec:technical:employer}. For many
+variables, aggregation to the establishment-level is achieved by summing the
+job-level variables ( beginning-of-period employment, end-of-period
+employment, accessions, new hires, recalls, separations, full-quarter
+employment, full-quarter accessions, full-quarter new hires, total earnings
+of full-quarter employees, total earnings of full-quarter accessions, and
+total earnings of full-quarter new hires). Some aggregate flow variables are
+computed using the beginning- and end-of-quarter employment estimates for
+that workplace. Examples are net job flows (see Equation (\ref{eq:JFjt}) in
+Appendix~\ref{cha:definitions}), average employment (\ref{eq:ebarjt}), job
+creations (\ref{eq:JCjt}) and job destructions (\ref{eq:JDjt}).
+
+The file created in this step, internally known as the Unit Flow File
+(UFF\_B), is also available in the RDC system, see Section~\ref{sec:LEHD-QWI}
+for details.
+
+\item The variables necessary for disclosure-proofing -- SEINUNIT-specific
+noise infusion called ``fuzz factors'' --
+are attached, and the establishment-level file is summed to the desired
+level of geographic and demographic detail, using the noise-infused values.
+Some flow variables are computed directly from other aggregated variables
+(see Section~\ref{sec:technical:aggregate_flows}). An undistorted version of
+all aggregates is also created. All aggregations use weights (see Section~%
+\ref{sec:weights}).
+
+\item The tables created in the previous step are disclosure-proofed (see
+Section~\ref{sec:disclosure-proofing}), by comparison with the undistorted
+version and in comparison with cell counts. If appropriate, items in some
+cells are suppressed, and noisy estimates are flagged as such.
+\end{enumerate}
+                                
+
+\section{Weighting in the QWI}
+\label{sec:weights}
+
+The QWI statistics are weighted to conform, along one dimension, to
+published BLS QCEW statistics. The fit is, however, not exact, since the
+weights are applied before statistics are calculated from the
+noise-distorted data. 
+
+When building the ECF, weights are computed such that measured
+beginning-of-quarter UI employment
+of in-scope units, when properly weighted, is equal to published QCEW
+state-wide employment in the first month of the quarter.
+% from ECFv31
+%Creation of the weights, step
+%1.
+%
+% First, the sample over which the weights will be positive (and therefore
+% which units will be included in any calculations) is determined. If a unit
+% has ever appeared on the ES202 and is in the UI, then it is eligible for a
+% positive weight. 
+% %
+% Additional restrictions are imposed for the actual calculation of the
+% overall adjustment. 
+The overall adjustment factor is calculated for private establishments and
+later applied to public-sector establishments as well. % %
+% The second component of the weights is based on the difference between UI
+% and ES202 employment at the SEIN level. These differences are calculated and
+% trimmed if necessary. 
+
+Selection and longitudinal linking in the QWI changes the in-scope units
+somewhat, and a weight-adjustment is recalculated. This weight is then used
+for all published QWI statistics. For almost all states and periods, the
+post-disclosure difference between the published QCEW statistic and the
+appropriate statistic in the QWI system is less than 0.5\%. 
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "qwi-overview"
+%%% End: 

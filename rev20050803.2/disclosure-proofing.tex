@@ -1,0 +1,287 @@
+%TCIDATA{Version=5.00.0.2570}
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+                      
+%TCIDATA{ChildDefaults=chapter:1,page:1}
+
+
+% -*- latex -*- 
+%
+% Time-stamp: <05/04/06 08:29:41 vilhuber> 
+%              Automatically adjusted if using Xemacs
+%              Please adjust manually if using other editors
+%
+% disclosure_proofing.tex
+% Responsible: Simon
+% Part of QWI_methods.tex
+
+%\section{Disclosure Proofing the QWI}
+%\label{sec:confidentiality}
+\label{cha:disclosure_proofing}
+
+\mindex{Disclosure proofing}
+Disclosure proofing is the set of methods used by statistical agencies to
+protect the confidentiality of the identity of and information about the
+individuals and businesses that form the underlying data in the system. In
+the QWI system, disclosure proofing is required to protect the information
+about individuals and businesses that contribute to the UI\index{UI} wage
+records, the ES-202 quarterly reports, and the Census Bureau demographic
+data that have been integrated with these sources. There are two layers of %
+\index{confidentiality protection} and disclosure proofing in the QWI
+system.
+
+The first layer occurs when workplace-level estimates are aggregated to
+higher levels. At this stage, the QWI
+system infuses specially constructed noise into the estimates of all of the
+workplace-level measures. This noise\index{noise} is designed to have two very
+important properties. First, for a given workplace, the data are always
+distorted in the same direction (increased or decreased) by the same
+percentage amount in every period. Second, the statistical properties%
+\index{distortion!statistical properties} of this distortion are such that
+when the estimates are aggregated, the effects of the distortion cancel out for the vast
+majority of the estimates.
+
+The second layer of confidentiality protection occurs after the
+workplace-level measures are aggregated to the higher levels. The data from many individuals and businesses are combined
+into a (relatively) few estimates. This aggregation helps to conceal the
+exact information about any of the individuals or businesses that underlie
+the estimate. At this level of confidentiality protection, some of the
+estimates turn out to be based on fewer than three persons or firms. These estimates
+are suppressed%
+\index{suppression}. In addition, some of the estimates are based on data
+that are still substantially influenced by the noise that was infused in the
+first layer. These estimates are flagged as \Mindex{substantially
+  distorted}. Table~\ref{tab:disclosure_flags} lists the possible flags for
+these and other cases. Each observation on any one of the published QWI tables has an
+associated flag. 
+
+\input{table_disclosure_flags.tex}
+
+
+
+\section{Multiplicative noise model\label{sec:disclosure:fuzz}}
+
+
+\index{multiplicative noise model}
+To implement  the multiplicative noise model, a
+random fuzz factor%
+\index{fuzz factor} $\delta _j$ is drawn for each employer $j$ according to
+the following process:
+
+\begin{equation*}
+p\left( {\delta _j } \right) = \left\{ {{%
+\begin{array}{*{20}c} {\mbox{ }{\left( {b - \delta } \right)} \mathord{\left/ {\vphantom {{\left( {b - \delta } \right)} {\left( {b - a} \right)^2}}} \right. \kern-\nulldelimiterspace} {\left( {b - a} \right)^2},\;\delta \in \mbox{ 
+}\left[ {a,b} \right]} \\ {{\left( {b + \delta - 2} \right)} \mathord{\left/ {\vphantom {{\left( {b + \delta - 2} \right)} {\left( {b - a} \right)^2}}} \right. \kern-\nulldelimiterspace} {\left( {b - a} \right)^2},\;\delta \in \left[ {2 - b,2 - a} \right]\mbox{ }} \\ \end{array} 
+}} \right.
+\end{equation*}
+
+\begin{equation*}
+F\left( {\delta _j } \right) = \left\{ {{%
+\begin{array}{*{20}c} {\mbox{0.5} + {\left[ {\left( {b - a} \right)^2 - \left( {b - \delta } \right)^2} \right]} \mathord{\left/ {\vphantom {{\left[ {\left( {b - a} \right)^2 - \left( {b - \delta } \right)^2} \right]} {\left[ {2\left( {b - a} \right)^2} \right]}}} \right. \kern-\nulldelimiterspace} {\left[ {2\left( {b - a} \right)^2} \right]},\;\delta \in \mbox{ }\left[ {a,b} \right]\mbox{ 
+}} \\ {{\left[ {\left( {\delta + b - 2} \right)^2} \right]} \mathord{\left/ {\vphantom {{\left[ {\left( {\delta + b - 2} \right)^2} \right]} {\left[ {2\left( {b - a} \right)^2} \right]}}} \right. \kern-\nulldelimiterspace} {\left[ {2\left( {b - a} \right)^2} \right]},\;\delta \in \left[ {2 - b,2 - a} \right]\mbox{ }} \\ \end{array} 
+}} \right.
+\end{equation*}
+
+\noindent where $a$ and $b$ are constants chosen such that $1 < a < b < 2$.%
+%
+\footnote{%
+The exact numbers are confidential.}
+%
+This produces a random noise factor
+centered around 1 with distortion of at least $a-1$ and at most $b-1$.
+
+
+
+\paragraph{Distorting totals}
+
+\index{fuzzing!totals}
+
+The fuzz factor $\delta _{j}$ is used to distort all establishment
+ totals by scaling of the true establishment level statistic
+
+\[
+\label{eq:fuzz_totals}X_{jt}^{\ast }=\delta _{j}X_{jt},
+\]%
+where $X_{jt}$ is an establishment level statistic among 
+%. Statistics distorted by this method are 
+beginning-of-quarter ($B$), end-of-quarter ($E$) employment, flow employment
+($M$), full-quarter employment ($F$), accessions ($A$), separations ($S$),
+new hires ($H$), recalls ($R$), flows into full-quarter status ($FA$), flows
+out of full-quarter status ($FS$), new hires into full-quarter status ($FH$%
+), total payroll ($W_{1}$), payroll associated with $E$ ($W_{2}$), with $B$ (%
+$W_{3}$), with new hires ($WFH$), periods of non-employment for accessions ($%
+NA$), for new hires ($NH$), for recalls ($NR$), and for separations ($NS$).
+
+\paragraph{Distorting  averages of magnitude variables}
+
+\index{fuzzing!averages}
+
+Averages are constructed from distorted numerators (totals) with undistorted
+denominators according to 
+\[
+ZY_{jt}^{\ast }=%
+\frac{Y_{jt}^{\ast }}{B(Y)_{jt}}=\delta _{j}\frac{Y_{jt}}{B(Y)_{jt}},
+\]%
+where $ZY_{jt}$ is a statistic related to a total $Y_{jt}$, and $B(Y)$ is
+the appropriate denominator for the calculation of the average. Statistics
+distorted by this method are average earnings for various groups ($%
+ZW_{2},ZW_{3},ZWFH,ZWA,ZWS$), and average periods of non-employment for
+several groups ($ZNA,ZNH,ZNR$, and $ZNS$).
+
+\paragraph{Distorting  differences of counts and magnitudes}
+
+\index{fuzzing!differences}
+
+Distorted net job flow%
+\index{job flow} ($JF$) is computed at the aggregate ($k$ = geography,
+industry, or combination of the two for the appropriate age and sex
+categories) level as the product of the aggregated, undistorted rate of growth
+and the aggregated distorted employment:%
+\[
+JF_{kt}^{\ast }=G_{kt}\times 
+\bar{E}_{kt}^{\ast }=JF_{kt}\times \frac{\bar{E}_{kt}^{\ast }}{\bar{E}_{kt}}.
+\]%
+This method of distorting net job flow will consistently estimate net job flow
+because it takes the product of two consistent estimators. The formulas for
+distorting gross job creation ($JC$) and job destruction ($JD$) are similar: 
+\index{job creation} 
+\index{job destruction}%
+\[
+JC_{kt}^{\ast }=JCR_{kt}\times 
+\bar{E}_{kt}^{\ast }=JC_{kt}\times \frac{\bar{E}_{kt}^{\ast }}{\bar{E}_{kt}}
+\]%
+and%
+\[
+JD_{kt}^{\ast }=JDR_{kt}\times \bar{E}_{kt}^{\ast }=JD_{kt}\times \frac{\bar{%
+E}_{kt}^{\ast }}{\bar{E}_{kt}}.
+\]%
+where $JCR_{kt}$ and $JDR_{kt}$ are the aggregated growth rates for job
+creations and destructions, respectively. Exactly analogous expressions
+apply to full-quarter net job flows $\left( FJF\right) $, full-quarter job
+creations $\left( FJC\right) ,$ and full-quarter job destructions $\left(
+FJD\right) .$
+
+The same logic was used to distort wage changes for subgroups (accessions,
+separations, full-quarter accessions and separations). 
+%: total change in earnings for
+%accessions (all jobs)%
+%\index{earnings!accessions}, total change in earnings for full-quarter
+%accessions%
+%\index{earnings!full-quarter accessions} (all jobs), total change in
+%earnings for separations%
+%\index{earnings!separations} (all jobs), and total change in earnings for
+%full-quarter separations%
+%\index{earnings!full-quarter separations} (all jobs). (Symbols used below: $%
+%\Delta WA, \Delta WS$.) 
+The undistorted total changes were divided by the undistorted denominators then
+multiplied by the ratio of the distorted denominator to the undistorted
+denominator for the computation of average change in earnings. 
+% for accessions (all jobs), average change in earnings for
+%full-quarter accessions (all jobs), average change in earnings for
+%separations (all jobs), and average change in earnings for full-quarter
+%separations (all jobs). (Symbols used below: $Z\Delta WA, Z \Delta WS.$)
+Averages are distorted by multiplying by the ratio of the distorted denominator to
+the true denominator. For example:%
+\[
+Z\Delta WY_{kt}^{\ast }=\frac{\Delta WY_{kt}}{Y_{kt}}\times \frac{%
+Y_{kt}^{\ast }}{Y_{kt}}.
+\]%
+where, again, $Y$ denotes a particular count, and $Z\Delta WY$ the average
+change in total earnings associated with that particular count.
+
+\section{Item suppression}
+
+\label{sec:disclosure:cell_suppression} 
+\index{cell suppression}
+
+Despite the noise infusion described in the previous sections, some
+disclosure risk remains for counts based on very few entities in a cell. For
+counts based on data from fewer than three individuals or employers, the
+fuzz factors may not provide sufficient protection. This condition applies
+to the variables $B$, $E$, $M$, $F$, $A$, $S$, $H$, $R$, $FA$, $FH$, $FS$, $%
+JC$, $JD$, $JF$, $FJC$, $FJD$, $FJF$. The QWIs therefore also implement item
+suppression based on the number of either workers or the number of employers
+that contribute data for that item in a cell $k$ in time period $t$, where a
+cell represents a particular combination of geography $\times $ industry $%
+\times $ age $\times $ sex. Because of the noise infusion used previously,
+however, no complementary suppressions are needed since all of the values
+based on three or more individuals or employers are adequately protected.
+Any estimate of the suppressed item computed by subtraction is also
+protected.
+
+The algorithm for item suppression for these variables 
+%for the variables $B$, $E$, $M$, $F$, $A$,
+%$S$, $H$, $R$, $FA$, $FH$, $FS$, $JC$, $JD$, and $JF$ 
+is as follows:
+
+%
+% As of May 4. 2005, JohnAbowd
+% 
+% QWIPU: Replace codes disclosure status codes 2, 3, and 4 with code 5 for
+% all instances for all variables. Do not change codes -2, -1, 0, and 9. 
+%
+
+\begin{itemize}
+\item Check the conditions leading to a disclosure flag of -2 or -1 (data
+availability). If met, set the item to missing in the release file.
+
+\item Determine whether the value can be computed according to Census
+standards:
+
+\begin{itemize}
+\item For the variables $JC$, $JD$, and $JF$, $\left( 
+\text{respectively, }FJC,FJD,\text{ and }FJF\right) $ check whether the
+denominator average employment ($\bar{E}_{kt}$; respectively, $\bar{F}_{kt}$%
+) in the relevant cell $kt$ rounds to zero. %If so, set the
+%disclosure status to $4$ and set the item to missing in the release file. 
+
+\item Check whether the item in cell $kt$ rounds to zero. %If so, set the
+%disclosure status to $0$ and set the item to $0$ in the release file.
+
+\item Check whether the data used to construct the cell $kt$ value were
+based on $1$ or $2$ individuals. 
+%If so, set the disclosure status to $2$ and set
+%the item to missing in the release file.
+
+\item Check whether the data used to construct the cell $kt$ value were
+based on $1$ or $2$ employers. 
+%If so, set the disclosure status to $3$ and set the
+%item to missing in the release file.
+\end{itemize}
+
+If any of these conditions are met, set the disclosure status to $5$ and set
+the item to missing in the release file.
+
+\item Check whether the distortion of cell $kt$ value exceeds the limit set
+by the Census Disclosure Review Board\footnote{%
+The precise value is confidential.}. If so, set the disclosure status to $9$
+and copy the distorted value to the release file.
+
+\item Otherwise, set the disclosure status to $1$ and copy the distorted value
+to the release file.
+\end{itemize}
+
+%
+%
+%
+
+\section{Analysis of the distortion due to the use of noise in the
+disclosure proofing process}
+
+Table~\Vref{tab:error_distribution} shows the distribution of the error in
+the first order serial correlation%
+\index{first order serial correlation} coefficient based on estimating an
+AR(1) using the multiplicatively distorted data ($r^*$) and using the
+undistorted data ($r$) for all counties in Illinois. The table shows that
+none of our variables is seriously affected by the distortion. In
+particular, the semi-interquartile range of the distortion is less than the
+precision with which estimated serial correlation coefficients are normally
+displayed---generally less than 2{\%}, which means that distortion is
+economically meaningless.
+
+\input{\mypath/disclosure_proofing.table1.tex}
+
+% 
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "QWI_methods"
+%%% End: 

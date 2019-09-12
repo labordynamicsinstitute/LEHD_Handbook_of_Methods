@@ -1,0 +1,97 @@
+%TCIDATA{Version=4.00.0.2321}
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+                      
+%
+% Time-stamp: <05/04/06 08:10:23 vilhuber>
+% Contains John Abowd mods 2005-04-05
+
+\section{Future projects}
+
+This section describes some of the ongoing efforts to improve the LEHD\
+Infrastructure Files.
+
+\subsection{Planned improvements to the ICF}
+
+Currently researchers at LEHD are developing an enhanced, longitudinal
+version of the ICF, referred to as the LICF. It improves on the current
+version of the ICF in a number of ways. The current ICF is a collection of
+state-specific files. Individuals appearing in multiple states are treated
+independently for each state in all missing data analyses and in the
+computation of employment statistics. The LICF will be national in scope,
+with a single set of missing data implicates for any PIK found on any of the
+UI wage records, regardless of state and with integrated national geography.
+
+Additional data sources will be integrated with the enhanced version of the
+ICF using direct links. The statistical link to the 1990 Decennial Census
+will be replaced by a direct link to the 2000 Decennial Census, and
+additional links to the ACS will be incorporated. The existing education
+impututation will greatly benefit from this enhancement. The additional
+links, as well as improved links to currently integrated data, will also
+allow for additional time-invariant characteristics to be incorporated and
+completed, including information on race and ethnicity and additional
+time-varying characteristics such as TANF\ recipiency.
+
+Longitudinal residence information will be appended to the ICF based on the
+information available from the StARS. Where appropriate, residence will be
+imputed based on a change in residence imputation model and Bayesian methods
+for imputing geography at the block level, replacing the current residential
+address missing data imputation model. In fact, all imputation models will
+be based on the most up-to-date imputation engines developed at LEHD.
+
+\subsection{Planned improvements to the EHF}
+
+The UI\ wage records in several states suffer from defects in the historical
+records. These defects can be detected automatically when they produce a big
+enough fluctuation in certain flow statistics, typically beginning of period
+employment as compared to total flow employment. Algorithms have been
+developed to detect the presence of missing wage records using the posterior
+predictive distribution.of employment histories given the available data and
+an informative prior on certain patterns. Once detected, the missing wage
+records are imputed, again using appropriate Bayesian methods. The same
+imputation engines are also being used to impute top-coded UI wages. These
+improvements are in the testing stage and should be implemented within the
+next year.
+
+\subsection{Planned improvements to the ECF}
+
+Two major enhancements to the ECF are in development. The first is a
+probabilistic record link to the Census Bureau's Business Register in order
+to improve the physical addresses on the ECF. This enhancement is currently
+in the testing phase. The second improvement to the ECF is a long-term
+project to incorporate information on non-employer businesses. The
+non-employer enhancements will affect both the ECF and the EHF because the
+information on non-employers also includes earnings from the non-employing
+business.
+
+\subsection{Creation of public-use synthetic data}
+
+As a part of a new, National Science Foundation Information Technology
+Research grant awarded to a consortium of Census Research Data Centers,
+researchers at LEHD and other parts of Census will collaborate with
+statisticians working in the RDCs to create and validate synthetic
+micro-data from the LEHD infrastructure files. Such synthetic micro-data
+will be confidentiality protected so that they may be released for public
+use. They will also be inference valid--permitting the estimation of some
+statistical models with results comparable to those obtained on the
+confidential micro-data.
+
+\subsection{The first 21st century statistical system}
+
+The goal of the development of the Quarterly Workforce Indicators was to
+create a 21st century statistical system. Without increasing respondent
+burden, the LEHD\ infrastructure permits the creation of extremely detailed
+statistics that, for the first time in the U.S., provide integrated
+demographic and economic information about the local labor market. The same
+techniques will work for other areas of interest--transportation dynamics
+and welfare-to-work dynamics to name just two examples. The two essential
+features of 21st century\ statistical systems will be their heavy reliance
+on existing data instruments (surveys, censuses and administrative records
+that are already in production) and their extensive use of data-intensive
+statistical modeling to enhance and summarize this information. In these
+regards, we think the LEHD infrastructure and the QWI system are worthy
+pioneers.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "qwi-overview"
+%%% End: 

@@ -1,0 +1,260 @@
+%TCIDATA{Version=4.00.0.2321}
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+                      
+%TCIDATA{ChildDefaults=chapter:1,page:1}
+%
+% Time-stamp: <05/03/09 22:01:22 vilhuber>
+
+%\section{Forming Aggregated Estimates}
+%\label{sec:aggregate}
+
+
+\subsection{What are the QWI statistics?}
+\label{sec:qwi:what}
+
+[ describe variables / statistics here ]
+
+
+\subsection{Computing the statistics}
+\label{sec:qwi:compute}
+
+
+Aggregating the QWI data is a four step process, which can be summarized as
+follows:
+
+\begin{itemize}
+\item[\ ] 
+
+\begin{enumerate}
+\item The basic variables, as discussed above, are created for each
+employment history (PIK\index{PIK}-SEIN\index{SEIN}-SEINUNIT\index{SEINUNIT} pair) and for every quarter
+that the pair exits. Note that each job history stems from an implicate of
+the U2W, and
+is weighted accordingly. 
+
+
+\item The QWI system sums for each employer's workplace the following variables:
+beginning-of-period employment, end-of-period employment, accessions, new
+hires, recalls, separations, full-quarter employment, full-quarter
+accessions, full-quarter new hires, total earnings of full-quarter
+employees, total earnings of full-quarter accessions, and total earnings of
+full-quarter new hires. Job creations, job destructions, and net job flows
+are estimated for each workplace using the beginning and end of quarter
+employment estimates for that workplace. The first-layer of
+disclosure-proofing is also applied at this step.
+
+\item The workplace-level variables in the list above are summed over the
+relevant aggregating unit (county or SIC) for each quarter. Average
+earnings of full-quarter employees, full-quarter accessions, and
+full-quarter new hires are estimated by taking the ratio of total earnings
+of the relevant category to the total number of individuals in that
+category. \ For example, avearge earnings of full-quarter men ages 55-64 for
+a given year, quarter and county is the ratio of total earnings of
+full-quarter men ages 55-64 to the number of full-quarter men ages 55-64 in
+that year, quarter, and county.
+
+\item The beginning-of-quarter employment for each county or SIC division is
+controlled (raked) to the BLS estimate of total county employment in month
+one of that quarter from the Covered Employment and Wages series. At this
+point the other estimates and the demographic groups are also raked to
+preserve the underlying relations among the variables.
+\end{enumerate}
+\end{itemize}
+
+%\chapter{Worker and Job Flow Analysis\label{cha:jobflow}}
+%
+%\input{\mypath/jobflow_analysis.tex}
+%\input{\mypath/jobflow_analysis_data_consistency.tex}
+
+
+\section{The Final product}
+\label{sec:final}
+
+\subsection{Summary Variable Definitions}
+
+\subsubsection{Timing and Category Variables}
+
+\index{Timing Variables|see{Variables, timing}} 
+\index{Category Variables|see{Variables, category}} \mindex{Variables!timing}
+\mindex{Variables!category}
+
+Timing and categorical variables are used to describe the population and
+time period that the content variables cover. The first such variable is 
+\textsf{STATE}\mindex{STATE}, which is the two-digit FIPS%
+\index{FIPS} code for the state upon which the employment dynamics estimates
+are based. The next two variables (\textsf{YEAR}\mindex{YEAR} and \textsf{%
+QUARTER}\mindex{QUARTER}) refer to the calendar year and quarter covered by
+the content variables. The \textsf{COUNTY}\mindex{COUNTY} variable
+(county-level data file) is the three-digit FIPS%
+\index{FIPS} code for the county (within the state). The \textsf{%
+SIC\_DIVISION}\mindex{SIC\_DIVISION} variable (sic-division-level data file)
+is the one-character SIC\ (1987) major industry group. The \textsf{SEX}%
+\mindex{SEX} variable indicates whether the data cover men or women. The 
+\textsf{AGEGROUP}\mindex{AGEGROUP} variable indicates which of the eight age
+categories the data cover.
+
+\subsubsection{Content Variables}
+
+\index{Content Variables|see{Variables, content}} \mindex{Variables!content}
+
+The quarterly employment estimates for beginning of quarter employment are
+contained the variable \textsf{B} and the estimates for end of quarter
+employment are found in the variable \textsf{E}. Accessions are reported in
+the variable \textsf{A}. New hires are in \textsf{H} and recalls are
+reported in \textsf{R}. Separations are reported in the variable \textsf{S}.
+
+Because of the confidentiality protection system used for the Employment
+Dynamics Estimates, the estimate of beginning-of-quarter employment for both
+sexes (\textsf{SEX}=0) and all age groups (\textsf{AGEGROUP}=0) is exactly
+equal to the BLS-published Covered Employment and Wages estimate of
+employment on the 12th day of the first month of the quarter for the
+relevant geographic and industrial category. For example, in California the
+QWI estimate for beginning-of-quarter employment in the entire state in
+1999:3 is 14,440,000 (\textsf{B}=14,440,000 for \textsf{STATE}=``06'', 
+\textsf{YEAR}=1999, \textsf{QUARTER}=3, \textsf{COUNTY}=``000'' (or \textsf{%
+SIC\_DIVISION}=(blank)),\textsf{SEX}=0, \textsf{AGEGROUP}=0), which exactly
+equals the BLS CEW estimate for month 1 in 1999:3 for the entire state,
+combining all establishment sizes and all ownership categories. \ Similarly,
+the QWI estimate of end-of-quarter employment is controlled for the category
+both sexes (\textsf{SEX}=0) and all age groups (\textsf{AGEGROUP}=0) to
+equal the BLS-published CEW estimate of employment on the 12th day of the
+first month of the succeeding quarter. Again, considering California, the
+QWI estimate for end-of-quarter employment in 1999:3 is 14,660,000, which
+exactly equals the BLS\ CEW estimate for month 1 in 1999:4 for the entire
+state (\textsf{E}=14,660,000 for \textsf{STATE}=``06'', \textsf{YEAR}=1999, 
+\textsf{QUARTER}=3, \textsf{COUNTY}=``000'' (or \textsf{SIC\_DIVISION}%
+=(blank)), \textsf{SEX}=0, \textsf{AGEGROUP}=0). 
+%See the tables in Appendix %
+%\ref{app:raking_data} for a complete list of the BLS\ series used in this
+%control.
+
+Quarterly employment estimates are also provided on a full-quarter basis.
+These estimates are reported in the variable \textsf{F}. Full-quarter
+accessions are reported in \textsf{FA}. Full-quarter separations are
+reported in \textsf{FS}. Full-quarter new hires are in \textsf{H3. }The
+raking step of the QWI confidentiality protection system used to disclosure
+proof the variables \textsf{B} and \textsf{E} (and related variables) does
+not affect the estimates of full-quarter employment and related flows.
+
+Job creations and destructions are reported in the variables \textsf{JC} and 
+\textsf{JD}, respectively. Net job flows are reported in the variable 
+\textsf{JF}. Full-quarter job creations and destructions are reported in 
+\textsf{FJC} and \textsf{FJD}, respectively. Full-quarter net job flows are
+in \textsf{FJF}.
+
+Average earnings of full-quarter employees can be found in \textsf{Z\_W3}.
+Average earnings of full-quarter new hires are reported in \textsf{Z\_WH3}.
+
+%See the table of contents at the end of this primer for a list of other
+%variables and definitions in the QWI data files.
+
+\subsubsection{Status Flag Variables}
+
+\index{Status Flag Variables|see{Variables, status flag}} %
+\mindex{Variables!status flag}
+
+Every variable in QWI data files has an associated status flag. These
+variables are called \textsf{[varname]\_status}. The status flag variables
+are also shown in the contents tables at the end of this primer. The status
+flag has three distinct values:
+
+\begin{itemize}
+\item[$*$] indicates significant distortion is necessary to preserve
+confidentiality
+
+\item[$d$] indicates an estimate is based on $<3$ employees in the at-risk group.
+
+\item[$n$] indicates an estimate is not defined because no employees are in
+the relevant category
+\end{itemize}
+
+%\newpage
+
+% \subsection{Data structure\label{primer_tables}}
+% 
+% Appendix~\Vref{app:data_structure} describes the contents of a typical
+% output statistics file, in this case for the state of Texas, and aggregated
+% to the county level. A similar file exists at the industry aggregation
+% level, and the same pair of files is constructed for every available state.
+% 
+%\input{\mypath/ca_county_v23_fuzzed.tex} \newpage \input{\mypath/ca_county_v23_fuzzed.freq.tex}
+%\newpage \input{\mypath/ca_sic_division_v23_fuzzed.tex} \newpage \input{%
+%\mypath/ca_sic_division_v23_fuzzed.freq.tex}
+
+% \newpage
+% 
+% \subsection{Florida}
+% 
+% \input{\mypath/fl_county_v23_fuzzed.tex} \newpage \input{\mypath/fl_county_v23_fuzzed.freq.tex}
+% \newpage \input{\mypath/fl_sic_division_v23_fuzzed.tex} \newpage \input{%
+% \mypath/fl_sic_division_v23_fuzzed.freq.tex}
+% 
+% \newpage
+% 
+% \subsection{Illinois}
+% 
+% \input{\mypath/il_county_v23_fuzzed.tex} \newpage \input{\mypath/il_county_v23_fuzzed.freq.tex}
+% \newpage \input{\mypath/il_sic_division_v23_fuzzed.tex} \newpage \input{%
+% \mypath/il_sic_division_v23_fuzzed.freq.tex}
+% 
+% \newpage
+% 
+% \subsection{Maryland}
+% 
+% \input{\mypath/md_county_v23_fuzzed.tex} \newpage \input{\mypath/md_county_v23_fuzzed.freq.tex}
+% \newpage \input{\mypath/md_sic_division_v23_fuzzed.tex} \newpage \input{%
+% \mypath/md_sic_division_v23_fuzzed.freq.tex}
+% 
+% \newpage
+% 
+% \subsection{Minnesota}
+% 
+% \input{\mypath/mn_county_v23_fuzzed.tex} \newpage \input{\mypath/mn_county_v23_fuzzed.freq.tex}
+% \newpage \input{\mypath/mn_sic_division_v23_fuzzed.tex} \newpage \input{%
+% \mypath/mn_sic_division_v23_fuzzed.freq.tex}
+% 
+% \newpage
+% 
+% \subsection{North Carolina}
+% 
+% \input{\mypath/nc_county_v23_fuzzed.tex} \newpage \input{\mypath/nc_county_v23_fuzzed.freq.tex}
+% \newpage \input{\mypath/nc_sic_division_v23_fuzzed.tex} \newpage \input{%
+% \mypath/nc_sic_division_v23_fuzzed.freq.tex}
+% 
+% \subsection{Texas}
+% 
+% \input{\mypath/tx_county_v23_fuzzed.tex} \newpage \input{\mypath/tx_county_v23_fuzzed.freq.tex}
+% \newpage \input{\mypath/tx_sic_division_v23_fuzzed.tex} \newpage \input{%
+% \mypath/tx_sic_division_v23_fuzzed.freq.tex}
+
+
+%\subsection{Example statistics}
+%\label{sec:example_statistics}
+%
+%Table~\Vref{tab:table_example} shows the extreme case of statistics for a
+%small county and for one gender only.%
+%%
+%%\footnote{The exact county and gender remain anonymous for data
+%%  confidentiality reasons.} 
+%%
+%Two types of confidentiality measures are
+%implemented within the same table. Ten cells have been distorted through
+%the injection of noise described earlier. Furthermore, one cell has been
+%suppressed because the statistics in that cell is based on too few
+%individuals.
+%
+%
+%  \input{table_example_statistics}
+%  
+%  Figure~\Vref{fig:figure_example} presents the data in a different way.
+%  The graph shows net job creation rates by county, for both genders, and
+%  for the youngest workers. It shows large dispersion across the state, and
+%  highlights the value added from joining demographic and firm-level data
+%  to form new statistics.
+%
+%  \input{figure_example_statistics}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "qwi-overview"
+%%% End: 

@@ -1,0 +1,61 @@
+This is BibTeX, Version 0.99c (Web2C 7.4.5)
+The top-level auxiliary file: qwi-overview.aux
+The style file: dcu.bst
+Database file #1: bib/abbrev.bib
+Database file #2: bib/self.bib
+Database file #3: bib/travail.bib
+Warning--string name "this" is undefined
+--line 4 of file bib/travail.bib
+Missing "}" in preamble command---line 4 of file bib/travail.bib
+ : @preamble{this 
+ :                file is maintaned by Lars Vilhuber <lars.vilhuber@cornell.edu>. (c) Lars Vilhuber 2004}
+I'm skipping whatever remains of this command
+I was expecting a `,' or a `)'---line 4 of file bib/travail.bib
+ : @preamble{this file is maintaned by Lars Vilhuber <lars.vilhuber@cornell.edu>. (c) 
+ :                                                                                    Lars Vilhuber 2004}
+I'm skipping whatever remains of this entry
+Database file #4: bib/lehdtp.bib
+Database file #5: bib/admindata.bib
+Database file #6: bib/ces.bib
+You've used 9 entries,
+            2921 wiz_defined-function locations,
+            734 strings with 6728 characters,
+and the built_in function-call counts, 41543 in all, are:
+= -- 6883
+> -- 513
+< -- 5
++ -- 3318
+- -- 154
+* -- 3580
+:= -- 8351
+add.period$ -- 18
+call.type$ -- 9
+change.case$ -- 126
+chr.to.int$ -- 9
+cite$ -- 9
+duplicate$ -- 112
+empty$ -- 210
+format.name$ -- 185
+if$ -- 7439
+int.to.chr$ -- 5
+int.to.str$ -- 0
+missing$ -- 4
+newline$ -- 39
+num.names$ -- 95
+pop$ -- 24
+preamble$ -- 1
+purify$ -- 135
+quote$ -- 0
+skip$ -- 103
+stack$ -- 0
+substring$ -- 9710
+swap$ -- 16
+text.length$ -- 131
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 34
+warning$ -- 0
+while$ -- 189
+width$ -- 0
+write$ -- 136
+(There were 2 error messages)

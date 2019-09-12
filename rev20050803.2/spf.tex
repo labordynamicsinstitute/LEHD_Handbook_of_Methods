@@ -1,0 +1,62 @@
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+
+% -*- latex -*- 
+%
+% Time-stamp: <05/02/27 05:59:42 vilhuber> 
+
+% from Vilhuber (2004)
+
+Tracking firms in data, and in particular in administrative data, poses
+some challenges. Firms can be born, split, merge, and disappear. Changes in
+ownership, of legal and organizational form, and changes in products and
+services offered can all lead to legitimate and legal changes in
+administrative identifiers. The very boundaries of what constitutes a
+single economic entity called a ``firm'' are often fluid.  For the purposes
+of the QWI, the fundamental focus is on firms as places of work for
+workers, i.e., the firm as employer, and the set of individuals which,
+taken together, constitute the ``firm''. Under that premise, flows for a
+particular employer should not be affected by purely administrative changes
+of the employer identity.  But should it be affected by a merger or the
+transfer of a plant from one firm to another? The identification of an
+economic, rather than legal successor to a firm becomes an important
+distinction.
+
+Administrations are  interested in linking firms for their own
+reasons. Payroll taxes can be experience rated, and firms with a higher
+payroll tax rate have an incentive to change administrative identity,
+becoming an apparently new entity not subject to the predecessor's higher
+tax rates. Administrations follow-up on firms, and the QCEW data contain a
+field that identifies a possible legal or legally obligated successor. This
+data has been used to link firms (Spletzer 2000). 
+
+The U.S. Bureau of Labor Statistics attributes about one third of the
+quarter-to-quarter matches that are not directly linked through firm
+identifiers to each of (a) the use of the administrative follow-up
+described in the preceding paragraph, (b) probabilistic matching (c)
+clerical review of otherwise unmatched records \citep{PivetzEtAl2001,ClaytonSpletzter2004}. At the time of writing of this
+document, only the administrative follow-up information is available within
+the LEHD system. 
+
+Because the LEHD system has access to the wage records of a firm's
+employees, it uses a different solution to identify a firm's
+successor(s). Since workers can be followed from one employer to the next,
+worker flows can be used to identify firms that are economically identical
+despite changing administrative identifiers. At one extreme, if all workers
+of firm $A$ simultaneously ``separate'', to then be collectively hired
+by firm $B$, where they constitute the totality of employment, then
+firms $A$ and $B$ are very likely to be the same firm having
+changed administrative identifiers. More generally, in order for a firm
+$B$ to be the economic successor of firm $A$, some fraction $f(A)$ of
+workers leaving firm $A$ must be linkable to firm $B$, and possibly some
+fraction $f(B)$ of workers at firm $B$ must have come from firm $A$. How to
+set the cutoff levels $f(A)$ and $f(B)$ is the subject of ongoing research,
+but for the purposes of the QWI, $f(A)=f(B)=80\%$ was chosen, based on
+research by LEHD researchers \citep{tp-2003-09} and consistent
+with similar methods in European countries (see \citet{Vilhuber2004} for an
+overview of such methods for some European countries and the US).
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "qwi-overview"
+%%% End: 

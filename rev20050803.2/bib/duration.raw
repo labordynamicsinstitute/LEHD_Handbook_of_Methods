@@ -1,0 +1,84 @@
+  N§    Articles    Sujet 
+   1        1963    DURATION 
+   2         927    HETEROGENEITY 
+*  3          81    DURATION and HETEROGENEITY 
+ 
+Enregistrement 1 de 10 - EconLit 1969-3/97 
+TI:  Training Duration and Post-training Outcomes:  A Duration-Limited Competing Risks Model 
+AU:  Mealli,-Fabrizia; Pudney,-Stephen; Thomas,-Jonathan-M. 
+SO:  Economic-Journal; 106(435), March 1996, pages 422-33. 
+PY:  1996 
+DE:  Human-Capital-Formation-in-school,-formal-training-programs,-on-the-job;-Occupational-Choice;-Labor-Productivity (J240) 
+AB:  In some practical applications of transition models there is a natural limit on the duration of some state.  An important example is the Youth Training Scheme (YTS), which is normally limited to two years.  The authors modify the usual competing risks model for this case and derive a diagnostic test for heterogeneity.  They apply the techniques to a model of the duration of YTS and find results that suggest an important qualitative effect of completed two-year YTS spells compared to spells completed under two years.  Full-term YTS spells are found to be associated with significantly higher employment probabilities. 
+--------------------------------------------------------------------------------
+Enregistrement 2 de 10 - EconLit 1969-3/97 
+TI:  Unemployment Dynamics and Duration Dependence 
+AU:  van-den-Berg,-Gerard-J.; van-Ours,-Jan-C. 
+SO:  Journal-of-Labor-Economics; 14(1), January 1996, pages 100-125. 
+PY:  1996 
+DE:  Unemployment:-Models,-Duration,-Incidence,-and-Job-Search (J640) 
+AB:  A major issue in the analysis of unemployment durations concerns distinguishing genuine duration dependence of the exit rate out of unemployment from unobserved heterogeneity. The authors present a method for the nonparametric estimation of both phenomena, designed to be applicable to time-series data on aggregate outflows from different duration classes. The model explicitly takes into account that individual exit rates are affected by the business cycle and by seasonal effects. The method is applied to U.S. data. The authors find diverging duration effects among black and white individuals. However, except for white males, duration dependence is dominated by unobserved heterogeneity. 
+--------------------------------------------------------------------------------
+Enregistrement 3 de 10 - EconLit 1969-3/97 
+TI:  Specification Tests for the Competing Risks Duration Model:  An Application to Unemployment Duration and Sectoral Movement 
+AU:  Pudney,-Stephen; Thomas,-Jonathan 
+SO:  Oxford-Bulletin-of-Economics-and-Statistics; 57(3), August 1995, pages 323-47. 
+PY:  1995 
+DE:  Unemployment:-Models,-Duration,-Incidence,-and-Job-Search (J640); Duration-Analysis (C410); Model-Evaluation-and-Testing (C520) 
+AB:  This study develops three specification tests for the competing risks duration model. They include a general test for misspecification and specific tests for heterogeneity and defective risk distributions. The last two tests involve null hypotheses located on the boundary of the parameter space and the authors consider alternative formulations of the score test to take account of this. The tests are applied to models of unemployment duration in which displaced job seekers may become reemployed in the preunemployment industry or switch industries. 
+--------------------------------------------------------------------------------
+Enregistrement 4 de 10 - EconLit 1969-3/97 
+TI:  Estimation of the Duration Model by Nonparametric Maximum Likelihood, Maximum Penalized Likelihood, and Probability Simulators 
+AU:  Huh,-Keun; Sickles,-Robin-C. 
+SO:  Review-of-Economics-and-Statistics; 76(4), November 1994, pages 683-94. 
+PY:  1994 
+DE:  Duration-Analysis (C410); Statistical-Simulation-Methods;-Monte-Carlo-Methods (C150); Semiparametric-and-Nonparametric-Methods (C140) 
+AB:  Failure to properly treat heterogeneity components in longitudinal analyses can result in an incorrect parametrization of the duration model. Estimation bias is not limited to duration dependence but also extends to the structural parameters. This paper uses Monte Carlo methods to examine the finite sample behavior of three estimators for this problem: nonparametric maximum likelihood, maximum penalized likelihood, and the probability simulator. The authors' results on the estimators' finite sample behavior for this class of model add to limited experimental evidence. They highlight the estimators' computational feasibility and point to their relative strengths in empirical duration modeling. 
+--------------------------------------------------------------------------------
+Enregistrement 5 de 10 - EconLit 1969-3/97 
+TI:  Leaving Teaching in the UK:  A Duration Analysis 
+AU:  Dolton,-Peter-J.; van-der-Klaauw,-Wilbert 
+SO:  Economic-Journal; 105(429), March 1995, pages 431-44. 
+PY:  1995 
+DE:  Labor-Turnover;-Vacancies-includes-separations,-hires,-layoffs,-redundancy (J630); Model-Construction-and-Estimation (C510) 
+AB:  In this paper, the authors analyze the decision by teachers to leave the profession. Their results affirm the importance of relative earnings in the tenure and turnover decisions of teachers. The econometric modeling approach used yields important insights into the appropriateness of adopting a flexible, semiparametric specification of the duration dependence structure and of the unobserved heterogeneity distribution in duration models. 
+--------------------------------------------------------------------------------
+Enregistrement 6 de 10 - EconLit 1969-3/97 
+TI:  Individual Heterogeneity in Duration Models with Segmentation 
+AU:  Cases,-C.; Lolivier,-S. 
+SO:  Unite de Recherche Document de Travail ENSAE/INSEE: 9344, October 1993, pages 10. 
+PY:  1993 
+DE:  Estimation (C130); Duration-Analysis (C410); Unemployment:-Models,-Duration,-Incidence,-and-Job-Search (J640) 
+AB:  The purpose of this study is the introduction of two kinds of  heterogeneity  in the estimation of reduced form duration models. The first one  takes into account more than one destination from unemployment:  inactivity and two segments of the labor market. The second one  consists in introducing an individual heterogeneity in addition  to exogenous variables. In the estimation of the model, we  reject the usual hypothesis of a decreasing hazard function.  This empirical evidence seems more related with a mover-stayer  effect than with a screening effect of long durations.  
+--------------------------------------------------------------------------------
+Enregistrement 7 de 10 - EconLit 1969-3/97 
+TI:  Testing the Proportional Hazards Assumption in the Presence of Unmeasured Heterogeneity 
+AU:  McCall,-Brian-P. 
+SO:  Journal-of-Applied-Econometrics; 9(3), July-Sept. 1994, pages 321-34. 
+PY:  1994 
+DE:  Duration-Analysis (C410) 
+AB:  This paper develops a discrete-time hazard model which accounts for unmeasured heterogeneity while allowing the coefficients of the regressors to vary over time.  Sufficient conditions for nonparametric identifiability of the unmeasured heterogeneity distribution are derived. Testing for time-varying coefficients in this model is, under suitable conditions, equivalent to testing the proportionality assumption of the underlying continuous-time hazard model. Some Monte Carlo evidence is presented regarding the small-sample properties of this test. As an illustration, these tests are applied to the joblessness durations of displaced workers. 
+--------------------------------------------------------------------------------
+Enregistrement 8 de 10 - EconLit 1969-3/97 
+TI:  Unemployment Dynamics and Duration Dependence in France, the Netherlands and the United Kingdom 
+AU:  van-den-Berg,-Gerard-J.; van-Ours,-Jan-C. 
+SO:  Economic-Journal; 104(423), March 1994, pages 432-43. 
+PY:  1994 
+DE:  Unemployment:-Models,-Duration,-Incidence,-and-Job-Search (J640) 
+AB:  This paper analyzes unemployment dynamics in the French, Dutch, and U.K.  labor market. It presents a method to distinguish between the effects of duration dependence and unobserved heterogeneity on the exit rate out of unemployment. It turns out that for British male unemployed there is strong genuine negative duration dependence. For French unemployed, there is no strong duration dependence during the first year of unemployment, while for Dutch unemployed there is nonmonotonic duration dependence. For all groups of French and Dutch individuals, significant unobserved heterogeneity is found. For U.K. male unemployed, heterogeneity seems to be empirically unimportant. 
+--------------------------------------------------------------------------------
+Enregistrement 9 de 10 - EconLit 1969-3/97 
+TI:  The Determinants of Unemployment and Jobsearch Duration in the Netherlands 
+AU:  Kerckhoffs,-C.; de-Neubourg,-Chris; Palm,-F. 
+SO:  De-Economist; 142(1), February 1994, pages 21-42. 
+PY:  1994 
+DE:  Unemployment:-Models,-Duration,-Incidence,-and-Job-Search (J640) 
+AB:  This study investigates the determinants of individual unemployment and job search duration and the size and direction of duration dependence in a proportional hazard model. New insights into the shape of the time dependence of unemployment duration are obtained using a semi-parametric baseline hazard specification in combination with a parametric (gamma) heterogeneity correction or with a semi-parametric heterogeneity correction. Registration data on unemployed individuals in The Netherlands in the period April 1987-May 1987 are used. For both sexes, the hazard rate quickly rises during the first five months, but then after the fifth month rapidly declines until the end of the first year of unemployment, not showing any clear tendency thereafter.  Commonly used parametric specifications for the baseline hazard prove to be too restrictive. For men we discuss the influences of the regressors. 
+--------------------------------------------------------------------------------
+Enregistrement 10 de 10 - EconLit 1969-3/97 
+TI:  An Empirical Model of Job-to-Job Transition with Self-Selectivity 
+AU:  Belzil,-Christian 
+SO:  Canadian-Journal-of-Economics; 26(3), August 1993, pages 536-51. 
+PY:  1993 
+DE:  Unemployment:-Models,-Duration,-Incidence,-and-Job-Search (J640) 
+AB:  The statistical relationship between accepted job duration and the job-to-job transition strategy chosen by job quitters is analyzed using parametric duration methods. Because job quitters can sort themselves between unemployed and employed search, the labor-market state occupied before acceptance of a new job must contain information about the search-preferred strategy. The results show that jobs preceded by unemployment tend to be shorter but also reveal a substantial amount of heterogeneity when the sample is split between those having comparative advantages in unemployed search and those with comparative advantages in employed search. However, even for those who have comparative advantages in unemployed search, choosing unemployment does not seem to raise subsequent job duration. 

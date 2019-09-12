@@ -1,0 +1,244 @@
+%TCIDATA{Version=4.00.0.2321}
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+                      
+%TCIDATA{ChildDefaults=chapter:1,page:1}
+%
+% Time-stamp: <05/03/15 22:49:16 vilhuber>
+
+The underlying data are wage records extracted from UI administrative files from each participating state, as
+well as from the (typically independently created) files from the Quarterly
+Census of Employment and Wages (QCEW, formerly known as 'ES-202'). These
+data are received by LEHD on a quarterly basis, with historical time series
+extending back to the early 1990s for some states. 
+
+% use Erika's list of caveats here?
+
+\section{Wage records: UI}
+\label{sec:input_files:ui}
+
+Wage records correspond to the report of an individual's
+UI\index{UI}-covered earnings by an employing entity, identified by a state
+UI account number (called State Employer Identification Number, or
+'SEIN'\index{SEIN} in the LEHD system). An individual's {UI} wage record
+appears if at least one employer reports earnings of at least one dollar
+for that individual during the quarter. Thus, the job
+must produce at least one dollar of {UI}-covered earnings during a given
+quarter to count in the LEHD system. Maximum earnings reported are defined in a
+specific state's unemployment insurance system, and observed top-coding
+varies across states and time.
+
+A record is completed with information on the individual's Social Security
+Number (later masked within the LEHD system), first name, last name, and
+middle initial. A few states include additional information: the firm's
+reporting unit, or establishment (called SEINUNIT in the LEHD system),
+available for Minnesota, and a crucial component to the Unit-to-Worker
+impute described later; weeks worked, available for some years in Florida;
+hours worked, available for Washington state.
+
+
+\section{Employer reports: ES202}
+\label{sec:input_files:es202}
+
+% from ECF intro
+The employer reports are  based on information from each state's
+Department of Employment Security. The data are collected as part of the
+Covered Employment and Wages (CEW)\index{CEW} program, also known as the
+ES-202 program, which is administered by the U.S. Bureau of Labor
+Statistics (BLS)\index{BLS}. This cooperative program between the states and the federal
+government collects employment, payroll, and location information from
+employers covered by state unemployment insurance programs.
+%
+These are the same records that form the basis of the Quarterly
+Census of Employment and Wages (QCEW), but are referred to in the LEHD
+system by their old acronym ``ES202''.  The fundamental unit of these files
+is a 'reporting unit', typically taken to be equivalent to a
+'establishment'. Most firms only have one establishment ('single-units'),
+but most employment is in firms with multiple establishments
+('multi-units'). One report per establishment per quarter is filed%
+%
+\footnote{These data are also used to compile the  Business Employment
+Dynamics (BED) data at the BLS.}%
+%
+.
+
+
+The information contained in these files has increased substantially over
+the years. Employers report wages subject to statutory payroll
+taxes on this form, together with some other information. Common to all years, and critical to LEHD processing, are
+information on the employer's identity (the SEIN), the reporting unit's
+identify (SEINUNIT), ownership information, employment on the 12th of each month covered by the
+quarter, and total wages paid over the course of the quarter. Additional
+information pertains to industry classifications (initially SIC, and later
+NAICS). Other information include the federal EIN, geography both at a high
+level (county or MSA) and low level (street address). A recent expansion of
+the record layout has increased the informational content substantially.
+
+
+\section{Administrative demographic information: PCF}
+\label{sec:input_files:pcf}
+
+The UI and ES202 files are the core data files describing the economic
+activity of individuals and firms. Although combined, these files contain a
+tremendous amount of detail on the economic activity, they contain little
+or no demographic information on the individuals. This information comes
+from a third administrative data source, compiled by ARRS/PRED.
+%\marginpar{\tiny [correct name???]} %
+The Person Characteristics File (PCF) 
+%is used to define a number
+%of frames at the Census Bureau, in particular the frame of each decade's
+%Census. It 
+contains information on gender, date of birth, place of birth,
+citizenship, and race, most of which is extraced in turn from the Social
+Security Administration's Numident file. Other information contains place
+of residence for several years culled from other administrative sources.
+
+\section{Demographic products}
+\label{cha:Demographic}
+
+Many individuals have appeared in at least one of the eligible Census demographic 
+products, and their detailed demographic information from 
+%those surveys 
+ the 1984, 1990-1993, and 1996 SIPP panels as well as
+from March Demographic Supplement to the Current Population
+Survey (CPS\index{CPS}) from 1983 onwards
+%
+can be linked to the extensive longitudinal data gleaned from the state
+records. They are used by the ICF.
+
+
+%
+%
+
+\section{Economic censuses and annual surveys}
+\index{Annual surveys!manufacturing}
+\index{Annual surveys!trade}
+\index{Annual surveys!service}
+\index{Annual surveys!transportation}
+\index{Annual surveys!communication}
+\index{Economic census}
+
+%\marginpar{\tiny (2002?) economic censuses. Does the ECF use these?}
+These data include the complete 1987, 1992 and 1997 economic censuses, all 
+annual surveys of manufacturing, service, trade, transportation and 
+communication industries and selected, approved fields from the Census 
+Bureau's %establishment master file.%
+%\index{Establishment master file}
+Business Register.
+
+Linkage to these data is based upon exact EIN\index{EIN} matches,
+supplemented with statistical matching to recover
+establishments\index{establishment}. 
+
+
+\section{Identifiers and their longitudinal consistency}
+\label{sec:coding}
+
+
+Both the wage records and employer reports are administrative data -
+comprehensive, but sometimes less than perfect. In particular, spurious
+changes in the numerical entity identifers used for longitudinal matching
+can have a significant impact on most economic uses of the data.
+
+\subsection{Scope of data and identifiers}
+\label{sec:scope}
+
+In the LEHD system,  a person is identified initially by the Social
+Security Number, and later by their Protected Identification Key
+(PIK). This identifier is national in scope, and individuals can be tracked
+across all states and time periods. Not all individuals are in-scope at all
+times. To be included in the wage record database, an individual's job must
+be covered by a state's unemployment insurance system. The prime exclusions
+are agriculture and to some extent the public sector. Coverage varies across states and
+time, although on average, 98\% of all private-sector jobs are covered.
+ \citet{tp-2002-16} provides a survey of coverage for a subset of the
+current participant states in the LEHD system.
+
+A 'firm' is identified primarily by their state UI
+account number (SEIN). A single legal ``firm'' might have multiple SEINs but regardless of its
+operations in other states a legal firm has a different unemployment
+insurance account in each state in which it has statutory employees.
+In particular the QWI are based exclusively on
+SEIN-based entities and their associated establishments. Since a SEIN is
+specific to a state, the QWI cannot account for movements of individuals
+across state lines, but within the same company. Time-consistency is also
+not guaranteed, since the tax number associated with a firm can change (see
+later discussions).  Again, the coverage caveat mentioned also applies. 
+
+The restriction to SEIN does not apply to the Infrastructure Files. For
+some states, the federal Employer Identification Number, used for federal
+tax purposes, is available, and reported on the Employer Characteristics
+File (ECF).  Links to the Census Business Register (BR)
+allow to map entities from the QCEW to larger companies across state lines
+(see Section~\ref{sec:BRB} for more information on the Business Register Bridge).
+
+\subsection{Error correction of person identifiers}
+\label{sec:ssnedit}
+
+Coding errors in the SSN can occur for a variety of
+reasons. A survey of 53 state employment security agencies in the United
+States over the 1996-1997 time period found that most errors are due to
+coding errors by employers, but that when errors were attributable to state
+agencies, data entry was the culprit \citep[pg. ii]{BLS1997}. %(Bureau of Labor Statistics 1997b, pg. ii). 
+The report noted that 38\% of all records were entered by key entry, while
+another 11\% were read in by optical character readers. OCR and magnetic
+media tend to be less prone to errors. 
+
+Errors can be random digit coding errors that do not persist, typically
+generated when data are transferred from one format (paper) to another
+(digital), or can be persistent, typically occurring when a firm's payroll
+system contains an erroneous SSN. While the latter is hard to identify and
+to correct, the LEHD system uses statistical matching techniques to correct
+for spurious and non-persistent coding errors. Both the incidence of errors
+and the success rate of the error correction methods differs widely by
+state. In particular, it depends critically on the availability of name
+information on the wage records. 
+
+\citet{AbowdVilhuber2005} describe and analyze the process as it was
+applied to data provided by the state of California. The process verified
+over half a billion records. The number of records that are recoded is
+slightly less than 10 percent of the total number of unique individuals
+appearing in the original data, and only a little more than 0.5\% of all
+wage records. The authors estimate that the true error rate in their data
+is higher, in part due to the conservative setup of the process. Over
+800,000 job history interruptions in the original data are eliminated,
+representing 0.9\% of all jobs, but 11\% of all interrupted jobs. Despite the small number of records that are found to be miscoded, the impact on flow statistics can be large. Accessions in the uncorrected data are overestimated by 2\%, and recalls are biased upwards by nearly 6\%. Payroll for accessions and separations are biased upward by up to 7 percent. 
+
+The wage record editing occurs prior to the construction of any of the
+Infrastructure Files, for two reasons. First, the wage record edit process
+requires access to the original Social Security Numbers as well as to the
+names on the wage records, both of which are replaced by Personal
+Identifier Numbers (PIK) or stripped off very early in the processing of
+wage records. The wage record editing process takes place in a secure and
+separate area from the rest of the LEHD processing, to avoid any
+commingling of SSN-laden data with anonymized data. Second, because the
+identifier changes underlying the wage record edit are deemed spurious, and
+because individuals have no economic reason at all to change Social
+Security Numbers, there is little
+ambiguity about the applicability of the edit. This is different from the
+editing of firm identifiers (see the next section).  
+
+\subsection{Correcting for changes in firm identifiers}
+\label{sec:input_spf}
+
+Firms in the
+QCEW system are identified by a (UI tax) account number attributed by the
+state. As with all firm identities, an account number can change for a
+number of reasons over time, not all of which are distinguishable economic
+entities for the purpose of these statistics. State administrative units take great care to
+follow the legal entities in their system, but account numbers may
+nevertheless change for reasons which economists may not consider
+legitimate economic reasons. For instance, a simple change in ownership of
+a firm may lead to a change in the account number. 
+
+Because changes in the firm identifiers are correlated with some elements
+of economic choice, albeit imperfectly, they are not imposed on the entire
+LEHD Infrastructure Files. Rather, an auxiliary file, the
+Successor-Predecessor File, is created that allows for the  selective
+application of such edits. This file is produced after the first of the Infrastructure
+Files have been created, and is described later in this document.
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "qwi-overview"
+%%% End: 

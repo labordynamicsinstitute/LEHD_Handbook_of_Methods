@@ -1,0 +1,78 @@
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+                      
+%
+% Time-stamp: <05/04/06 13:48:43 vilhuber>
+
+
+%\section{Post-processing of UI and ES202 files}
+%\label{sec:post-processing}
+
+Once received, the UI and ES202 files are standardized.%
+%
+\footnote{%
+The
+ES202 files in particular have been received in a bewildering array of physical file
+layouts and formats, reflecting the wide diversity in computer systems
+installed in state agencies.}%
+%
+The UI files have been edited for longitudinal
+consistency, and the SSN replaced by the Protected Identification Key
+(PIK). Beyond that, no further processing has occurred.
+
+The core Infrastructure Files are built from the core input files, and
+augmented from a large number of additional Census-internal demographic and
+economic (firm) surveys and censuses. 
+%
+The Employment History File (EHF\index{EHF}) provides a full time-series of
+ earnings at all within-state jobs for all time periods covered by the
+LEHD data, and activity calendars at a job, SEINUNIT, and SEIN level. 
+%
+The Individual Characteristics File
+(ICF\index{ICF}) provides time-invariant personal characteristics and
+some address information.%.
+%
+\footnote{A time-varying variant of the ICF is under development.}%
+%
+The Employer Characteristics File (ECF\index{ECF}) provides a complete 
+database of firm and establishment characteristics, most of which are
+time-varying. 
+%
+It includes a subset of the data available on the Geocoded Address List
+(GAL\index{GAL}), which contains geocoded at the block-level  and
+latitude/longitude coordinates for addresses from a large set of
+administrative and survey data.
+%
+We will describe each in detail.
+
+
+\section{Employment History File\label{cha:ehf}: EHF}
+\input{\mypath/ehf_description.tex}
+
+%
+%
+
+\label{sec:files}
+\section{Individual Characteristics File\label{cha:icf}: ICF}
+\input{\mypath/icf_description.tex}
+
+%
+%
+\section{The Employer Characteristics File\label{cha:ecf}: ECF}
+\input{\mypath/ecf_description.tex}
+\input{\mypath/ecf_naics.tex}
+
+%
+%
+
+\section{The Geocoded Address List\label{cha:gal}: GAL}
+\input{\mypath/gal_intro.tex}
+
+%
+%
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "qwi-overview"
+%%% End: 

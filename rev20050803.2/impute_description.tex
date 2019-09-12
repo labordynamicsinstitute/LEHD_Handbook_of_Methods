@@ -1,0 +1,343 @@
+%TCIDATA{Version=4.00.0.2321}
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+                      
+%
+% Time-stamp: <05/03/09 21:53:10 vilhuber>
+
+\subsection{A Probability Model for Employment Location}
+
+\subsubsection{Definitions}
+
+Let $i=1,...,I$ index workers (PIKs), $j=1,...,J$ index firms (SEINs), and $%
+t=1,...,T$ index time (quarters). \ \ Let $R_{jt}$ denote the number of
+active establishments (units) at firm $j$ in quarter $t,$ let $\mathfrak{R}%
+=\max_{j,t}R_{jt},$ and $r=1,...,\mathfrak{R}$ index establishments
+(SEINUNITs). Note the index $r$ is nested within $j.$ Let $N_{jrt}$ denote
+the quarter $t$ employment of unit $r$ in firm $j.$ Finally, if worker $i$
+was employed at firm $j$ in $t,$ denote by $y_{ijt}$ the unit at which she
+was employed$.$
+
+Now we define some useful sets. Let $\mathcal{J}_{t}$ denote the set of
+firms active in quarter $t,$ let $\mathcal{I}_{jt}$ denote the set of
+individuals employed at firm $j$ in quarter $t,$ let $\mathcal{R}_{jt}$
+denote the set of active ($N_{jrt}>0$) units at firm $j$ in $t,$ and let $%
+\mathcal{R}_{jt}^{i}\subset $ $\mathcal{R}_{jt}$ denote the set of active
+units that are feasible for worker $i$. Feasibility is defined as follows. A
+unit $r\in \mathcal{R}_{jt}^{i}$ if $N_{jrs}>0$ for every quarter $s$ that $%
+i $ was employed at $j.$
+
+\subsubsection{The Probability Model}
+
+Let $p_{ijrt}=\Pr \left( y_{ijt}=r\right) .$ At the core of the model is the
+probability statement:%
+\begin{equation}
+p_{ijrt}=\frac{e^{\alpha _{jrt}+x_{ijrt}^{\prime }\beta }}{\sum_{s\in 
+\mathcal{R}_{jt}^{i}}e^{\alpha _{jst}+x_{ijst}^{\prime }\beta }}  \label{p}
+\end{equation}%
+where $\alpha _{jrt}$ is a unit- and quarter-specific effect, $x_{ijrt}$ is
+a time-varying vector of characteristics of the worker and unit, and $\beta $
+measures the effect of characteristics on the probability of being employed
+at a particular establishment. In the current implementation, $x_{ijrt}$ is
+a linear spline in the (great-circle) distance between worker $i$'s
+residence and the physical location of unit $r.$ The spline has knots at 25,
+50, and 100 miles. A convenient characteristic of (\ref{p}) is that the
+log-odds ratio is linear:%
+\begin{equation}
+\log \left( \frac{p_{ijrt}}{p_{ijst}}\right) =\left( \alpha _{jrt}-\alpha
+_{jst}\right) +\left( x_{ijrt}-x_{ijst}\right) ^{\prime }\beta
+\end{equation}
+
+We use (\ref{p}) to define the likelihood%
+\begin{equation}
+p\left( y|\alpha ,\beta ,x\right) =\prod_{t=1}^{T}\prod_{j\in \mathcal{J}%
+_{t}}\prod_{i\in \mathcal{I}_{jt}}\prod_{r\in \mathcal{R}_{jt}^{i}}\left(
+p_{ijrt}\right) ^{d_{ijrt}}  \label{likelihood}
+\end{equation}%
+where 
+\begin{equation}
+d_{ijrt}=\left\{ 
+\begin{array}{cc}
+1 & \text{if }y_{ijt}=r \\ 
+0 & \text{otherwise}%
+\end{array}%
+\right.  \label{d}
+\end{equation}%
+and where $y$ is the appropriately-dimensioned vector of the outcome
+variables $y_{ijt},$ $\alpha $ is the appropriately-dimensioned vector of
+the $\alpha _{jrt},$ and $x$ is the appropriately-dimensioned matrix of
+characteristics $x_{ijrt}$.
+
+We adopt a hierarchical Bayesian model for the $\alpha _{jrt}$ based on
+employment counts $N_{jrt}.$ Let $N_{jt}$ denote the $R_{jt}\times 1$ vector
+of employment counts at firm $j$ in $t.$ Assume $N_{jt}\sim $Multin$\left(
+\pi _{jt}\right) $, where $\pi _{jt}$ is an $R_{jt}\times 1$ vector of
+parameters $\pi _{jrt}$ such that $\sum_{r\in \mathcal{R}_{jt}}\pi _{jrt}=1$
+for all $j,t$ . That is,%
+\begin{equation}
+p\left( N_{jt}|\pi _{jt}\right) \varpropto \prod_{r\in \mathcal{R}%
+_{jt}}\left( \pi _{jrt}\right) ^{N_{jrt}}.  \label{p(N|pi)}
+\end{equation}%
+We adopt a non-informative Dirichlet prior for the $\pi _{jt}$ with
+hyperparameters $\theta _{jt}.$ That is, for all $j,t$ such that $R_{jt}=R,$%
+\begin{equation}
+p\left( \pi _{jt}\right) \varpropto \prod_{r=1}^{R}\left( \pi _{jrt}\right)
+^{\theta _{jrt}-1}  \label{p(pi)}
+\end{equation}%
+with $\theta _{jrt}=0$ for all $j,r,t.$ The Dirichlet is of course the
+conjugate prior for the Multinomial distribution, and when $\theta _{jrt}=0$
+for all $j,r,t$ \ it is uniform in the $\log \left( \pi _{jt}\right) .$ It
+is also improper in this case, but the resulting posterior distribution is
+proper as long as there is at least one observation in each of the $R$
+categories.\footnote{%
+See Gelman, Carlin, Stern, and Rubin (1997, p.76)} This posterior is%
+\begin{eqnarray}
+p\left( \pi _{jt}|N_{jt}\right) &\varpropto &p\left( \pi _{jt}\right)
+p\left( N_{jt}|\pi _{jt}\right)  \notag \\
+&\varpropto &\prod_{r\in \mathcal{R}_{jt}}\left( \pi _{jrt}\right)
+^{N_{jrt}-1}  \label{p(pi|N)}
+\end{eqnarray}%
+which is Dirichlet with ``parameter'' vector $N_{jt}.$ Now define%
+\begin{equation}
+\alpha _{jrt}=\left\{ 
+\begin{array}{cc}
+0 & r=1 \\ 
+\log \left( \frac{\pi _{jrt}}{\pi _{j1t}}\right) & r=2,3,...,R_{jt}%
+\end{array}%
+\right. .  \label{a-def}
+\end{equation}%
+Thus the $\alpha _{jrt}$ are the inverse-logit of the Dirichlet random
+variables $\pi _{jrt}.\footnote{%
+The $\alpha _{jrt}$ can also be interpreted as the log-odds ratio of
+employment at unit $r$ vs. unit 1 when $\beta =0$ (distance doesn't matter)
+or when $x_{ijrt}=x_{ij1t}$ (the units are equidistant).}$ Let $\alpha _{jt}$
+denote the $R_{jt}\times 1$ vector of the parameters $\alpha _{jrt}.$
+Equations (\ref{p(pi)}) and (\ref{a-def}) implicitly define $p\left( \alpha
+_{jt}|N_{jt}\right) .$ Taking the product of these across all $j$ and $t$
+yields%
+\begin{equation}
+p\left( \alpha |N\right) =\prod_{t=1}^{T}\prod_{j\in \mathcal{J}_{t}}p\left(
+\alpha _{jt}|N_{jt}\right)  \label{p(a|N)}
+\end{equation}%
+where $N$ is the appropriately-dimensioned vector of all the $N_{jt}.$
+
+The object of interest is the joint posterior distribution of $\alpha $ and $%
+\beta .$ We assume a uniform prior on $\beta ,$ $p\left( \beta \right)
+\varpropto 1.$ Our characterization of $p\left( \alpha ,\beta |x,y,N\right) $
+is based on the factorization 
+\begin{eqnarray}
+p\left( \alpha ,\beta |x,y,N\right) &=&p\left( \alpha |N\right) p\left(
+\beta |\alpha ,x,y\right)  \notag \\
+&\varpropto &p\left( \alpha |N\right) p\left( \beta \right) p\left( y|\alpha
+,\beta ,x\right)  \notag \\
+&\varpropto &p\left( \alpha |N\right) p\left( y|\alpha ,\beta ,x\right) .
+\label{p(a,b|x,y,N)}
+\end{eqnarray}
+Thus the joint posterior (\ref{p(a,b|x,y,N)}) is completely characterized by
+the posterior of $\alpha $ in (\ref{p(a|N)}) and the likelihood of $y$ in (%
+\ref{likelihood}). Note (\ref{likelihood}) and (\ref{p(a,b|x,y,N)}) assume
+that the employment counts $N$ affect employment location $y$ only through
+the parameters $\alpha .$
+
+\subsubsection{Estimation}
+
+We approximate the joint posterior $p\left( \alpha ,\beta |x,y,N\right) $ at
+the posterior mode. In particular, we estimate the posterior mode of $%
+p\left( \beta |\alpha ,x,y\right) $ evaluated at the posterior mode of $%
+\alpha .$ The posterior mode of $\alpha $ is simply defined -- the posterior
+modal values of the $\pi _{jrt}$ are the employment shares at unit $r$ of
+firm $j$ in quarter $t.$ From these we compute the posterior modal values of
+the $\alpha _{jrt}$ using (\ref{a-def}). We then maximize the log posterior
+density%
+\begin{equation}
+\log p\left( \beta |\alpha ,x,y\right) \varpropto \sum_{t=1}^{T}\sum_{j\in 
+\mathcal{J}_{t}}\sum_{i\in \mathcal{I}_{jt}}\sum_{r\in \mathcal{R}%
+_{jt}^{i}}d_{ijrt}\left( \alpha _{jrt}+x_{ijrt}^{\prime }\beta -\log \left(
+\sum_{s\in \mathcal{R}_{jt}^{i}}e^{\alpha _{jst}+x_{ijst}^{\prime }\beta
+}\right) \right)  \label{log-posterior}
+\end{equation}%
+evaluated at the posterior modal values of the $\alpha _{jrt},$ using a
+modified Newton-Raphson method. The mode-finding exercise is based on the
+gradient and Hessian of (\ref{log-posterior}). These are:%
+\begin{eqnarray}
+\frac{\partial \log p\left( \beta |\alpha ,x,y\right) }{\partial \beta }
+&\varpropto &\sum_{t=1}^{T}\sum_{j\in \mathcal{J}_{t}}\sum_{i\in \mathcal{I}%
+_{jt}}\sum_{r\in \mathcal{R}_{jt}^{i}}d_{ijrt}\left( x_{ijrt}-\frac{%
+\sum_{s\in \mathcal{R}_{jt}^{i}}x_{ijst}e^{\alpha _{jst}+x_{ijst}^{\prime
+}\beta }}{\sum_{s\in \mathcal{R}_{jt}^{i}}e^{\alpha _{jst}+x_{ijst}^{\prime
+}\beta }}\right)  \notag \\
+&=&\sum_{t=1}^{T}\sum_{j\in \mathcal{J}_{t}}\sum_{i\in \mathcal{I}%
+_{jt}}\sum_{r\in \mathcal{R}_{jt}^{i}}d_{ijrt}\left( x_{ijrt}-\sum_{s\in 
+\mathcal{R}_{jt}^{i}}p_{ijst}x_{ijst}\right)  \notag \\
+&=&\sum_{t=1}^{T}\sum_{j\in \mathcal{J}_{t}}\sum_{i\in \mathcal{I}%
+_{jt}}\sum_{r\in \mathcal{R}_{jt}^{i}}d_{ijrt}\left( x_{ijrt}-\bar{x}%
+_{ijt}\right)  \label{gradient}
+\end{eqnarray}%
+\begin{eqnarray}
+\frac{\partial ^{2}\log p\left( \beta |\alpha ,x,y\right) }{\partial \beta
+^{2}} &\varpropto &-\sum_{t=1}^{T}\sum_{j\in \mathcal{J}_{t}}\sum_{i\in 
+\mathcal{I}_{jt}}\sum_{r\in \mathcal{R}_{jt}^{i}}\left( 
+\begin{array}{c}
+\frac{d_{ijrt}}{\left( \sum_{s\in \mathcal{R}_{jt}^{i}}e^{\alpha
+_{jst}+x_{ijst}^{\prime }\beta }\right) ^{2}} \\ 
+\times \left( 
+\begin{array}{c}
+\sum_{s\in \mathcal{R}_{jt}^{i}}x_{ijst}x_{ijst}^{\prime }e^{\alpha
+_{jst}+x_{ijst}^{\prime }\beta }\sum_{s\in \mathcal{R}_{jt}^{i}}e^{\alpha
+_{jst}+x_{ijst}^{\prime }\beta } \\ 
+-\sum_{s\in \mathcal{R}_{jt}^{i}}x_{ijst}e^{\alpha _{jst}+x_{ijst}^{\prime
+}\beta }\sum_{s\in \mathcal{R}_{jt}^{i}}x_{ijst}^{\prime }e^{\alpha
+_{jst}+x_{ijst}^{\prime }\beta }%
+\end{array}%
+\right)%
+\end{array}%
+\right)  \notag \\
+&=&-\sum_{t=1}^{T}\sum_{j\in \mathcal{J}_{t}}\sum_{i\in \mathcal{I}%
+_{jt}}\sum_{r\in \mathcal{R}_{jt}^{i}}d_{ijrt}\sum_{s\in \mathcal{R}%
+_{jt}^{i}}p_{ijst}x_{ijst}\left( x_{ijst}-\bar{x}_{ijt}\right) ^{\prime } 
+\notag \\
+&=&-\sum_{t=1}^{T}\sum_{j\in \mathcal{J}_{t}}\sum_{i\in \mathcal{I}%
+_{jt}}\sum_{r\in \mathcal{R}_{jt}^{i}}d_{ijrt}\sum_{s\in \mathcal{R}%
+_{jt}^{i}}p_{ijst}\left( x_{ijst}-\bar{x}_{ijt}\right) \left( x_{ijst}-\bar{x%
+}_{ijt}\right) ^{\prime }  \notag \\
+&=&-\sum_{t=1}^{T}\sum_{j\in \mathcal{J}_{t}}\sum_{i\in \mathcal{I}%
+_{jt}}\sum_{r\in \mathcal{R}_{jt}^{i}}p_{ijrt}\left( x_{ijrt}-\bar{x}%
+_{ijt}\right) \left( x_{ijrt}-\bar{x}_{ijt}\right) ^{\prime }
+\label{hessian}
+\end{eqnarray}%
+where $\bar{x}_{ijt}=\sum_{s\in \mathcal{R}_{jt}^{i}}p_{ijst}x_{ijst}$ is
+the mean value of characteristics $x_{ijrt}$ across the units of firm $j$ in 
+$t.$
+
+In practice, (11) is estimated for three firm employment size classes: 1-100
+employees, 101-500 employees, and greater than 500 employees, using data for
+the State of Minnesota -- the only LEHD\ state data in which the physical
+establishment of employment is recorded.
+
+\subsection{Imputing Place of Work}
+
+For all states other than Minnesota, place-of-work for employees is imputed.
+
+\subsubsection{A Sketch of the Imputation Method}
+
+As with all missing data in the LEHD database, place of work is
+multiply-imputed. Ignoring temporal considerations, which are treated in the
+next Section, we generate $M=10$ implicates of the missing data as follows.
+First, using the mean and variance of $\beta $ estimated from those States
+where place of work is available, we take 10 draws of $\beta $ from the
+normal approximation (at the mode) to $p\left( \beta |\alpha ,x,y\right) .$
+Next, using ES-202 employment counts for the units of firm $j$ in quarter $t$
+(these are the $N_{jrt}$), we take 10 draws of $\pi _{jt}$ from the
+Dirichlet distribution (\ref{p(pi|N)}). These are used to compute 10 values
+of $\alpha _{jt}$ using (\ref{a-def}). Note these are draws from the exact
+posterior distribution of the $\alpha _{jrt}.$ The drawn values of $\alpha $
+and $\beta $ are used to draw 10 imputed values of place of work from the
+normal approximation to the posterior predictive distribution%
+\begin{equation}
+p\left( \tilde{y}|x,y\right) =\int \int p\left( \tilde{y}|\alpha ,\beta
+,x,y\right) p\left( \alpha |N\right) p\left( \beta |\alpha ,x,y\right)
+d\alpha d\beta .  \label{post-pred}
+\end{equation}%
+The resulting imputed values reflect two sources of uncertainty: the
+fundamental uncertainty of the model (i.e., the unexplained or residual
+component of variation in place of work), and the posterior uncertainty in $%
+\alpha $ and $\beta $.
+
+\subsubsection{Details}
+
+Using state-level ES-202 data, the set of firms (SEINs) that ever operate
+more that one establishment in a given quarter are identified; these SEINs
+represent the set of ever-multi-unit firms $\mathcal{J}_{t}$ \footnote{%
+Firms with only one establishment represent the trivial case $p_{ijrt}=1$
+for $r=1$.}. \ Establishments $r_{jt}$ operating under firms $j$ are
+identified in the ES-202 data as well; those establishments with positive
+first-month employment in time $t$ characterize the set $\mathcal{R}_{jt}$.
+\ An establishment date-of-birth is identified and, in most cases, is the
+first date in the ES-202 time series in which the establishment has positive
+first-month employment\footnote{%
+A different date-of-birth (always strictly less than the one of the first
+quarter of positive first-month employment) may be assigned if a known or
+suspected establishment identifier change has occured. \ The details of this
+identification process is discussed in other LEHD\ technical documents.}. 
+
+State Unemployment Insurance (UI) wage records provide the earnings
+histories for employees of the ever-multi-unit firms.  \ From the UI wage
+records, one observation -- a candidate for imputation --  is generated for
+the \emph{end} of a job history, where a job history,  $h_{ijt}$, is defined
+by a continuum of periods of positive earnings for worker $i$ at firm $j$,
+during which there are no more than 3 consecutive periods of non-positive
+earnings. \ The start-date of the job history is the first date of positive
+earnings for the individual at the firm; the end-date is the last date date
+of positive earnings. \ These job histories characterize the set $\mathcal{I}%
+_{jt}$ defined in Section 1.1. \ 
+
+A job history $h_{ijt}$ (where $t$ indexes the end-date) and an
+establishment $r_{jt}\in \mathcal{R}_{jt}$ are paired for all $\ j\in 
+\mathcal{J}_{t}$ in time $t$. \ The set of establishments  $\mathcal{R}%
+_{jt}^{i}\subset $ $\mathcal{R}_{jt}$ are those which have dates-of-birth
+that are less than or equal to the start-date of the job history $h_{ijt}$
+for an individual $i$ separating from firm $j$ at time $t$. \ It is the set $%
+\mathcal{R}_{jt}^{i}$ from which one unit $\hat{y}_{jt}\in \mathcal{R}%
+_{jt}^{i}$ is imputed to job history $h_{ijt}$ and serves as the
+establishment identifier for every period over which the job history is
+defined\footnote{%
+We explicitly rule-out within job history changes in establishment
+identifiers in the estimation and implementation of the model. \ Though
+transitions of this nature exist in the data, modeling them is beyond the
+scope of our current approach.}.
+
+\bigskip The imputation model is applied on a state-by-state basis. \ Once
+the data are organized (as outlined above), a set of 10 imputed
+establishment identifiers are generated for each job history $h_{ijt}$
+ending in every period for which both ES-202 and UI wage records exist. \
+Formally, for each implicate, $m=1,..,10$, and for each of the three size
+classes, $s=1,2,3$, $\hat{\beta}_{m}^{s}$ is sampled from the normal
+approximation 
+\begin{equation}
+p(\beta ^{s}|\alpha _{MN},x_{MN},y_{MN})  \label{sample beta}
+\end{equation}
+the posterior predictive distribution of $\beta ^{s}$ conditional\ on
+Minnesota. \ The draws from this distribution varies across implicates, but
+not across time, firms, and individuals.
+
+Next, for each implicate $m$ and firm $j$ at time $t$, a set of $\alpha
+_{jrt}^{\prime }s$ are drawn from%
+\begin{equation}
+p\left( \alpha _{ST}|N_{ST}\right)   \label{sample alpha}
+\end{equation}%
+These draws are based on the ES-202 first-month employment totals for all
+establishments $r_{jt}\subset $ $\mathcal{R}_{jt}$at firm $j$ for the state
+being processed. \ The inital draws of \ $\alpha _{jrt\text{ }}$from this
+distribution vary across time and firms but not across job histories. \ \ 
+
+Combining (\ref{sample beta}) and (\ref{sample alpha})
+
+\begin{eqnarray}
+&&p\left( \alpha _{ST}|N_{ST}\right) p(\beta ^{s}|\alpha _{MN},x_{MN},y_{MN})
+\label{post mode ST} \\
+&\approx &p\left( \alpha _{ST}|N_{ST}\right) p(\beta ^{s}|\alpha
+_{ST},x_{ST},y_{ST})  \notag \\
+&=&p\left( \alpha _{ST},\beta _{ST}|x_{ST},y_{ST},N_{ST}\right)   \notag
+\end{eqnarray}%
+an approximation of the joint posterior distribution of $\alpha $ and $\beta
+^{s}$ (\ref{p(a,b|x,y,N)}) conditional on data from the state being
+processed.
+
+Finally, the draws $\hat{\alpha}$ and $\hat{\beta}^{s}$in conjunction with
+the establishment, firm, and job history data in $x_{ijrt}$ are used to
+construct the $p_{ijrt}$ in (\ref{p}) for all $r\in \mathcal{R}_{jt}^{i}$. \
+Recall that the set of establishments $\mathcal{R}_{jt}^{i}$ are unique to a
+given job history, so the draws of $\alpha _{jrt\text{ }}$ from (\ref{sample
+alpha}) are approriately windsorized so that $\sum_{s\in \mathcal{R}%
+_{jt}^{i}}$ $\alpha _{jst}=1$ for all $i$,$j$, and $t$.  A random number $q$%
+, $q\backsim uniform[0,1]$, is drawn\ and compared to the cumulative
+distribution (ordered by $r$ over $\mathcal{R}_{jt}^{i}$) of the $p_{ijrt}$;
+the imputed unit is identified by index $r^{\ast }$ where $%
+\sum\limits_{r=1}^{r^{\ast }}p_{ijrt}\leq q$ for $1\leq r^{\ast }\leq R_{ijt}
+$.
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "u2w_master"
+%%% TeX-master: "qwi-overview"
+%%% End: 

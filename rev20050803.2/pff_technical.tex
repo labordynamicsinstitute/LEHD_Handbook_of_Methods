@@ -1,0 +1,70 @@
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+                      
+
+% -*- latex -*- 
+%
+% Time-stamp: <02/03/14 18:23:21 vilhuber> 
+%              Automatically adjusted if using Xemacs
+%              Please adjust manually if using other editors
+%
+% pff_technical.tex
+% Responsible: Paul
+% Part of QWI_methods.tex
+
+% This was  moved here from ehf_technical.tex
+% 
+
+\index{PFF|(mainref}
+
+This section describes the one program that creates the Person Flows File
+(PFF). Since it is intricately linked to both the EHF\index{EHF}
+(Chapter~\Vref{app:ehf_technical}) and the ECF\index{ECF}
+(Chapter~\Vref{app:ecf_technical}), please revise the descriptions of that
+processing as well. In particular, this file used to be part of the EHF
+sequence, so all notes and tips in Section~\Vref{sec:ehf:notes} apply to
+this file as well.
+
+\begin{description}
+\item \ 
+  \begin{steps}
+                                
+\item ui{\&}st-work-history-06
+ 
+  This program is virtually identical to the first program in the QWI~v2.2
+  sequence, jobflow01.sas, and has in fact replaced it in the most current
+  version of processing. The only difference is the output file contains
+  the variable PIK\index{PIK} in addition to other
+  \textit{PIK-SEIN}-level\index{SEIN} job flow statistics. The program
+  combines information from the Individual Characteritics File
+  (ICF)\index{ICF} as well as from the EHF. More specifically, it reads in
+  records from the employment history file and attaches demographics from
+  the ICF. Employment and earnings histories are created for each
+  individual which are subsequently used to create the
+  \textit{PIK-SEIN}-level job flow statistics. The output file is the
+  ``Person Flows File,'' called jobflow01{\_}pik. Depending on the amount
+  of space available, it should be stored in either
+  /data/working5/person{\_}flows/{\&}st or
+  /data/working6/person{\_}flows/{\&}st.
+ 
+ \begin{itemize}
+ \item[TIP:] The user should first check to see whether these directories have
+   been created. In order for ui{\&}st-work-history-06.sas to run correctly,
+   the user must first edit the program macrolist.sas! 
+ 
+ \end{itemize}
+ 
+ This program has been written in a 
+ very generic manner, meaning the user must select the appropriate state of 
+ interest, enter an appropriate temporary working directory, enter the 
+ appropriate person{\_}flows directory. The correct locations for the EHF\index{EHF} and 
+ ICF must also be entered. The location of the ICF\index{ICF} for each state can be 
+ found in /data/doc/data{\_}availability/daf.xls. 
+\end{steps}
+\end{description}
+
+\index{PFF|)mainref}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "QWI_methods"
+%%% End: 

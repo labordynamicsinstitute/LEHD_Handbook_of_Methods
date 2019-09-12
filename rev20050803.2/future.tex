@@ -1,0 +1,40 @@
+%TCIDATA{LaTeXparent=0,0,QWI_methods.tex}
+% -*- latex -*- 
+%
+% Time-stamp: <01/10/17 23:25:20 vilhuber> 
+%              Automatically adjusted if using Xemacs
+%              Please adjust manually if using other editors
+%
+% future.tex
+% Part of QWI_methods.tex
+
+The ability of LEHD to combine unemployment insurance records from various 
+states into a single data warehouse enables us to investigate questions that 
+one state alone cannot pursue. One example of this type of research is the 
+movement of workers across state borders. In addition to the industry where 
+an individual is employed, Census data allow us to examine the demographic 
+characteristics of these workers. Appendix~\Vref{app:mobility} shows preliminary results for 
+workers that have moved across state lines and the proportion of those 
+workers that can be identified in Census datasets.
+
+The transition from SIC to NAICS based industry coding requires a relatively 
+minor reconfiguration of the current job flow processing. Appendix~\Vref{app:sicnaics} 
+contains a list of SIC codes and their NAICS equivalent. Additional 
+information is also provided for detailed industry groups that have changed 
+substantially under the NAICS classification system.
+
+Census demographic surveys provide additional information on employees in 
+each state, but the employer information at Census is also extensive. The 
+first step towards linking employers from state data to Census business data 
+has been taken for Illinois. The Bureau of the Census maintains a list of 
+known business establishments in the United States called the Standard 
+Statistical Establishments List (SSEL). The SSEL provides the crucial link 
+from the federal EIN found on state data to Census internal firm 
+identifiers. The overall match rate is very good (98{\%}), but there are 
+differences in the classification of single and multi-unit firms. Detailed 
+results are presented in Appendix~\Vref{app:linkuissel}. 
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "QWI_methods"
+%%% End: 

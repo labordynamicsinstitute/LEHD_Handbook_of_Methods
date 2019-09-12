@@ -1,0 +1,95 @@
+\BOOKMARK [0][-]{section*.2}{Contents}{}
+\BOOKMARK [0][-]{section*.4}{List of Tables}{}
+\BOOKMARK [0][-]{section*.6}{List of Figures}{}
+\BOOKMARK [0][-]{chapter.1}{1 Introduction}{}
+\BOOKMARK [0][-]{chapter.2}{2 Input files}{}
+\BOOKMARK [1][-]{section.2.1}{2.1 Wage records: UI}{chapter.2}
+\BOOKMARK [1][-]{section.2.2}{2.2 Employer reports: ES202}{chapter.2}
+\BOOKMARK [1][-]{section.2.3}{2.3 Administrative demographic information: PCF}{chapter.2}
+\BOOKMARK [1][-]{section.2.4}{2.4 Demographic products}{chapter.2}
+\BOOKMARK [1][-]{section.2.5}{2.5 Economic censuses and annual surveys}{chapter.2}
+\BOOKMARK [1][-]{section.2.6}{2.6 Identifiers and their longitudinal consistency}{chapter.2}
+\BOOKMARK [2][-]{subsection.2.6.1}{2.6.1 Scope of data and identifiers}{section.2.6}
+\BOOKMARK [2][-]{subsection.2.6.2}{2.6.2 Error correction of person identifiers}{section.2.6}
+\BOOKMARK [2][-]{subsection.2.6.3}{2.6.3 Correcting for changes in firm identifiers}{section.2.6}
+\BOOKMARK [0][-]{chapter.3}{3 Infrastructure files}{}
+\BOOKMARK [1][-]{section.3.1}{3.1 Employment History File: EHF}{chapter.3}
+\BOOKMARK [1][-]{section.3.2}{3.2 Individual Characteristics File: ICF}{chapter.3}
+\BOOKMARK [2][-]{subsection.3.2.1}{3.2.1 Age and gender imputation}{section.3.2}
+\BOOKMARK [2][-]{subsection.3.2.2}{3.2.2 Place of residence imputation}{section.3.2}
+\BOOKMARK [2][-]{subsection.3.2.3}{3.2.3 Education imputation}{section.3.2}
+\BOOKMARK [1][-]{section.3.3}{3.3 The Employer Characteristics File: ECF}{chapter.3}
+\BOOKMARK [2][-]{subsection.3.3.1}{3.3.1 Constructing the ECF}{section.3.3}
+\BOOKMARK [2][-]{subsection.3.3.2}{3.3.2 Imputations in the ECF}{section.3.3}
+\BOOKMARK [2][-]{subsection.3.3.3}{3.3.3 NAICS codes on the ECF}{section.3.3}
+\BOOKMARK [3][-]{subsubsection.3.3.3.1}{3.3.3.1 NAICS algorithm precedence ordering}{subsection.3.3.3}
+\BOOKMARK [3][-]{subsubsection.3.3.3.2}{3.3.3.2 ESO and FNL variables}{subsection.3.3.3}
+\BOOKMARK [3][-]{subsubsection.3.3.3.3}{3.3.3.3 LDB versus LEHD NAICS backcoding}{subsection.3.3.3}
+\BOOKMARK [1][-]{section.3.4}{3.4 The Geocoded Address List: GAL}{chapter.3}
+\BOOKMARK [2][-]{subsection.3.4.1}{3.4.1 Geographic codes and their sources}{section.3.4}
+\BOOKMARK [3][-]{subsubsection.3.4.1.1}{3.4.1.1 Block coding}{subsection.3.4.1}
+\BOOKMARK [3][-]{subsubsection.3.4.1.2}{3.4.1.2 Geographic coordinates}{subsection.3.4.1}
+\BOOKMARK [2][-]{subsection.3.4.2}{3.4.2 Accessing the GAL: the GAL Crosswalks}{section.3.4}
+\BOOKMARK [0][-]{chapter.4}{4 Auxiliary data}{}
+\BOOKMARK [1][-]{section.4.1}{4.1 Connecting firms intertemporally: the Successor-Predessor File \(SPF\)}{chapter.4}
+\BOOKMARK [1][-]{section.4.2}{4.2 Allocating workers to workplaces: Unit-to-worker impute \(U2W\)}{chapter.4}
+\BOOKMARK [2][-]{subsection.4.2.1}{4.2.1 A Probability Model for Employment Location}{section.4.2}
+\BOOKMARK [3][-]{subsubsection.4.2.1.1}{4.2.1.1 Definitions}{subsection.4.2.1}
+\BOOKMARK [3][-]{subsubsection.4.2.1.2}{4.2.1.2 The Probability Model}{subsection.4.2.1}
+\BOOKMARK [3][-]{subsubsection.4.2.1.3}{4.2.1.3 Estimation}{subsection.4.2.1}
+\BOOKMARK [2][-]{subsection.4.2.2}{4.2.2 Imputing Place of Work}{section.4.2}
+\BOOKMARK [3][-]{subsubsection.4.2.2.1}{4.2.2.1 Sketch of Imputation Method}{subsection.4.2.2}
+\BOOKMARK [3][-]{subsubsection.4.2.2.2}{4.2.2.2 Implementation}{subsection.4.2.2}
+\BOOKMARK [0][-]{chapter.5}{5 Forming Aggregated Estimates: QWI}{}
+\BOOKMARK [1][-]{section.5.1}{5.1 What are the QWI statistics?}{chapter.5}
+\BOOKMARK [1][-]{section.5.2}{5.2 Computing the statistics}{chapter.5}
+\BOOKMARK [1][-]{section.5.3}{5.3 Weighting in the QWI}{chapter.5}
+\BOOKMARK [0][-]{chapter.6}{6 Disclosure-proofing the QWI}{}
+\BOOKMARK [1][-]{section.6.1}{6.1 Multiplicative noise model}{chapter.6}
+\BOOKMARK [1][-]{section.6.2}{6.2 Item suppression}{chapter.6}
+\BOOKMARK [1][-]{section.6.3}{6.3 Analysis of the distortion due to the use of noise in the disclosure proofing process}{chapter.6}
+\BOOKMARK [0][-]{chapter.7}{7 Publicly available files}{}
+\BOOKMARK [1][-]{section.7.1}{7.1 Public use files}{chapter.7}
+\BOOKMARK [1][-]{section.7.2}{7.2 Restricted-access files}{chapter.7}
+\BOOKMARK [2][-]{subsection.7.2.1}{7.2.1 ECF}{section.7.2}
+\BOOKMARK [2][-]{subsection.7.2.2}{7.2.2 Unit Flow Files - Firm-level QWI}{section.7.2}
+\BOOKMARK [2][-]{subsection.7.2.3}{7.2.3 Business Register Bridge}{section.7.2}
+\BOOKMARK [2][-]{subsection.7.2.4}{7.2.4 Human Capital files}{section.7.2}
+\BOOKMARK [0][-]{chapter.8}{8 Concluding remarks}{}
+\BOOKMARK [1][-]{section.8.1}{8.1 Future projects}{chapter.8}
+\BOOKMARK [2][-]{subsection.8.1.1}{8.1.1 Planned improvements to the ICF}{section.8.1}
+\BOOKMARK [2][-]{subsection.8.1.2}{8.1.2 Planned improvements to the EHF}{section.8.1}
+\BOOKMARK [2][-]{subsection.8.1.3}{8.1.3 Planned improvements to the ECF}{section.8.1}
+\BOOKMARK [2][-]{subsection.8.1.4}{8.1.4 Creation of public-use synthetic data}{section.8.1}
+\BOOKMARK [2][-]{subsection.8.1.5}{8.1.5 The first 21st century statistical system}{section.8.1}
+\BOOKMARK [0][-]{section*.15}{Bibliography}{}
+\BOOKMARK [0][-]{appendix.A}{A Definitions of fundamental LEHD concepts \040}{}
+\BOOKMARK [1][-]{section.A.1}{A.1 Fundamental Concepts}{appendix.A}
+\BOOKMARK [2][-]{subsection.A.1.1}{A.1.1 Dates}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.2}{A.1.2 Employer}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.3}{A.1.3 Establishment}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.4}{A.1.4 Employee}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.5}{A.1.5 Job}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.6}{A.1.6 Unemployment Insurance wage records \(the QWI system universe\)}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.7}{A.1.7 Employment at a point in time}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.8}{A.1.8 Employment for a full quarter}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.9}{A.1.9 Point-in-time estimates of accession and separation}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.10}{A.1.10 Accession and separation from full-quarter employment}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.11}{A.1.11 Point-in-time estimates of new hires and recalls}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.12}{A.1.12 New hires and recalls to and from full-quarter employment}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.13}{A.1.13 Job creations and destructions}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.14}{A.1.14 Net job flows}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.15}{A.1.15 Full-quarter job creations, job destructions and net job flows}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.16}{A.1.16 Average earnings of end-of-period employees}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.17}{A.1.17 Average earnings of full-quarter employees}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.18}{A.1.18 Average earnings of full-quarter accessions}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.19}{A.1.19 Average earnings of full-quarter new hires}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.20}{A.1.20 Average earnings of full-quarter separations}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.21}{A.1.21 Average periods of non-employment for accessions, new hires, and recalls}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.22}{A.1.22 Average number of periods of non-employment for separations}{section.A.1}
+\BOOKMARK [2][-]{subsection.A.1.23}{A.1.23 Average changes in total earnings for accessions and separations}{section.A.1}
+\BOOKMARK [1][-]{section.A.2}{A.2 Definitions of Job Flow, Worker Flow, and Earnings Statistics }{appendix.A}
+\BOOKMARK [2][-]{subsection.A.2.1}{A.2.1 Overview and basic data processing conventions}{section.A.2}
+\BOOKMARK [2][-]{subsection.A.2.2}{A.2.2 Individual concepts}{section.A.2}
+\BOOKMARK [2][-]{subsection.A.2.3}{A.2.3 Establishment concepts}{section.A.2}
+\BOOKMARK [2][-]{subsection.A.2.4}{A.2.4 Aggregation of flows}{section.A.2}

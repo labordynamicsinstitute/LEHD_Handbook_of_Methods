@@ -1,0 +1,194 @@
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+
+% -*- latex -*- 
+%
+% Time-stamp: <05/04/08 02:43:44 vilhuber> 
+%              Automatically adjusted if using Xemacs
+%              Please adjust manually if using other editors
+%
+% ecf.tex
+% Responsible: Kevin 
+% Part of QWI_methods.tex
+
+The Employer Characteristics File (ECF\index{ECF}) consolidates most firm level
+information (size, location, industry, etc.) into two easily accessible
+files. The firm or SEIN-level file contains one record for every
+year-quarter an SEIN is present in either the ES-202 or the UI, with more
+detailed information available for the establishments of multi-unit SEINs in the 
+SEINUNIT-level file. The SEIN file is built up from the SEINUNIT file and contains
+no additional information, but should be viewed merely as an easier and/or
+more efficient way to access SEIN level data.
+
+A number of inputs are used to build the ECF. 
+%
+The ES202 data  is the primary input to the ECF file
+creation process.  
+%
+UI data is  used to supplement information on the ES202,
+in particular SEIN-level employment. UI data is also used to extend
+published BLS county-level employment data, which is used to construct
+weights for later use in the QWI process. Geocoded address information from the
+%
+GAL\index{GAL} file contributes latitude-longitude coordinates of most
+establishments, as well as updated WIB\index{WIB} and MSA
+information. 
+%
+BLS-provided Longitudinal Database (LDB) extracts as well as
+LEHD-developed imputation mechanisms are used to backfill NAICS information
+for periods in which NAICS was not collected. 
+%
+Finally, the QWI disclosure
+mechanism is initiated in the ECF. 
+%
+We will describe in
+Section~\ref{sec:ecf_processing}, while the details of the NAICS imputation
+algorithm are described in Section~\ref{sec:ecf:naics}, and the entire
+disclosure-proofing mechanism described in Section~\ref{cha:disclosure_proofing}.
+
+
+\subsection{Constructing the ECF}
+\label{sec:ecf_processing}
+
+%\subsection{Program Overview}
+
+ECF processing starts by stacking yearly  ES202 files. 
+General and state specific consistency checks are then performed.
+The COUNTY, NAICS, SIC, and EIN data are checked for invalid values. The 
+%\marginpar{\tiny is this correct? was SIC, expanded to NAICS}
+ check for industry codes goes beyond a simple validity check. If a
+4-digit SIC code or 5-digit NAICS code is
+present, but is not valid, then the industry code undergoes a conditional impute
+based on the first 2 and 3 (SIC) or 3,4 and 5 (NAICS) digits.%
+%
+\footnote{Both NAICS 1997 and NAICS 2002 are used. The same procedure is
+  later used for LDB data.}%
+%
+If the resulting codes are not valid, then the industry code is set to
+missing, and  imputed at a later stage of processing.
+
+Based on the EHF, SEIN-level quarterly employment and payroll totals are
+computed. UI data is used as an imputation source for either payroll or
+employment in the following situations:
+
+\begin{itemize}
+\item if ES202 employment is missing, but ES202 payroll is reported, then UI
+employment is used. 
+\item if ES202 employment is zero, then UI employment is {\em not} used,
+  since this may be a correct report of zero employment for an existing
+  SEIN. The situation may arise when bonuses or benefits were retro-actively paid, even
+  though no employees were actively employed.
+\item if ES202 payroll is zero and ES202 employment is positive, then UI
+  payroll is used. 
+\item if  ES202 payroll and employment are both zero or both missing, then
+  UI payroll and employment are  used.
+\end{itemize}
+
+The ES202 data contains a ``master'' record for multi-unit SEINs, which is
+removed after preserving information not available in the establishment
+records.
+% (I initially allocate the data equally to each establishment). 
+Various inconsistencies in the record structure are also dealt with, such
+as two records (master and establishment) appearing for a
+single-unit. 
+%
+Initially, information from the master records is used to
+impute missing data items for the establishments.  A flat prior is
+used in the allocation process: each establishment is assumed to have equal
+employment and payroll. This is improved upon later in the process.
+
+The allocation process implemented above (master to establishments) does not
+incorporate any information on the structure of the SEIN. To  improve on
+this, SEINs that are missing firm structure for some periods, but reported a
+valid multi-unit structure in other periods, are inspected. The absence of
+information on firm structure typically occurs when an SEIN record is
+missing due to a data processing error. A SEIN with a
+valid multi-unit structure in a previous period is a candidate for
+structure imputation. The  firm
+structure is then imputed using the last available record with a multi-unit
+structure. Payroll and employment are allocated appropriately.
+
+From this point on, the firm structure (number of establishments per SEIN)
+is defined for all periods. Geocoded data from the GAL is incorporated to
+obtain precise geographic information on all establishments. 
+
+%\marginpar{\tiny NAICS impute here?}
+Geographic data, industry codes (SIC and NAICS) and EIN data
+ from  time periods with valid data are used to fill  missing data
+in other periods for the same establishment (SEINUNIT). If at least one
+industry variable among the several sources (SIC, NAICS1997, NAICS2002,
+LDB) has valid data, it is used to impute missing values in other fields.
+%\marginpar{\tiny algorithm here?} 
+Geography, if still missing, is imputed
+conditional on industry, if available. Counties with larger employment in a
+SEINUNIT's industry have a higher probability of being selected.
+
+For SEINs, the (employment and establishment-weighted) modal values
+of county, industry codes, ownership codes, and EIN are calculated for each
+SEIN and year-quarter. SEIN-level records with missing data are filled in
+with data from the closest time period with valid data.
+
+At this point, if an SEIN mode variable has a missing value, then no
+information was ever available for that SEIN. Additional attention is
+devoted to  industry codes, which
+are critical for QWI processing. 
+%SIC is imputed based on the
+%distribution of employment across 4-digit SIC within states. 
+% A draw from a uniform distribution is used to impute SIC. SIC industries with a larger
+%share of employment are more at risk for assignment than those with a
+%relatively small share. The SIC code is then used to impute NAICS.  
+% 
+% from Kevin
+%
+SIC and NAICS are randomly imputed with probability proportional to the
+state-wide share of employment in 4-digit SIC code or 5-digit NAICS
+code. SIC and NAICS codes with a larger share of employment have a higher
+probability of selection. 
+%
+If an industry code is imputed, it is done so once for each SEIN and
+remains constant across time. These industry codes are then propagated to
+all SEINUNITs as well.
+
+With most data items complete, weights are calculated. These weights are
+discussed in the section on QWI (Section~\ref{sec:aggregate}). Furthermore,
+the disclosure proofing is also prepared at the SEIN and SEINUNIT
+level. This is discussed in detail in Section~\ref{sec:confidentiality}. 
+
+
+\subsection{Imputations in the ECF}
+\label{sec:ecf:impute}
+
+Many data items, when missing, are imputed. The following is a summary list
+of such imputations. Imputations can be of two types: algorithmic -- data
+closest in time is copied into the  missing data items -- and probabilistic
+-- the data is drawn from an empirical distribution, conditional on a
+maximum of available information.
+
+\begin{itemize}
+\item Employment and payroll: can be imputed based on information in the
+  SEIN master record, or based on information computed at the SEIN-level from UI
+  data. Imputation is always algorithmic - no employment or payroll is ever
+  imputed through probabilistic methods. 
+\item Firm structure (relative size of establishments) can be imputed based
+  on reported firm structure in other periods. Imputation is always algorithmic.
+\item Geography, industry codes, ownership, and EIN are imputed
+  algorithmically first, if possible.
+\item Geography, if still missing, is imputed conditional on industry, if
+  available, and unconditionally otherwise. Counties with more employment
+  in an SEINUNIT's industry have a higher probability of being selected.
+\item Industry codes are imputed probabilistically based on empirical
+  correspondence tables conditional on the same unit's observed other
+  industry data items. For instance, if SIC is missing, but NAICS1997 is
+  available, the relative observed distribution of SIC-NAICS1997 pairs is
+  used to impute the missing data item.
+\item If all previous imputation mechanisms fail, SIC is imputed
+  unconditionally based on the observed distribution of within-state
+  employment across SIC industries. Once SIC is assigned, the previous
+  conditional imputation mechanisms are again used to impute other industry
+  data items.
+\end{itemize}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "qwi-overview"
+%%% End: 

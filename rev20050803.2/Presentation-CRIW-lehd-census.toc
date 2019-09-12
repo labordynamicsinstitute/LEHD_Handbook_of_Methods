@@ -1,0 +1,30 @@
+\pcontentsline {1}{Introduction}{2}{3}{1}
+\pcontentsline {0}{What are QWI?}{3}{10}{}
+\pcontentsline {0}{What is it?}{10}{17}{}
+\pcontentsline {0}{In this paper}{17}{23}{}
+\pcontentsline {1}{Input Files}{23}{24}{2}
+\pcontentsline {0}{Wage records: UI}{24}{29}{}
+\pcontentsline {0}{Employer reports: ES202}{29}{35}{}
+\pcontentsline {0}{Demographics}{35}{37}{}
+\pcontentsline {1}{Infrastructure Files}{37}{38}{3}
+\pcontentsline {0}{EHF: Employment History Files}{38}{41}{}
+\pcontentsline {0}{ICF: Individual Characteristics File}{41}{51}{}
+\pcontentsline {0}{ECF: Employer Characteristics File}{51}{61}{}
+\pcontentsline {0}{GAL: Geocoded Address List}{61}{72}{}
+\pcontentsline {0}{Flow so far}{72}{75}{}
+\pcontentsline {1}{Forming Aggregated Estimates: QWI}{75}{76}{4}
+\pcontentsline {0}{Correction of spurious worker flows}{76}{84}{}
+\pcontentsline {0}{Solution: Successor-Predecessor File}{84}{88}{}
+\pcontentsline {0}{Attaching establishment characteristics to jobs}{88}{99}{}
+\pcontentsline {0}{U2W: Unit to Worker Impute}{99}{110}{}
+\pcontentsline {0}{Probability Model}{110}{118}{}
+\pcontentsline {0}{Implementation}{118}{122}{}
+\pcontentsline {0}{Implementation}{122}{127}{}
+\pcontentsline {0}{Computing the statistics}{127}{141}{}
+\pcontentsline {1}{Disclosure-proofing the QWI}{141}{142}{5}
+\pcontentsline {0}{Noise-infusion }{142}{149}{}
+\pcontentsline {0}{Item suppression}{149}{156}{}
+\pcontentsline {1}{Publicly available files}{156}{157}{6}
+\pcontentsline {0}{Publicly available files}{157}{165}{}
+\pcontentsline {1}{Conclusion}{165}{166}{7}
+\pcontentsline {0}{Flow so far}{166}{170}{}

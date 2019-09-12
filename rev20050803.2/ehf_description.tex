@@ -1,0 +1,59 @@
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+
+% -*- latex -*- 
+%
+% Time-stamp: <05/04/05 10:29:28 vilhuber> 
+%              Automatically adjusted if using Xemacs
+%              Please adjust manually if using other editors
+%
+% ehf.tex
+% Responsible: Paul
+% Part of QWI_methods.tex
+
+
+%\subsection{Employment History File}
+\label{sec:ehf_overview}
+%\label{cha:ehf}
+
+
+The \textit{Employment History File} (EHF)\mindex{EHF}%
+\index{Employment History File|see{EHF}}
+%\footnote{%
+%See Appendix~\Vref{app:ehf_technical} for detailed information on the
+%creation of the EHF.} 
+is designed to store the complete in-state work
+history for each individual that appears in the UI%
+\index{UI} wage records. The EHF for each state contains one record for each
+employee-employer combination~-- a job\index{job} --  in that state in each
+year.
+% Every individual who is employed during a given year will then have one observation per
+%employer for that year.
+  Both annual and quarterly earnings variables are available in
+the EHF. Individuals who never have strictly positive earnings (a
+theoretical possibility) are dropped. 
+
+A re-ordering of the data into one observation per
+job, with all quarterly earnings and activity records available within one record, is
+also available (Person History File, PHF\index{PHF}). Activity is defined
+as active employment within a quarter, requiring a strictly positive value
+for quarterly earnings. A similar time-series of activity at the SEINUNIT level (UNIT History
+File, UHF\index{UHF}) and the SEIN level (SEIN History File,
+SHF\index{SHF}) is also computed at this time. 
+
+A comparison of the earnings and employment information from the UI and
+ES202 files is one of the core quality measures that are computed. Large
+discrepancies are highlighted, and clarified with the data provider. Often,
+a corrected data file can be imported into the LEHD system. Not
+all data discrepancies can be easily resolved. In particular the historical
+data sometimes are not correctable, because the data has been lost or
+corrupted.%.
+%
+\footnote{A future extension currently being developed will allow to apply
+imputation models to correct for large discrepancies.}
+%
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "qwi-overview"
+%%% End: 

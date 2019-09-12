@@ -1,0 +1,83 @@
+%TCIDATA{Version=4.00.0.2321}
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+                      
+%
+% Time-stamp: <05/04/05 14:03:46 vilhuber>
+
+%\section{Forming Aggregated Estimates}
+%\label{sec:aggregate}
+
+The infrastructure files in principle have all the information necessary to
+compute the QWI statistics. However, to be able to compute statistics at a
+low level of geographical aggregation, we need to be able to place
+individuals at specific work locations. And since the focus is on dynamics
+-- flows of workers in and out of firms and workplaces -- the economic
+definition of a workplace and a firm needs to be well-defined.
+
+
+\section{Connecting firms intertemporally: the Successor-Predessor File
+(SPF)}
+\label{sec:spf}
+
+The firm identifier used in all of LEHD's files is a state-specific
+account number in that state's unemployment insurance system, used in
+particular to collect payroll taxes. These account numbers, here called 'SEIN', can and do
+change for a number of reasons, including a simple change in legal form or
+a merger. Typically, the separation of a worker from a firm is
+identified by a change in the SEIN  on that worker's wage
+records. If a firm changes SEINs, but makes no other changes, the
+worker would seem to have left the original firm, when in fact his
+employment status remains unchanged. Thus, a simple change in account
+numbers would lead to the observation of a firm closing, when in fact, all
+workers remain employed.
+
+To identify such events, the Successor Predecessor File (SPF) tracks large worker movements between SEINs.
+\citet{tp-2003-09} used the SPF for an early analysis in one particular state of
+the impact of such an exercise. The SPF provides for a variety of link
+characteristics, based on the number of workers leaving an SEIN, in both
+absolute and relative terms, and the number of workers entering an SEIN,
+again in absolute and relative terms. 
+
+For the QWI, only the strongest links are used to filter out spurious firm
+identifier changes: If 80\% of an SEIN's workers (the predecessor) are
+observed to move to a single successor, and that successor absorbs 80\% of
+its employees from a single predecessor, then all flows between those two
+account numbers are filtered out, and treated as if they had never existed.
+
+An evaluation of the impact of the SPF on the aggregate QWI statistics is
+currently under way.
+
+Of importance to the Unit-to-Worker impute described in the next section is
+a similar measure, computed within an SEIN. For most states and firms within
+states, the breakout of units into SEINUNITs is  at the discretion
+of the firm, and the firm may decide to change such a breakout. Again, by
+following groups of workers as they move between SEINUNITs, spurious
+intra-SEIN flows can be detected. 
+
+
+\section{Allocating workers to workplaces: Unit-to-worker impute (U2W)}
+\label{sec:u2w}
+
+
+Early versions of the QWI (then
+called the Employment Dynamics Estimates, EDE), were computed only at the SEIN
+level, with employment allocated to a single location per SEIN. This
+approach was driven by the absence of workplace information on almost all
+state-provided wage records. Only the state of Minnesota requires the
+identification of a worker's workplace (SEINUNIT) on a wage records. 
+
+%For the QWI, a more sophisticated approach was needed. In a nutshell, using
+%the Minnesota data, a model relating proximity between residence and
+%potential workplaces for workers was developed. The parameters from that
+%model, which are regularly updated, are then used to impute a worker's
+%workplace. This imputation is performed ten times, and all ten implicates
+%are later used in the computation of the QWI. 
+
+%\input{impute_description.tex}
+\input{impute_description_bryce_edits.tex}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "qwi-overview"
+%%% End: 

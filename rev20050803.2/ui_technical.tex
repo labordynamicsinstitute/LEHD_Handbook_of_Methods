@@ -1,0 +1,248 @@
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+                      
+% -*- latex -*- 
+%
+% Time-stamp: <02/03/27 21:07:15 vilhuber> 
+%              Automatically adjusted if using Xemacs
+%              Please adjust manually if using other editors
+%
+% ui_technical.tex
+% Responsible: Lars
+% Part of QWI_methods.tex
+
+The unemployment insurance (UI)\index{UI} wage records are and have been
+received on a variety of media: CDROM\index{CDROM} and different
+tape\index{tape} formats. On these media, files may come as single file
+spanning all quarters of available data down to several files per quarter.
+Formats of the actual data on the media vary as well, from flat
+ASCII\index{ASCII} files that vary across vintages of data to other data
+formats such as Fortran\index{Fortran} or Dbase files. Formats do vary
+across states, and may vary within the date range of any given state.
+
+LEHD has developed a set of SAS macros that take these diverse data and
+standardize them. This also occurs for the \aindex{ES-202} data, but is documented
+separately (see Chapter~\Vref{app:es202_technical}). The data analyst
+reading in the data configures the \aindex{SAS} macros in order to accomodate the
+varying formats. The suite of programs then reads in the data, standardizes
+variable names and formats, sorts into a standard sort order, and saves the
+file in a standardized location with a standardized name. All subsequent
+processing, from the ICF\index{ICF} on, uses only these standardized data. It is this
+suite of procedures and programs which will be described in the next sections.
+
+\section{Data formats\label{app:ui_formats}}
+
+The first step after receipt of the data is to ascertain the format the
+data is in. Table~\Vref{tab:orig_layout} describes the standard format in
+which data ideally is received. At the present date, 10 different
+formats, comprising both ASCII\index{ASCII} and Dbase\index{Dbase} data descriptions, have been used
+in the QWI processing. All formats are available in 
+\begin{center}
+/programs/projects/auxiliary/Layouts  ,
+\end{center}
+with legacy layouts labeled 
+\begin{center}
+ \index{state@\&state.}. \&state..ui.00.0x.layout.sas
+\end{center}
+and newer standardized layouts called
+\begin{center}
+  ui.00.0x.layout.sas.
+\end{center}
+If it is ascertained that the data for a given state fits one of the
+available data descriptions, then that information will become one of the
+macro parameters to be used in the readin files. If the data does not fit
+any of the available descriptions, then a new standardized layout with
+sequence number \textit{0x +1} is generated, and saved in the layout repository.
+
+\section{Program sequence\label{app:ui_programs}}
+
+The following list contains the names of all programs used to process the raw
+data files. They are listed by location.
+
+
+\paragraph{/data/master/ui/\&state/conversions/SSN}
+ Contains state-specific macro calls. The following programs are typically
+ found in this directory (see Section~\Vref{app:ui_step_by_step} for details).
+
+\begin{itemize}                                %%%
+\item {\tt config\&state..sas}\index{config\&state..sas}: Configuration file containing directory positions 
+  and format definitions, read in by all SAS program files.
+\item {\tt 01.01.readin.sas}: Reads the data in using the appropriate \mindex{layout}.
+\item {\tt 02.02.readin-stats.sas}: Provides statistics and quality control on
+  the readin files. Also creates a set of \LaTeX\index{LaTeX@\LaTeX} tables that can be used in
+  the production of a codebook.
+\item {\tt 03.03.uniquessn.sas}: Creates a file of unique \aindex{SSN}s
+  and, if name information is on the file, a file of unique
+  \Mindex{SSN-Name combinations}. These files are used for integrating
+  other Census data.
+\item {\tt 04.04.readin-sort.sas}: Yearly files are put into the standard
+  sort order.
+\item {\tt 05.05.pointer.sas}: Creates a \Mindex{pointer file} between the
+  unique record identifier \Mindex{RID} and the unique SSN-Name identifier
+  \Mindex{UID}.
+\end{itemize}                                  %%%
+
+
+\paragraph{/programs/projects/auxiliary/}
+
+Contains generalized programs (macros):
+
+\begin{itemize}
+\item macro\_ui.readin.01.sas
+\item macro\_ui.readin.02.sas
+\item macro\_ui.analysis.01.sas
+\item macro\_ui.analysis.02.sas
+\item macro\_ui.sort.01.sas
+\item macro\_ui.uniquessn.01.sas
+\item macro\_ui.pointer.01.sas
+\end{itemize}
+
+
+\paragraph{/programs/projects/auxiliary/Layouts}
+\mindex{layout}
+
+Contains layouts. As of the receipt of North Carolina data, the following
+format files have been defined:
+
+\begin{description}
+\item Legacy layouts
+\begin{itemize}
+\item ca.ui.00.01.layout.sas
+\item fl.ui.00.01.layout.sas
+\item fl.ui.00.02.layout.sas
+\item md.ui.00.01.layout.sas
+\end{itemize}
+\item Standardized layouts
+\begin{itemize}
+\item ui.00.01.layout.sas
+\item ui.00.02.layout.sas
+\item ui.00.03.layout.sas
+\item ui.00.04.layout.sas
+\item ui.00.05.layout.sas
+\end{itemize}
+\end{description}
+
+\section{Step-by-step instructions}
+\label{app:ui_step_by_step}
+
+\begin{description}
+\item \ 
+
+
+  \begin{steps}
+  \item If not already in existence, create a state-specific subdirectory
+    (or ideally, a separate partition) in /data/master/ui/, using the
+    two-letter lowercase \aindex{postal abbreviation} for that state. That
+    abbreviation will be referred to elsewhere in this chapter as
+    \textit{\&state.}\index{state@\&state.}.
+  \item Determine the format of the data. Verify with existing
+    \aindex{layout}s. If a layout matches, retain the number (the second
+    digit in the layout file name) for use in the relevant macros.
+  \item If not already in existence, create data and program subdirectories
+    of /data/master/ui/\&state.:
+
+  \begin{itemize}
+  \item ./conversions/SSN , which will contain programs that work on the
+    original data
+  \item ./ssn/rawdata , which will contain links to the original data
+    (which is actually stored in ./received)
+  \item ./ssn/sasdata , which will contain the standardized raw data
+  \item ./conversions/UI , which will contain programs that work on the
+    PIKized data
+  \item ./\&year/sasdata , where \&year goes from the first observed year
+    to the last available year. This will contain the final PIKized UI (and
+    ES-202) SAS files.
+\end{itemize}
+\item If not done yet, create symbolic links in ./ssn/rawdata according to
+  conventions as defined in the LEHD \aindex{Data standard} handbook
+  (Datastand.pdf), available in /data/doc.
+\item If not already in existence, copy the file
+  \textit{../XX/conversions/configXX.sas} from a template state directory
+  (a previous implementation of the readin programs, preferably the latest,
+  where XX stands for some other state abbreviation) to ./conversions.
+  Rename it to \textit{config\&state..sas}\index{config\&state..sas} and
+  adjust its contents. In particular, adjust the beginning and end years
+  and quarters of the data, since this information is used system-wide.
+\item If not already in existence, copy the file
+  \textit{../XX/conversions/SSN/configXX.sas} from a template state
+  directory to ./conversions/SSN. Rename it to \textit{config\&state..sas}
+  and adjust macro variables (but not SAS library names) to match the file
+  created in the previous step. The only difference between the two files
+  should be in the SAS library names!
+\item Copy the first five files listed in the above program list (serial
+  numbers 01.01-05.05) from  \textit{../XX/conversions/SSN} 
+  to ./conversions/SSN. 
+\item Adjust the the macro variable \textit{\&state.} in
+  each. 
+\item Further adjust \textit{01.01.readin.sas}. 
+  \begin{itemize}
+  \item[Tip:] comment out the line starting with ``\%readui'' by putting a
+    ``*'' in front of it, and run the program. The file
+    ``macro\_ui.readin.01.sas'' will print out instructions to the log
+    file. Then uncomment the line again, and adjust the parameters
+    according to the instructions.
+\end{itemize}
+The salient parameters are:
+  \begin{itemize}
+  \item \aindex{layout}=aa. This determines the layout used to read in the
+    file. This should have been determined earlier. If the layout is the
+    standard layout as defined by ui.00.01.layout.sas, then no adjustments
+    need be made. For any other variable, add ``layout=aa'' to the end of
+    the (comma-separated) parameter list of the macro call ``\%readui''.
+  \item freq=xx. This parameter is related to how the data files are
+    structured. If there is one file per quarter, then no adjustments need
+    to be made. If there is one file per year, then use ``freq=yearly'',
+    and if there is one global file, then use ``freq=global''.
+  \end{itemize}
+\item Further adjust \textit{03.03.uniquessn.sas}. The parameter
+  ``name=yes'' needs only be set if the data will be SSN-edited. If not,
+  then the default value of ``name=no'' is sufficient, and will save
+  significant amounts of disk space.
+\item No further adjustments should need to be made to the other 
+  files, but double-check.
+\item Run all five programs in sequence. Some of the programs can be long
+  to run. 
+  \begin{itemize}
+  \item[Tip:] You can use the (LEHD-specific) command ``\Mindex{mailsas}''
+    to have yourself sent a result code when the program has finished
+    executing.
+  \item[Tip:] Programs 05.05 is optional if the data will not be SSN-edited.
+  \end{itemize}
+\item Inspect the log and list files after each run, and adjust the
+  programs if necessary. These programs have been tested many times, but
+  are not guaranteed to be fool-proof.
+\item Create a \Mindex{codebook} in /data/doc/latex. To start, run the
+  script ``\Mindex{prepare-documentation.ksh}''. The project name should be
+  ``ui\&state.''.
+  \begin{itemize}
+  \item Edit the file templates created by this program using \aindex{Xemacs}, other
+    raw text editors, or \aindex{Scientific Word}/Workplace.
+  \item[Tip:] When describing the variables, you can use, with minor modifications, the \LaTeX\index{LaTeX@\LaTeX} tables    created by 02.02 program.
+  \item Create the Postscript version of the file by ``compiling'' the
+    {\LaTeX} document (command: ``latex name\_of\_file[.tex]''). Multiple
+    compilation runs may be necessary, and are indicated at the end of each
+    compilation run. Do not use Scientific Word for this step.
+  \item Create a preliminary PDF document by running ``\aindex{pdflatex}''
+    (syntax is othewise the same as above).
+  \item When satisfied, use \aindex{Acrobat Distiller} on your PC to
+    convert the Postscript version of the file into that final PDF version
+    (it is slightly nicer than the one created by pdflatex).
+  \end{itemize}
+\item Update the \aindex{DAF}.
+\item Notify LEHD personnel of the availability of new or modified \aindex{UI}
+  files. 
+\end{steps}
+\end{description}
+
+Further processing depends on the necessity of a SSN edit\index{SSN!edit}:
+\begin{itemize}
+\item If there is an SSN edit, then the data stay on LEHD systems until the
+  end of that processing.
+\item If there is no SSN edit, then the data get transferred to \aindex{ARRS}/\aindex{PRED}
+  immediately for replacement of the SSN by the \aindex{PIK}.
+\end{itemize}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "QWI_methods"
+%%% End: 

@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2005-08-03T02:30:01.483470Z"
+   url="file:///home/vilhuber/Repository/Papers_Bib/Bib"
+   last-author="vilhuber"
+   kind="dir"
+   uuid="b8039f3a-65fd-0310-9870-e9e8d310d20a"
+   revision="1"/>
+<entry
+   committed-rev="2"
+   name="self.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="7a1ca4ff888758530f0b202de8ce04e4"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="labor.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="0edc268a0690710e330bbc4e4c83f56a"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="census.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="9da223e4a9de0dd4a1bd7160d08a808a"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="travail.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="ccf63bd532ae479bb99971d9d29efd07"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="train.ps"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="945840242882632f9db5b07cabcd058a"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="displaced.workers.20010823.txt"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="d85c071f140aedcc1c566357a4bed675"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="displaced.workers.20010823.ps"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="9d569f10f3de51bec0750a97ebfcf165"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="jel-classification"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="fafb273cea603d1fd1d1fcc3fb600f63"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="training.raw"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="752aa4e1bd9df97a842e830785a42165"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="data.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="61767b68ab72953d69743c372b264837"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name=".rsync.thisdir.up"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="06c205410a1f6fcb9a647c19e9aa7b62"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="ces.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="3de522dd1d6a793573e9e829d5c70159"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="printbib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="0c78f78794512d07ba832c9e09aab7b7"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="hierarchy.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="b1a01f910898b4eb947fba414725c582"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="travail-old.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="a09ed87c960bfe69f0a8a435780405ca"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="test.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="529d6f65bda2f77cf5068b9cb2d113c5"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="train.bbl"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="2fbe8ca1054525abd413353a7de4dd66"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="repeat.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="a5dc82ee0cd70d292b89026167724041"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="eff-wage.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="f5af6da7be41e8a8ba2024fff7b68697"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="duration.raw"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="34db2f6a8123e75154e605d08c2c746f"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="lehdwp.bib"
+   text-time="2005-08-03T02:27:29.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="459212e115f3a7e4cf586c35cff59a77"
+   last-author="vilhuber"
+   kind="file"
+   prop-time="2005-08-03T02:31:16.000000Z"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="germany.york.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="6bf567091e2b5eeef472b0ff1823e99c"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="train.blg"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="d41d8cd98f00b204e9800998ecf8427e"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="econometrics.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="6704c1401129f200c4873d963b339351"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="rsync.thisdir.up"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="81549101c831611486fb4939059550af"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name=".rsync.thisdir.down"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="7d90ed1832eaf14975d5e76ecac138d2"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="vw.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="c1dac3f6e39b9763b44eabb76501ac9e"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="abbrev.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="64fc44f4173e501b60613ace5474bfa0"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="germany.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="c078ee3683de56488ec9356fa6779a4d"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="education.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="e56d1853e56dc1b5db8690e1abb615be"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="rsync.thisdir.down"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="453b430bac1d035bd2bcbef003b102a7"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="immigration.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="ef2d3362f6b3f1fda54243828a96c362"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="lehdtp.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="e6d4cdc8b5f5c90a32e434e714d9cabf"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="quotes.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="1911d0f30151ab71a6a3259820cda09f"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="admindata.bib"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="0fa9ccedcac22dfeb8a7e27309e7a853"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+<entry
+   committed-rev="2"
+   name="test.tex"
+   text-time="2005-08-03T02:25:36.000000Z"
+   committed-date="2005-08-03T02:32:15.577752Z"
+   checksum="061bb4baa594a9534786a0c3e28af656"
+   last-author="vilhuber"
+   kind="file"
+   revision="2"/>
+</wc-entries>

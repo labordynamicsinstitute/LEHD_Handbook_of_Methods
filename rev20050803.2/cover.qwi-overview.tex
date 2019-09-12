@@ -1,0 +1,76 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% +
+% UNCOMMENT ONE OF THE TWO FOLLOWING BLOCKS                       % +
+% DO NOT CHANGE THESE LINES                                       % +
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% +
+% This is for technical papers (TP series)                        % +
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% +
+\ifx\pdfoutput\undefined                                          % +
+\documentclass[notitlepage,dvips,10pt,letterpaper]{lehdtechnical} % +
+\else                                                             % +
+\documentclass[notitlepage,pdftex,10pt,letterpaper]{lehdtechnical}% +
+\fi                                                               % +
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% +
+% This is for Info docs (ID series)                               % +
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% +
+%\ifx\pdfoutput\undefined                                          % +
+%\documentclass[notitlepage,dvips,10pt,letterpaper]{lehdother}     % +
+%\else                                                             % +
+%\documentclass[notitlepage,pdftex,10pt,letterpaper]{lehdother}    % +
+%\fi                                                               % +
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% +
+%                                                                 % +
+% ENTER THE TITLE AND AUTHOR INFO IN THIS SECTION                 % +
+%                                                                 % +
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% +
+\newcommand{\mytitle}{The LEHD Infrastructure Files and the Creation of the
+Quarterly Workforce Indicators} 
+\newcommand{\mysubtitle}{}
+%\newcommand{\myauthors}{John M. Abowd, Bryce  E. Stephens, Lars Vilhuber, \\ Fredrik Andersson, Kevin L. McKinney, Marc Roemer, and Simon Woodcock}
+\newcommand{\myauthors}{John M. Abowd, Bryce  E. Stephens, Lars Vilhuber, Fredrik Andersson, Kevin L. McKinney, Marc Roemer, and Simon Woodcock}
+\newcommand{\mythanks}{}
+\date{April 2005}
+\papernumber{2005-02}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% +
+%                                                                 % +
+%  To combine this coverpage with another document:               % +
+% gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=result.pdf +
+%                                         source1.pdf source2.pdf % +
+%  UNDER NORMAL CIRCUMSTANCES, NO CHANGES NECESSARY AFTER THIS    % +
+%                                                                 % +
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% +
+\usepackage{times}
+\usepackage{fullpage}
+\usepackage{pstricks}
+\usepackage{color}
+\definecolor{myblue}{rgb}{0,.2,1}
+\newrgbcolor{myred}{1 .1 0}
+% PDF specifics
+\usepackage[%4,%
+bookmarks,%
+bookmarksopen,%
+plainpages,%
+%colorlinks,%
+urlcolor=myblue,
+filecolor=myblue,
+pdftitle={\mytitle},%
+%pdfpagemode=UseOutlines,%
+pdfauthor={\myauthors},%
+pdfsubject={LEHD technical paper}%
+%pdfstartview=FitW%
+%dvips%
+%latex2html%
+]{hyperref}
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%% Title info
+\author{\myauthors}
+\title{\mytitle \\ \mysubtitle }
+\maketitle
+\thispagestyle{empty}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

@@ -1,0 +1,221 @@
+% prepared for NBER conference Empirical Labor Economics
+% Authors: John A, Paul L, Lars V
+
+%==================== DO NOT EDIT WITH SCIWORD ====================
+%++++++++++++++++++++ do not modify these lines++++++++++++++++++ +
+%\ifx\pdfoutput\undefined                                        % +
+%\documentclass[dvips,12pt,letterpaper]{report}                  % +
+%\else                                                           % +
+\documentclass[pdftex,12pt,letterpaper]{report}                 % +
+%\fi                                                             % +
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ +
+
+%++++++++++++++++++++ Adjust this as necessary ++++++++++++++++++++
+%-------------------- Start of title info -------------------------
+% Use these definitions, since they are also used in headers, PDF info,
+% etc. 
+\newcommand{\mytitle}{The LEHD Infrastructure Files and the Creation of the
+Quarterly Workforce Indicators} 
+\newcommand{\myshorttitle}{LEHD/ QWI Overview }
+\newcommand{\myauthors}{John M. Abowd, Bryce  E. Stephens, Lars
+  Vilhuber, \\
+ Fredrik Andersson, Kevin L. McKinney, Marc Roemer, and Simon Woodcock}
+%\newcommand{\myversion}{January 22 2002}
+%\papernumber{2002-02}
+ \newcommand{\myversion}{\today}  %alternate version
+
+\title{\mytitle \\
+\bf Preliminary - Do not cite or quote without authorization by the authors
+}
+\author{\myauthors%
+\thanks{The authors acknowledge the substantial contributions of the staff and 
+senior research fellows of the U.S. Census Bureau's Longitudinal 
+Employer-Household Dynamics (LEHD) Program. We thank participants of the
+2005 CRIW ``Conference on Producer Dynamics: New Evidence from Micro Data''
+for their comments. This document is based in part on
+a presentation first given at the  NBER Summer 
+Institute Conference on Personnel Economics, 2002, by John Abowd, Paul
+Lengermann, and Lars Vilhuber. 
+This research is a part of the U.S. Census Bureau's Longitudinal
+Employer-Household Dynamics Program (LEHD), which is partially supported by
+the National Science Foundation Grant SES-9978093 to Cornell University
+(Cornell Institute for Social and Economic Research), the National
+Institute on Aging Grant R01~AG018854-02, and the Alfred P. Sloan
+Foundation. This document reports the results of research and analysis
+undertaken by  U.S. Census Bureau staff. It has undergone a Census
+Bureau review more limited in scope than that given to official Census
+Bureau publications. This document is released to inform interested
+parties of ongoing research and to encourage discussion of work in
+progress. The views expressed herein are attributable only to the
+author(s) and do not represent the views of the U.S. Census Bureau, its
+program sponsors, Cornell University, or data providers. Some or all of the data used in this paper are confidential data from the LEHD Program. The U.S. Census Bureau supports external researchers' use of these data through the Research Data Centers (see www.ces.census.gov). For other questions regarding the data, please contact Jeremy S. Wu, Director, U.S. Census Bureau, LEHD Program, Demographic Surveys Division, FOB 3, Room 2138, 4700 Silver Hill Rd., Suitland, MD 20233, USA. (Jeremy.S.Wu@census.gov http://lehd.dsd.census.gov ).
+}}
+\date{\myversion}
+
+%============== beyond here no changes necessary ====================
+
+% other packages may be loaded by formats.tex
+
+
+%-------------------- External info is stored in this file ---
+\input{formats}
+\renewcommand\chaptername{Section}
+
+%-------------------- Start of document --------------------
+\begin{document}
+%\layout
+\maketitle  % create title info/page
+\renewcommand{\thepage}{\roman{page}}
+\begin{abstract}
+  \input{\mypath/qwi-abstract}
+\end{abstract}
+
+% used during editing. Comment out afterwards.
+\tableofcontents
+\newpage
+\listoftables
+\newpage
+\listoffigures
+\newpage
+
+% main section
+\renewcommand{\thepage}{\arabic{page}}
+\setcounter{page}{1}
+\chapter{Introduction}
+\label{sec:intro}
+\input{\mypath/qwi-intro.tex}
+
+\chapter{Input files}
+\label{sec:input_files}
+\input{\mypath/input-files.tex}
+
+\chapter{Infrastructure files}
+\label{sec:infra_files}
+\input{\mypath/infrastructure-files.tex}
+
+\chapter{Auxiliary data}
+\label{sec:aux}
+\input{\mypath/auxiliary-files.tex}
+
+\chapter{Forming Aggregated Estimates: QWI}
+\label{sec:aggregate}
+\input{\mypath/computing_qwi}
+
+\chapter{Disclosure-proofing the QWI}
+\label{sec:disclosure-proofing}
+\label{sec:confidentiality}
+\input{disclosure-proofing}
+
+\chapter{Publicly available files}
+\label{sec:public}
+\input{\mypath/public}
+
+\chapter{Concluding remarks}
+\label{sec:conclusion}
+\input{\mypath/conclusion}
+
+\clearpage
+\bibliography{bib/abbrev,bib/self,bib/travail,bib/lehdtp,bib/admindata,bib/ces}  
+\bibliographystyle{\mybibstyle}
+
+
+% -------------------- start of appendix --------------------
+%
+\newpage
+\appendix
+\chapter{Definitions of fundamental LEHD concepts\label{app:concepts}
+\label{cha:concept}
+\label{sec:concept}}
+
+\section{Fundamental Concepts}
+\label{sec:fundamental_concepts}
+\input{\mypath/definition_concepts.tex}
+
+\section{Definitions of Job Flow, Worker Flow, and Earnings
+  Statistics\label{app:definitions}
+\label{cha:definitions}}
+\input{\mypath/definition_technical.tex}
+
+%\chapter{Example data structure
+%  \label{app:data_structure}}
+% \input{\mypath/il_county_v23.tex} \newpage \input{\mypath/il_county_v23_fuzzed.freq.tex}
+%Need to create proc contents of a county level, and a smallest-aggregate
+%file from QWIPU files.
+
+%
+% 
+% \addcontentsline{toc}{chapter}{\it Appendices:}
+% \clearpage
+% 
+% \chapter{Overview of programming details\label{app:flowchart}}
+% %\updating
+% \input{\mypath/jobflow_flowchart.tex}
+% 
+% \chapter{Glossary of abbreviations\label{app:glossary}}
+% %\updating
+% \input{\mypath/glossary.tex}
+% 
+% 
+% \chapter{Data availability\label{app:daf}}
+% \input{\mypath/daf.tex}
+% 
+% \chapter{Technical details of the processing of UI wage record data\label{app:ui_technical}}
+% %\updating
+% \input{\mypath/ui_technical.tex}
+% \input{\mypath/ui_cdrom-tape-data-layout.tex} % this file is from the UI
+%                                            % codebook sequence
+% \clearpage
+% \chapter{Technical details of the processing of the Census Personal
+%   Characteristics File\label{app:pcf_technical}}
+% %\updating
+% \input{\mypath/pcf_technical.tex}
+% 
+% \chapter{Technical details for the Employment History File\label{app:ehf_technical}}
+% %\updating
+% \input{\mypath/ehf_technical.tex}
+% 
+% \chapter{Technical details for the Individual Characteristics File\label{app:icf_technical}}
+% %\updating
+% \input{\mypath/icf_technical.tex}
+% 
+% \chapter{Technical details for the Person Flows File\label{app:pff_technical}}
+% %\updating
+% \input{\mypath/pff_technical.tex}
+% 
+% \chapter{Technical details for the receipt of ES-202 data\label{app:es202_technical}}
+% %\updating
+% \input{\mypath/es202_technical.tex}
+% 
+% \chapter{Technical details for the Employer Characteristics File\label{app:ecf_technical}}
+% %\updating
+% \input{\mypath/ecf_technical.tex}
+% 
+% \chapter{Technical details of Job Flow, Worker Flow, and Earnings Statistics Programming\label{app:jobflow_technical}}
+% %\updating
+% \input{\mypath/jobflow_technical.tex}
+% 
+% \chapter{Technical details of Disclosure Proofing Methods\label{app:disclosure_technical}}
+% %\updating
+% \input{\mypath/disclosure_technical.tex}
+% % This will include bryce-blsraketotals.txt as well
+% 
+% \chapter{Data Series Used for Raking\label{app:raking_data}}
+% 
+% \input{\mypath/raking_data}
+% 
+% %\chapter{Analysis of Interstate Mobility\label{app:mobility}}
+% 
+% %\updating
+% %\input{\mypath/mobility.tex}
+% 
+% %\chapter{Coding Issues for Converting from SIC to NAICS\label{app:sicnaics}}
+% %
+% %\updating
+% %\input{\mypath/sicnaics.tex}
+% 
+% %\chapter{Linkage of UI files to SSEL and Economic Censuses\label{app:linkuissel}}
+% %\updating
+% %\input{\mypath/linkuissel.tex}
+% \printindex
+
+\end{document}

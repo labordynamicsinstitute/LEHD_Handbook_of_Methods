@@ -1,0 +1,376 @@
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+                      
+
+% -*- latex -*- 
+%
+% Time-stamp: <02/05/13 23:58:14 vilhuber> 
+%              Automatically adjusted if using Xemacs
+%              Please adjust manually if using other editors
+%
+% icf_technical.tex
+% Responsible: Fredrik/Martha
+% Part of QWI_methods.tex
+
+\index{ICF|(mainref}
+
+\section{Overview}
+\label{sec:icf_technical_overview}
+
+
+This chapter describes how to process the ICF and how to verify that the
+correct output is being produced. The purpose of the documentation is to
+provide enough guidelines for someone with no prior experience to process
+the ICF version 2.2%
+%
+\footnote{ICF version 2.2 is used in QWI versions 2.2 and 2.3.}
+%
+ in the absence of the normally responsible persons. The
+documentation also contains information, although not in great detail, on
+what each of the included programs in the program sequence does. This
+information should hopefully be sufficient to at least direct the reader to
+where in the program sequence any modifications should be applied if such
+should become necessary.
+
+\section{Versions of the ICF}
+
+Up to three different versions of the ICF coexist for each of the states
+that have been processed. The differences between version 2.0 and version
+2.2 are that the latter rely on updated Numident data, the latest available
+UI data, and geographical data from the STARs system. However, no further
+processing of the geographical data takes place in version 2.2. Version 3.0
+uses the very same input data as version 2.2 does to further refine the
+geographical information on the ICF. Thus, the information contained in
+version 2.2 is a strict subset of the information contained in version 3.0
+and, hence, could be viewed as an intermediate product of version 3.0 . As
+such, version 2.2 is to be deleted once version 3.0 has been finalized 
+\underline{and} it has been verified that version 2.2 data indeed is a
+strict subset of version 3.0. Version 2.2 is located in
+''/data/master/Individual/v2.2/sasdata/'' and should be accessible from
+''/data/master/Individual/current/sasdata/'', if it is the most current
+version of the ICF\ available. To understand why version 2.2 is a necessary
+intermediate product we need to understand what the input data are of each
+version and how the ICF is related to the other products of LEHD.
+
+\section{Input data}
+
+Version 2.2 uses the Employment History File as one of its inputs and the
+processing of version 2.2 can normally be initiated as soon as the EHF
+exists. (Before processing the CPR and the STARs data must also have been
+updated to include the specific state, but that can be done independently of
+the status of EHF.) In addition, version 3.0 uses the Employer
+Characteristics File as one of its inputs. However, the ECF uses the ICF
+version 2.2 as one of its inputs and, hence, version 2.2 is a necessary
+intermediate product.
+
+\section{Program sequence}
+
+The generic program `00.00.icfv2.2.sas' is located in
+`/programs/projects/icf/icfv2.2/programs'. The program is completely
+state-independent and all intermediate output files are deleted as soon as
+possible in the program. It uses `/saswork4' as its working directory,
+outputs `indmast{\&}state' and 'implicates{\&}state' to
+`/data/working/individual/ui{\&}state.{\_}rev2/', and creates an index for
+`pik' in `indmast{\&}state'. This program in turn includes several other
+programs described briefly later on. Unless any modifications are needed
+this program (or any if its underlying programs) should not be changed.
+
+\begin{description}
+\item The following is a step-by-step list of what needs to be done in order
+to create the ICF version 2.2 for any state:
+
+\begin{steps}
+\item Create a directory in /programs/projects/icf/icfv2.2/{\&}state/ and
+copy the program '01.01.icfv2.2.sas' from
+`/programs/projects/icf/icfv2.2/programs' to that directory. This is the
+program that contains all state-specific parameters and which calls upon
+`00.00.icfv2.2.sas' when executed. Only the two letter state abbreviation 
+\texttt{{\&}state} needs to be set, all other parameters are parsed from
+global configuration files, in particular
+
+/data/master/ui/{\&}state/conversions/config{\&}state.sas
+
+However, visual verification of the time span defined in that file should be
+done with the EHF and the Data Availability File (daf.xls in /data/doc).
+
+\item Make sure enough space is available on `/saswork4' and `/data/master'.
+If there is not (i.e. if `/saswork4/' has less than about 20 percent
+available space), it's probably time to erase some temporary files. If that
+is not possible change the libname `mywork' in `00.00.icfv2.2.sas' to
+another directory with enough space, after having consulted the owner of the
+alternative saswork directory specified.
+
+\item Before executing '01.01.icfv2.2.sas' you probably want to make sure
+that global macros and libnames are updated in `00.00.icfv2.2.sas'.
+
+\item Execute '01.01.icfv2.2.sas'. (For California the cpu-time is about 6
+hours and for Minnesota about 1 hour.)
+
+\item Verify that the output is correct in the log and list file of
+'01.01.icfv2.2.sas' (see Section~\Vref{icf_tech:what1}).
+
+\item Create a symbolic link in
+''/data/master/Individual/current/sasdata/''\ between
+''indmast\&state..sas7bdat'' and ''indmast\&state..sas7bndx, on the on hand,
+and ''/data/master/Indiviudual/v2.2/sasdata/indmast\&state..sas7bdat'' and
+''/data/master/Indiviudual/v2.2/sasdata/indmast\&state..sas7bndx'', on the
+other hand, assuming that v2.2 is the most current version of the ICF\
+available for that state.\ 
+
+\item Update `daf.xls' to reflect the fact that the ICF version 2.2 exists.
+
+\item Notify the rest of the LEHD by e-mail that the ICF version 2.2 is done.
+\end{steps}
+\end{description}
+
+\section{Description of sub-programs}
+
+%The following is based on the documentation by Martha in /data/master/doc/public/Project-files.
+The following is a description of sub-programs called from the main program
+`00.00.icfv2.2.sas'. 
+All of the list files associated with each of the included programs have
+``Proc Contents'' printed in them to provide documentation on the exact
+names and formats of variables. 
+
+\paragraph{00.01.icfv2.2.sas}
+
+This program reads in the Employment History File and counts the number of
+unique SEINs with positive earnings for each individual in each year and
+year/quarter. The resulting data set, persum01.sas7bdat contains the
+variables
+
+\begin{itemize}
+\item \textit{PIK},
+
+\item \textit{SY{\&}uifirstyear.ui{\&}uifirstquarter.}~-- \textit{SY{\&}%
+uilastyear.ui{\&}uilastquarter.},
+
+\item \textit{SPTNMF{\&}uifirstyear.}~-- \textit{SPTNMF{\&}uilastyear.},
+
+\item \textit{source} (=FIPS code for {\&}state.), and
+
+\item \textit{sourcetp} (=UI).
+\end{itemize}
+
+There is one observation per individual who ever worked in {\&}state. during
+the time period {\&}uifirstyear.~-- {\&}uilastyear.. When there were no
+employers in a particular quarter, the employer count variable, \textit{SY{\&%
+}year.{\&}quarter.}, is set to zero. When the quarter was out of range (pre-{%
+\&}uifirstyear. and post-{\&}uilastyear.), the employer count variables are
+set to missing. The range of \textit{SY{\&}year.{\&}quarter.} is 1985
+quarter 1 to 2001 quarter 4. (The range is defined in '00.00.icfv2.2.sas'.)
+
+\paragraph{00.02.icfv2.2.sas}
+
+This program reads in raw numident and STAR data and creates date of birth
+and date of death sas-date format variables. Race, gender, place of birth,
+and citizenship variables are labeled and the data is sorted by \textit{PIK}
+in preparation for the merge with the UI data. The resulting data set is
+persum02.sas7bdat.
+
+\paragraph{00.03.icfv2.2.sas}
+
+This program merges persum01.sas7bdat and persum02.sas7bdat by \textit{PIK}.
+The resulting file is persum03.sas7bdat.
+
+\paragraph{00.04.icfv2.2.sas}
+
+This program matches on CPS household and person ID variables. The PIK/CPSID
+crosswalk
+
+\begin{center}
+/data/working/individual/cpsuicw2.ssd04
+\end{center}
+
+was created by a series of programs in /programs/projects/cps/linkuimd.
+These programs take the raw crosswalks, standardize them across years, and
+deal with duplicates. Please see
+/programs/projects/cps/linkuimd/jobsequence.txt  for details. This crosswalk
+is merged with persum03.sas7bdat to form linkcps1.sas7bdat. Variables added
+from crosswalk include \textit{hid1}, \textit{pposold1}, \textit{yearcps1}
+and various indicators of duplicates. Since numerous people are in the March
+CPS twice, variables \textit{hid2}, \textit{pposold2}, and \textit{yearcps2}
+also exist.
+
+\paragraph{00.05.icfv2.2.sas}
+
+This program matches on SIPP person id variables. The PIK/SIPPID crosswalk
+
+\begin{center}
+/data/working/individual/sipp/xwalk/iu-pu-pikxwallyears\_final.sas7bdat
+\end{center}
+
+was created by a separate series of programs in
+/programs/projects/sipp/xwalk. These programs standardize across years and
+deal with duplicates. Variables added from the crosswalk include \textit{%
+intid} (internal SIPP ID), panel year in the SIPP, and various indicators of
+duplicates. {ntid} is a 14 character (19 character for 1996) identifier
+which is created by concatenating \textit{pp\_psu} \textit{pp\_seg} \textit{%
+pp\_ser} \textit{pp\_entry} \textit{pp\_pnum}. This crosswalk is merged with
+linkcps1.sas7bdat to form linksip1.sas7bdat. Variables are then re-named and
+labeled, extraneous variables are dropped, and the resulting file,
+persum04.sas7bdat is indexed by \textit{PIK}.
+
+\paragraph{00.06.icfv2.2.sas}
+
+The output data, cps{\&}state.sas7bdat, contains the variables {IK}, \textit{%
+a\_age}, \textit{a\_sex} and \textit{yearcps} from the CPS for those
+individuals that match to the CPS.
+
+\paragraph{00.07.icfv2.2.sas}
+
+This program uses the employment history file
+
+\begin{center}
+/data/master/Employment\_history/sasdata/emphis{\&}state..sas7bdat
+\end{center}
+
+as its input  and calculates yearly earnings totals for each \textit{PIK} by
+summing over all the jobs in a given year. Individuals who never have
+positive earnings are dropped. The resulting data set is impute01.sas7bdat.
+
+\paragraph{00.08.icfv2.2.sas}
+
+This program merges impute01.sas7bdat and persum4.sas7bdat to form
+impute02.sas7bdat. This program prepares variables to be used in the age and
+gender impute, calculates age at first job (first job is defined as the
+first time an individual appears in the UI wage records), and edits the 
+\textit{dob} variable:
+
+\begin{itemize}
+\item Workers who are 101 years or older have 100 years added to their birth
+year and 100 years subtracted from their age.
+
+\item Workers ages 0 or younger and 90 or older (but still less than 101)
+have their \textit{dob} and \textit{age} variables set to missing.
+\end{itemize}
+
+Then workers are assigned to one of nine age categories: 1-19, 20-29, 30-39,
+40-49, 50-59, 60-69, 70-79, 80-89. Workers ages 14-89 or with missing ages
+are output to impute148902.sas7bdat. All workers regardless of age are
+output to imputeall02.sas7bdat. The first data set will be used in the logit
+model which predicts age category. The second data set will be used in the
+logit model which predicts gender. The program finishes by doing ``proc
+freqs'' to get the distribution of ages within each age category and
+outputing each distribution to a data set called freqagecatx.sas7bdat.
+
+\paragraph{00.09.icfv2.2.sas}
+
+This file takes the data sets freqagecat1.sas7bdat-freqagecat8.sas7bdat,
+appends them all, and then creates a data set which is one observation long
+and contains an array, \textit{agecprob}$\lbrace$8,10$\rbrace$, which
+contains the probabilities of being less than or equal to a certain age
+within each agecategory. The resulting data set, impute02freq.sas7bdat, will
+be used in the age impute in impute05b.sas.
+
+\paragraph{00.10.icfv2.2.sas}
+
+This program uses impute148902.sas7bdat to run a multinomial logit model
+which predicts the probability of an individual being in each of the 8 age
+categories. Right-hand side variables are indicators for whether an
+individual had a job in a given year and total earnings and total earnings
+squared for each year. Results are output to impute03a.sas7bdat which
+contains 7 observations per \textit{PIK}. Each observation contains the
+variable \textit{agecathat} which is the probability that the person falls
+into a given age group or younger.
+
+\paragraph{00.11.icfv2.2.sas}
+
+This program takes the data set impute03a.sas7bdat and collapses it into a
+data set with only one observation per \textit{PIK}. At the same time it
+creates an array of the cumulative probabilities, \textit{cprob1}- \textit{%
+cprob7}, to be used in the age impute.
+
+\paragraph{00.12.icfv2.2.sas}
+
+This program uses imputeall02.sas7bdat to run a logit model where the
+probability of being male is predicted. The output data set,
+impute04.sas7bdat, contains all the original variables plus \textit{malehat}
+- the probability of being male.
+
+\paragraph{00.13.icfv2.2.sas}
+
+This file merges impute04.sas7bdat, impute03b.sas7bdat, and cps{\&}%
+state.sas7bdat. The output data set is called impute05a.sas7bdat.
+
+\paragraph{00.14.icfv2.2.sas}
+
+This program uses impute05a.sas7bdat to finally impute age and gender where
+it is missing. First impute02freq.sas7bdat is merged on and then four arrays
+of random numbers are generated for each individual. \textit{agecatrandom}
+will be used to assign the age category, \textit{agerandom} will be used to
+assign the age, \textit{dayrandom} will be used to assign the day of the
+year for the dob variable, and \textit{x} will be used to assign gender. The
+file has 9 loops to cover the 9 possibilities:
+
+\begin{enumerate}
+\item nothing missing
+
+\item \textit{dob} not missing/\textit{sex} from CPS
+
+\item \textit{dob} not missing/\textit{sex} missing,
+
+\item \textit{dob} from CPS/\textit{sex} not missing,
+
+\item \textit{dob} from CPS/\textit{sex} from CPS,
+
+\item \textit{dob} from CPS/\textit{sex} missing,
+
+\item \textit{dob} missing/\textit{sex} not missing,
+
+\item \textit{dob} missing/\textit{sex} from CPS
+
+\item \textit{dob} missing/\textit{sex} missing.
+\end{enumerate}
+
+When \textit{age} comes from the CPS, \textit{birthyear} is calculated, then 
+\textit{age} at first job, and finally using the \textit{dayrandom}
+variable, a random day of the year is assigned and the \textit{dob} variable
+is created. When \textit{age} is imputed completely, age category is imputed
+first by comparing \textit{agecatrandom} to the values of \textit{cprob1}- 
+\textit{cprob7} for that individual. Then age within the category \textit{m}
+is imputed by comparing \textit{agerandom} to \textit{agecprob$\lbrace$m,1$%
+\rbrace$}-\textit{agecprob}$\lbrace$m,9$\rbrace$. Finally day of the year is
+imputed using \textit{dayrandom}, and \textit{dob} is created. When \textit{%
+sex} is missing, the value is assigned by comparing \textit{x} to \textit{%
+malehat}. The imputing is done 10 times for each missing value, creating 10
+'implicates' for individuals with missing values. Implicate 1 is output to
+impute05b.sas7bdat along with observations with no missing values. The other
+9 implicates are output to implicates.sas7bdat.
+
+\paragraph{00.15.icfv2.2.sas}
+
+This program merges impute05b.sas7bdat and persum4.sas7bdat to create the
+final master file. This is necessary because most of the variables were
+dropped from persum4 at the beginning of the imputing process to keep the
+data sets small. The output file, indmast{\&}state..sas7bdat is written to
+''/data/master/Individual/v2.2/sasdata/''.
+
+
+\section{Verification and quality control\label{icf_tech:what1}}
+
+There is an extensive list-file associated with `01.01.icfv2.2.sas'. Every
+output is included for a reason, so make sure to understand how to read the
+output. I'm afraid it is hard to be specific and that some experience is
+necessary. However, looking at old list and log files can serve as a partial
+substitute for experience.
+
+\begin{itemize}
+\item Check the number of observations. It should coincide with the number
+of unique `piks' in the UI data, and in the EHF.
+
+\item The time-span of data should coincide with the dimensions of the EHF
+(located in `/data/master/Employment{\_}history/sasdata'), but double check
+with `/data/doc/daf.xls'. It is also defined in `/data/master/ui/{\&}%
+state/config{\&}state'. If it does not coincide, notify the person
+processing the EHF.
+
+\item Check for any error messages.
+\end{itemize}
+
+
+\index{ICF|)mainref} 
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "QWI_methods"
+%%% End: 

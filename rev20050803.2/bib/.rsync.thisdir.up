@@ -1,0 +1,1 @@
+rsync -e "ssh1 -o ClearAllForwardings=yes" --rsync-path=/u4/vilhuber/bin/rsync -bauvz  ~/Textes/Papers/Bib/ dept.econ.yorku.ca:/u4/vilhuber/Textes/Papers/Bib

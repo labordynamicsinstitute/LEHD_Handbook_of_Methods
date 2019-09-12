@@ -1,0 +1,397 @@
+               Geocoded Address List Version 3.0
+
+
+The Geocoded Address List (GAL) is a data set containing unique commercial and residential addresses
+in a state geocoded to the Census Block and latitude/longitude coordinates. The file encompasses
+addresses from the state ES202 data, the Business Register (a.k.a. SSEL), the Census Bureau's Master
+Address File (MAF), the American Community Survey Place of Work file (ACS-POW), and others.
+Addresses from these source files go through Code1, Vality standardizer, Vality matching for
+unduplication, and several other steps in SAS. This document refers to one year's data from a source file
+as a file-year (for example, the 1995 ES202). 
+
+The job stream follows the steps below using the indicated software.
+
+Step 1:   Create input (SAS).
+Step 2:   Standardize and geocode addresses (Code1).
+Step 3:   Parse and standardize address elements (Vality Standardize).
+Step 4:   Match addresses, flag masters and duplicates (Vality Unduplicate).
+Step 5:  Create preliminary crosswalk and unique address list with address identifier (SAS).
+Step 6:   Set file-year flags, create GAL Crosswalks containing the input identifier and address identifier (SAS).
+Step 7:   Retrieve and derive block codes and coordinates from the MAF (SAS).
+Step 8:   Impute block within known tract (SAS).
+Step 9:   Create GAL by adding higher-level geocodes by block (SAS). 
+Step 10: Delete intermediate data files and create links. 
+
+The section entitled "Details of GAL Processing" gives details on each of these steps. 
+
+The final output consists of the address list and a crosswalk for each processed file-year. The GAL
+contains each address, its geocodes, a flag for each file-year in which it appears, data quality indicators,
+and data processing information. The GAL Crosswalk contains the ID of each input entity and the ID of
+its address. The following section describes the GAL's content. 
+
+
+                      Important Variables
+
+Unique identifier
+
+The variable galid is the unique address identifier on the GAL, a 26-character string consisting of the
+letter 'A' in the first column followed by the 2-character state FIPS code and a zero-padded sequential
+number. The galid is created each time a GAL is created. There's no consistency in the galid between
+versions or vintages of the GAL.
+
+Geographic vintage
+
+The release date (year) of the GRF identifies the geographic vintage. In the GAL the vintage becomes the
+variable a_vintage.
+Geographic codes
+
+The variable a_geocode is FIPS-state(2)||FIPS-county(3)||Census-tract(6), and it uniquely identifies the
+Census tract in the U.S. The tract is the lowest level of geography recommended for analysis. The Census
+block within the tract is a_block. The uncertainties in block-coding make block-level analysis
+questionable. However, geocoding to the block allows us to add all the higher-level geocodes to the
+addresses. The variable a_block_src generated in Steps 7 and 8 describes the source of the block-code:
+
+a_block_src
+Value  Typical Percent   Meaning
+C              12.20          Code1, or the address matches an address for which Code1 supplied the block code
+M              81.86          The MAF - the address is a MAF address or matches a MAF address
+E               0.00          The MAF, the street address is exactly the same as a MAF address in the same tract
+W               0.03          The MAF, the street address is between 2 MAF addresses on the same block face
+O               1.23          Imputed by the distribution of commercial addresses in the tract
+S               1.17          Imputed by the distribution of residential addresses in the tract
+I               0.01          Imputed by the distribution of mixed-use addresses in the tract
+D               0.00          Imputed by the distribution of all addresses in the tract
+missing                 3.50       Block code is missing
+              100.00
+
+In all states observed so far except California, no address required the 'D' method. That is, almost every
+tract where an address lacks a block code contains commercial, residential, and mixed-use addresses. 
+
+The Census Bureau splits blocks to accommodate changes in political boundaries. Most commonly, these
+are place boundaries (a place is a city, village, or similar municipality). The resulting block parts are
+identified by 2 suffixes, each taking a value from A to Z. The GAL assigns the block part directly from
+the MAF, or by adopting the one whose internal point is closest to the address by the straight-line
+distance. The variables a_block_suf1 and a_block_suf2 identify the block part, and a_block_suf_src
+generated in Step 9 describes the method used to assign it.
+
+a_block_suf_src
+Value  Typical Percent   Meaning
+A               1.50          Assigned by distance
+M               4.18          The MAF - the address is a MAF address or matches a MAF address
+missing                94.32       Not a split block
+              100.00
+
+The GAL also provides the following basic geographic variables:
+a_ssccc        FIPS-state(2)||FIPS-county (3)
+a_st      FIPS state (2)
+a_cty          FIPS county within the state (3)
+a_tract        Census tract within the county (6)
+
+Higher-level geographic codes originate from the Block Map File (BMF) and attach to the GAL in Step
+9. The BMF is an extract of the GRF-C (Geographic Reference File - Codes). All these geocodes are
+character variables. FIPS (Federal Information Processing Standard) codes are unique within the U.S.;
+Census codes are not.
+
+a_fipsmcd 5-digit FIPS Minor Civil Division (a division of a county)
+a_mcd          3-digit Census Minor Civil Division (a division of a county)
+a_fipspl  5-digit FIPS Place
+a_place        4-digit Census Place
+a_msapmsa Metropolitan-Statistical-Area(4)||Primary-Metropolitan-Statistical-Area(4)
+a_wib          6-digit Workforce Investment Board area
+
+Geographic coordinates
+
+The coordinates of each address are in the variables a_latitude and a_longitude. These variables are
+numeric with 6 implied decimals (divide by 1,000,000 to convert them). The coordinates are not as
+accurate as 6 decimal places implies. An indication of their quality is in the variable a_geoqual, a
+numeric variable taking values from 1 to 9 and generated in Steps 7, 8, and 9:
+
+a_geoqual
+Value  Typical Percent   Meaning
+1              80.15          Rooftop or MAF (most accurate)
+2               1.59          ZIP4 or block face, block face is certain
+3              10.12          Block group is certain
+4               4.65          Tract is certain
+9               3.50          Coordinates are missing
+              100.00
+
+The format 'agqual' provided by 'format_geo.sas' in '/programs/projects/auxiliary/Formats' contains the
+meanings of the a_geoqual values listed above.
+
+Two other variables give information about the coordinates. The flag a_latlong_src indicates their
+source: 
+
+a_latlong_src
+Value  Typical Percent   Meaning
+B              14.77          Block (or block part) internal point
+C              70.04          Code1
+D               0.03          Derived
+M              11.66          the MAF
+missing                 3.50       Coordinates are missing
+              100.00
+Few addresses have a_latlong_src equal to 'D'. Deriving coordinates occurs only if they're still missing
+after Code1 processing and direct extraction from the MAF, but the tract is known. In this case, the flag
+a_latlong_drv generated in Step 7 describes the derivation method:
+
+a_latlong_drv
+Value  Typical Percent   Meaning
+F               0.00          Adopted from the only address on the block face
+P               0.04          Extrapolated between 2 addresses on the block face
+missing                99.96       Derivation not performed
+              100.00
+
+In GAL Version 1, deriving coordinates and block codes by these methods was an important means of
+block-coding. It rarely operates now, since Code1 began providing block codes. Nevertheless, GAL
+Version 3 still exhausts all methods of assigning block-codes and coordinates before resorting to
+imputation. 
+
+File-year flags
+
+A set of flags generated in Step 6 indicates what file-years an address appears in. The names of the flags
+conform to the naming convention [f][yyyy] for the source file [f] and year [yyyy], where [f] takes the
+following values:
+
+Business Register (SSEL)                f = b
+ES202                              f = e
+Master Address File                     f = m
+American Community Survey - Place of Work    f = p
+American Housing Survey            f = h
+
+For example, the flag variable b1997 equals 1 if the address is on the 1997 SSEL; otherwise it equals 0.
+Note that if a state partner supplies 1991 ES202 data with no address information, e1991 will be 0 for all
+addresses. Typically, the e[yyyy] flags equal 1 for between 3 and 6 percent of addresses, the b[yyyy]
+flags equal 1 for between 4 and 10 percent, and the m[yyyy] flag is 1 for between 80 and 90 percent. The
+p[yyyy] and h[yyyy] flags equal 1 for less than 1 percent of addresses because the ACS-POW and AHS
+data are sample surveys. 
+
+
+                                                        Other Variables
+
+The variable occupant_type, recoded from the file-year flags in Step 8, indicates whether an address is
+commercial, residential, or mixed-use. 
+
+The tracking ID bigsrcid, created in Step 1, uniquely identifies the entity that supplied the address. It
+consists of [f], [yyyy], the unique ID from the input file, zero-padding, and for some source files, a flag
+indicating which set of variables supplied the address. For addresses originating in the Business Register,
+another flag indicates the single-unit data set or the multi-unit data set. This tracking ID variable is useful
+for debugging. 
+
+A diagnostic variable srcmast contains [f][yyyy], indicating the file-year that supplied this address. Bear
+in mind that it's often arbitrary which observation becomes the master address for a set of duplicates in
+Step 1 and Step 4, so bigsrcid and srcmast don't indicate anything special about an address or an entity.
+They simply identify the origin of an address that became a master address in unduplication. 
+
+The names of Code1 variables contain the prefix c1_. They impart mostly diagnostic information from
+Code1 processing. They could be useful for development work or address research. The parsed address
+elements from Step 3 sit in the variables named with the prefix v_. They could be useful for development
+work, particularly in improving the parsing routine. 
+
+
+             Accessing the GAL: the GAL Crosswalks
+
+The GAL Crosswalks allow you to extract geographic and address information about any entity whose
+address went into the GAL. Each crosswalk contains the identifiers of the entity, its galid, and sometimes
+flags. To attach geocodes, coordinates, or address information to an entity, merge the GAL Crosswalk to
+the GAL by galid, outputting only observations existing on the GAL Crosswalk. Then merge the
+resulting file to the entities of interest using the entity identifiers. An entity whose address wasn't
+processed (because it's out of state or lacks address information) will have blank GAL data. 
+
+For the AHS, the entity ID variables are control and year. 
+
+For the ES202, the entity ID variables are sein, seinunit, year, and quarter. The flag variable e_flag
+indicates whether the address came from the address_street1, address_state, and address_zip9
+variables (e_flag=P for physical address) or from the ui_address_street1, ui_address_state, and
+ui_address_zip9 variables (e_flag=M for mailing address). 
+
+For the ACS-POW data, the entity ID variables are acsfileseq, cmid, seq, and pnum. 
+
+For the SSEL, the entity ID variables are cfn, year, and singmult. The flag variable singmult indicates
+whether the entity resides in the single-unit (su) or the multi-unit (mu) data set. Another flag variable
+b_flag indicates whether the address originated from the variables pstreet, pplce, pst, and pzip
+(b_flag=P for physical address) or street, plce, st, and zip (b_flag=M for mailing address). . 
+
+For the MAF, mafid and year identify entities. 
+              Resources for geographic information
+
+The best place for information about Census geography is 
+<http://www.census.gov/geo/www/reference.html>
+
+Especially informative is the Geographic Areas Reference Manual (GARM), at
+<http://www.census.gov/geo/www/garm.html>
+
+
+
+                   Details of GAL Processing
+
+                        Control Programs
+
+The control program is 'rungal.ksh', which documents itself. Simply type the name of the program to see
+instructions. A super-control program 'rungal_all.ksh' runs GALs in any number of states, limiting each
+step of GAL processing to 1 state a time. It actually launches another program 'rungal_line.ksh' for each
+state specified. The super-control program requires you to specify the states,  the steps, and other
+parameters in the program and confirm them before it will execute. Submit 'rungal_all.ksh' in the
+foreground to confirm the parameters.
+
+                           Input Data
+
+The input data consists of addresses, geocodes, and coordinates. Currently, the source files providing
+addresses consist of the following (future work will add the Non-employer file):
+ACS-POW   American Community Survey Place of Work (2001 and later)
+AHS       American Housing Survey (2002)
+ES202          Employment Security form 202 (all available years 1990 and later)
+SSEL      Business Register (Standard Statistical Establishment List 1990 and later)
+MAF       Master Address File (the year following the year of the desired geographic vintage)
+
+The source files providing geocodes and coordinates are the following:
+GCP       the databases of Group1's Geographic Coding Plus software
+MAF       Master Address File
+GRF-C          Geographic Reference File, Codes (encompassed in the BMF)
+WIB-C          Workforce Investment Board, Codes (encompassed in the BMF)
+BMF       Block Map File
+
+A flow-chart of how all these files relate to the GAL is in the document 'gal_schematic.pdf.'Below is a description of each step of GAL processing. Further information is available in the GAL
+programs, the documentation of the input data files, and the materials explaining the Code1 and Vality
+software packages. 
+
+                 Step 1. Creating Address Input
+
+This step creates all the input address data for the GAL. It launches a SAS job for each input file in
+parallel. The launched macro programs find observations with a unique identifier and address
+information in the specified state. The program creates one big data file from all the input data files, sorts
+it, outputs unique addresses separately from exact address duplicates, and splits the file of unique
+addresses into as many as 8 same-size chunks for parallel processing in the next step. 
+
+The process keeps track of addresses by means of a tracking ID bigsrcid. This variable contains 5 digits
+to identify the file-year, IDs from the source file, sometimes a source-file-specific flag, and some zeroes
+as place holders. Quality Assurance (QA) for Step 1 checks bigsrcid for blank columns.
+
+Address processing may exclude an address for any of the following reasons: it contains a duplicate
+source file identifier; it lacks a street address and zip; or it's in the wrong state. Only 1 observation enters
+address processing even if an input entity has more than 1 (for instance, a physical and mailing address).
+The following section lists the conditions required for processing an address from each source file. 
+
+ES202
+
+The source data set is state-specific. A flag indicates whether the address was a physical ('P') or mailing
+('M') address. Later, Step 6 puts this flag on the crosswalk as the variable e_flag.
+
+Conditions required to process an address are:
+1-   a unique sein-seinunit-year-quarter
+2-   the address is in state
+3-   physical address street or zip is nonblank, or mailing address street or zip is nonblank
+
+Business Register (SSEL)
+
+The source data set covers all states. The flag 'singmult' indicates whether the address was from the
+single-unit ('S') or multi-unit ('M') source file. Additionally, for observations from the single-unit file, a
+flag indicates whether the address was a physical ('P', from variable pstreet) or mailing ('M', from
+variable street) address. All observations are 'M' from the multi-unit source file. Later, Step 6 puts this
+flag on the crosswalk as the variable b_flag. 
+
+Conditions required to process an address are:
+1-   a unique tracking ID
+2-   the address is in state
+3-   if from the multi-unit source file, the mailing address is nonblank; or if from the single-unit
+     source file, the physical address or mailing address is nonblank
+
+Master Address File (MAF)
+
+The source data set is state-specific. One condition suffices to process an address:
+1-   the street or zip is nonblank
+
+American Community Survey - Place of Work (ACS-POW)
+
+The source data set covers all states. Conditions required to process an address are:
+1-   a unique cmid-seq-pnum
+2-   the address is in state
+3-   the street or zip is nonblank
+
+                    Step 2. Code1 Processing
+
+This step standardizes and geocodes addresses using Group1 software. Here "standardize" really means
+correcting street names, zip codes, apartment numbers, and so forth. This step processes the chunks of
+data produced by Step 1 in parallel. The software license limits the number of jobs to 10. The GAL
+program sequence limits the number of jobs to 8, leaving 2 free for development work. Quality
+Assurance (QA) for this step checks the rates of best address matching and geocoding. 
+
+Group1 recommendations and visual inspection of output indicate that medium strictness and a
+correctness score of 3 or lower achieves a good balance between the number and the quality of address
+corrections.  The following other options also apply. If Code1 can't find a matching address, it provides
+the input information as output. This ensures that the output field contains the best available information.
+If an input street name is an alias street name, then Code1 returns the base street name. If there are
+multiple address matches for a given input address, Code1 doesn't correct the address. The spreadsheet
+'gal_fields_v3.xls' in '/data/doc/geocoding' provides further information on processing parameters, and
+can serve as a data dictionary for the Code1 output. 
+
+                Step 3. Parsing Address Elements
+
+This step edits the Code1 address by parsing it into its elements and standardizing them.  This procedure
+prepares the address for unduplication matching. Address elements are number, street, directional,
+apartment number, and so forth. This step processes the chunks of data in parallel. 
+
+               Step 4. Matching for Unduplication
+
+This step creates input data files for each round of Vality matching, creating cuts of data without
+breaking apart blocking groups. It runs each round of Vality unduplication matching on each cut in
+sequence. In tests, parallel processing in this step didn't improve performance. The output data files
+consist of matched addresses with the master and duplicate addresses flagged as such.
+
+                                Step 5. Creating a Data Set of Unique Addresses and Preliminary Crosswalk
+
+This step creates the unique address list and preliminary crosswalk by reading in the results of Vality
+unduplication matching and creating the unique address identifier galid. This step also builds the
+preliminary crosswalk containing the tracking ID and galid. The crosswalk is preliminary because it's a
+combined crosswalk for all file-years, it lacks the exact address duplicates set aside in Step 1, and it
+contains bigsrcid (not the source file ID). QA for this step checks the unduplication rates in each round
+of matching (production mode of GAL processing doesn't produce a report in Step 4). 
+
+Step 6. Creating the GAL Crosswalks and Setting the File-Year Flags
+
+This step combines the preliminary crosswalk and the address duplicates set aside in Step 1 and outputs
+the final crosswalks, each containing the source file identifiers of each input entity and its address
+identifier. SAS produces these crosswalks in parallel. Then the program sets the file-year flags to 1 or 0
+for each address on the GAL.
+
+For QA, this step checks for any blank source-of-master-address (srcmast) and the proportion of
+addresses for which a MAF address is the master. QA also checks that each input entity appears on the
+appropriate crosswalk, and the frequency of each file-year flag. 
+
+     Step 7. Retrieving and Deriving Geocodes from the MAF
+
+This step retrieves and derives geocodes from the MAF and attaches them to any address possible. The
+program first retrieves MAF geocodes for MAF addresses. Then it determines block-codes and
+coordinates for any address that's the same as a MAF address or falling between 2 MAF addresses on the
+same block face. An address can be the same as a MAF address and fail to match it because of a different
+apartment number, missing data, or other reasons. 
+
+The derivation routine affects very few addresses, but remains in the program sequence to exhaust all
+possible means of block-coding before resorting to imputation. Note that the program blanks out-of-state
+geocodes produced by Step 2. 
+
+        Step 8. Imputing the Block Within a Known Tract
+
+This step imputes a block when the tract is known but the block is still missing. The imputed block is a
+random draw from the distribution of residential addresses, commercial addresses, mixed addresses, or
+(as a last resort) all addresses in the tract. These 4 types of imputation, 2 methods of derivation from the
+MAF, retrieval from the MAF, and Code1 amount to 8 possible sources of the block code. For QA, this
+step checks that at least 7 of the 8 block-coding methods operated, and that the source-of-block-code
+variable (a_block_src) is never missing.
+
+                                                 Step 9. Creating the Final GAL
+
+This step adds higher-level geocodes such as Minor Civil Division, Place, and Metropolitan Statistical
+Area from the Block Map File (BMF) to all addresses possible. First it assigns the block suffix to
+addresses on blocks the Census Bureau has split to accomodate boundary changes. It adopts the
+coordinates of the block (or block part) internal point if the existing coordinates of an address are less
+precise than block face. This assures consistency between the coordinates and the geocode. 
+
+In tests, a few anomalies appeared about which county a block falls into. Therefore the program now runs
+a patch when this occurs. 
+
+For QA, this step checks how much the geocoding improved in Steps 7, 8, and 9, how many addresses
+adopted the coordinates of the block (or block part), and how many blocks needed patching.
+                                
+                       Step 10. Clean-up
+
+This step deletes all intermediate data files and creates links in the current/ directory pointing at the GAL
+and GAL Crosswalks in the version/geo-vintage directory.

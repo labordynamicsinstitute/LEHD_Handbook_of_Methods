@@ -1,0 +1,179 @@
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+
+% -*- latex -*- 
+%
+% Time-stamp: <02/05/23 14:12:13 vilhu001> 
+%              Automatically adjusted if using Xemacs
+%              Please adjust manually if using other editors
+%
+% input_sources.tex
+% Responsible: Lars/John
+% Part of QWI_methods.tex
+
+%\section{Description of initial data processing}
+
+This section describes the data processing steps. Figure~\Vref{fig1} gives a
+generic overview 
+of that process. A more detailed flowchart is provided in
+Figure~\Vref{fig:flowchart} in Appendix~\ref{app:flowchart}.
+
+\begin{figure}[htbp]
+\begin{center}
+\centerline{\includegraphics[width=4.83in,height=3.84in]{\mypath/GraphTable/QWI_methods_V200101171}}
+\caption{Overview of data processing\label{fig1}}
+\end{center}
+\end{figure}
+
+
+\section{Receipt of data}
+
+The data acquisition process starts with receipt of the data carrier (tape, 
+CDROM) by the U.S. Census Bureau. If the data is on CDROM, readin is done
+at LEHD, otherwise this task is performed by the 
+Administrative Records Research Staff (ARRS\index{ARRS}).  Data entry, 
+including method and date of receipt, and number of records, are recorded
+both at ARRS\index{ARRS} and at LEHD in either case.
+
+\section{Standardization}
+
+The goal of much of LEHD processing is to create a homogeneous analytical 
+product. Thus all data processing at LEHD standardizes variable concepts, 
+names, and formats. Harmonization is necessary because different states have 
+different ways of recording wages, \aindex{UI} account numbers, and other data items. 
+In addition, while these identifiers may be unique within a state, they may 
+not be so across different states. After harmonization, LEHD files contain a 
+unique state firm identifier (\aindex{SEIN}) used in subsequent processing. Now that 
+\aindex{BLS} reporting unit information is available on certain employer-level files, 
+the reporting unit (\aindex{RUN}) will be incorporated into the business identifier 
+permitting analyses at the establishment level. (LEHD program \aindex{QWI} project 
+version 3 will incorporate the reporting unit.) Similar standardization 
+treatment is given to other variables. 
+
+\section{SSN editing}
+
+SSN\index{SSN} can and do have coding errors. Since the QWI requires
+a consistent longitudinal identifier for each individual, such coding
+errors introduce bias into any of the measures computed. LEHD has
+developed a process by which possibly miscoded records are matched back to
+an otherwise consistent time-series for a given SSN. This processing is
+done before anonymization, because it requires the original SSN. Not all
+state data are processed this way. 
+
+\section{Anonymization}
+
+The first processing that the data receive, if applicable, is anonymization. 
+The administrative data received from the states contain individual and firm 
+identifiers. Identifiers include, but are not limited to, first and last 
+name, Social Security Number (SSN\index{SSN}), state unemployment insurance account 
+number \aindex{SEIN}, and federal EIN\index{EIN}. As per the current Memoranda of Understanding (\aindex{MOU}, 
+also called Data Use Agreements%
+\index{Data Use Agreements|see{MOU}} by some states), firm identifiers are 
+carried along unchanged throughout LEHD processing. Personal identifiers, on 
+the other hand, are either deleted or modified in such a manner as to mask 
+the original identifier. Thus, the SSN\index{SSN} is replaced by a Census internal 
+identifier (Protected Identity Key, PIK\index{PIK}). The original SSN\index{SSN} can not be 
+re-inferred, since the algorithm used to associate PIK\index{PIK}s to SSN\index{SSN}s is not 
+accessible to LEHD personnel. As an additional precaution, individual names 
+are deleted from all files containing them. 
+
+After having passed quality control within ARRS\index{ARRS}, the data are transferred to 
+the LEHD computers. All processing from here on is performed exclusively 
+within the secure computing environment at LEHD by LEHD
+personnel, using PIKs as identifiers. This process is sometimes referred to
+as ``PIKizing.\mindex{PIKizing}''
+
+
+\section{Creation of state-specific characteristics files}
+
+The data are next prepared for the process of extracting information on
+jobs, firms, and individuals. It is at this stage that information
+available within Census on both the individual and the employer is added to
+the data.  Three related files are created for every state. The first of
+these is the Individual Characteristics File (\aindex{ICF}), which contains
+information on the individual, including demographic information added from
+the Census Numident\index{Numident|see{PCF}}/\aindex{PCF} file and links to
+any Census survey in which that individual may have participated.  The
+actual survey respondent data are linked on a case-by-case basis. The
+second file is the Employment History File (\aindex{EHF}), which contains a
+detailed quarter-by-quarter time series of an individual's working activity
+within the state. The third file is the Employer Characteristics File
+(\aindex{ECF}), which contains both information on employers active within
+the state as provided in the employer-based data received from the states
+and indicators for the presence of that employer in Census data products
+(business surveys, business censuses, etc.).
+
+\subsection{Demographic products}
+
+%Across all states presently on version 2, nearly xxxxxx%
+%\marginpar{\tiny Has to be corrected for all states!}
+Many
+individuals have appeared in at least one of the eligible Census demographic 
+products, and their detailed demographic information from those surveys can 
+be linked to the extensive longitudinal data gleaned from the state records.
+
+
+\subsection{Census PCF}
+\index{SSA}
+\index{Numident}
+\index{PCF}
+
+These data, which contain information on date of birth, place of birth,
+race and sex, are maintained by ARRS\index{ARRS} under a Memorandum of
+Understanding with the Social Security Administration\index{SSA}, being
+based on the SSA Numident. The LEHD Program matches date of birth, sex,
+race, and place of birth using the PIK\index{PIK}. This processing is done
+on the ARRS\index{ARRS} system to protect the confidentiality of the
+PIK\index{PIK}-SSN\index{SSN} cross walk.
+
+\subsection{Economic censuses and annual surveys}
+\index{Annual surveys!manufacturing}
+\index{Annual surveys!trade}
+\index{Annual surveys!service}
+\index{Annual surveys!transportation}
+\index{Annual surveys!communication}
+\index{Economic census}
+
+These data include the complete 1987, 1992 and 1997 economic censuses, all 
+annual surveys of manufacturing, service, trade, transportation and 
+communication industries and selected, approved fields from the Census 
+Bureau's establishment master file.%
+\index{Establishment master file}
+Linkage to these data is based upon 
+exact EIN\index{EIN} matches, supplemented with statistical matching to recover 
+establishments\index{establishment}.
+
+% \section{National master files}
+% 
+% All three types of master files are then aggregated to the national level. 
+% For instance, an individual may have worked a number of years in state A, 
+% but disappear periodically from that state's UI records. However, he or she 
+% may actually have moved to a different state B and have continued working. 
+% The national employment history file will contain the complete time series 
+% of working information from all states in the LEHD data base. The same 
+% applies for firms. The national employer master file will allow the activity 
+% of a firm with a presence in several states to be used in a coherent 
+% fashion. The process of producing the first national master files will begin 
+% once certain critical statistical research has been completed on a few large 
+% states.
+% 
+% As the number of states participating in the \aindex{QWI} project grows, the quality 
+% of these linkages will improve. At the present, four states have already 
+% contributed data to the LEHD Program. The number of potential linkages is 
+% small. Nevertheless, over 500,000 individuals have records in at least two 
+% of those states, a number much larger than all but the most comprehensive 
+% surveys. 
+%
+%\section{Merge with other Census Bureau products}
+%
+%The structure of the files themselves will be virtually identical to the 
+%state level files, so all the linkages to Census products available at the 
+%state level carry over to the national files. Special projects that require 
+%less numerous, but more detailed information on individuals and firms can be 
+%carried out both at the national and the state level. 
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "QWI_methods"
+%%% End: 

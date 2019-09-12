@@ -1,0 +1,98 @@
+%TCIDATA{Version=4.00.0.2321}
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+                      
+% -*- latex -*- 
+%
+% Time-stamp: <05/04/06 23:54:45 vilhuber> 
+% Incorporates JOhn abowd mods 2005-04-05
+%              Automatically adjusted if using Xemacs
+%              Please adjust manually if using other editors
+%
+% qwi-intro.tex
+
+%\section{Introduction}
+%\label{sec:intro}
+%\marginpar{\footnotesize Needs final edit}
+Since 2003, U.S. Census Bureau has published a new and novel statistical
+series: the Quarterly Workforce Indicators (QWI). Compiled from
+administrative records data collected by a large number of states for both
+jobs and firms, and enhanced with information culled from other data sets at
+the Census Bureau, these statistics offer unprecedented detail on the local
+dynamics of labor markets. Despite the fine detail, confidentiality is
+maintained due to the application of state-of-the-art protection methods.
+
+The underlying data infrastructure was designed by the Longitudinal
+Employer-Household Dynamics Program at the Census Bureau 
+%Abowd-Haltiwanger-Lane AER 2004)
+\citep{AbowdEtAl2004}. Although the QWI are the flagship
+statistical product published from the LEHD infrastructure files, the latter
+have found a much more widespread application. The infrastructure
+constitutes an encompassing and almost universal data source for individuals
+and firms of all 31 currently participating states.%
+%
+\footnote{%
+The number of participating states still increases regularly as new Memoranda of
+Understanding are signed and new states begin shipping data. As of April 5,
+2005, there are 31 states in production (shipping data to Census) of which
+27 are available at \htmladdnormallink{http://lehd.dsd.census.gov/}{http://lehd.dsd.census.gov/}}
+
+In this article, we describe the primary input data underlying the the LEHD
+Infrastructure Files, the methods by which the Infrastructure Files are
+compiled, and how these files are integrated to create the Quarterly
+Workforce Indicators. We also provide details about the statistical models
+used to improve the basic administrative data, and describe enhancements and
+limitations imposed by both data and legal constraints. Some of the
+infrastructure and derivative microdata files have recently been made
+available within the Research Data Centers of the U.S. Census Bureau, and we
+point out these files during the discussion.
+
+The QWI use a bewildering array of data sources, both from administrative
+records and from survey and census data.  The Census Bureau receives UI
+wage records and ES-202 establishment records from each state participating
+in the program. The Bureau then uses these products to integrate
+information about the individuals (place of residence, sex, birth date,
+place of birth, race, education) with information about the employer (place
+of work, industry, employment, sales). Not all of the integration methods
+are straight one-to-one matches. In some cases, statistical matching
+techniques are used, and in others variable values are imputed. Throughout,
+critical imputations are done multiple times, 
+improving the precision of the final estimates. 
+
+It should be noted that the data integration is a two-way street. Not only
+do the Census Bureau's surveys and censuses improve the detail on the
+administrative files: As a part of its Title~13 mission, the Census Bureau
+uses the integrated files to in turn improve the Census Bureau's
+demographic surveys, like the Current Population Survey, the Survey of
+Income and Program Participation, and the American Community Survey. They
+are also used to improve the Census Bureau's Business Register, which is
+the sampling frame for all its economic data and the initial contact frame
+for the Economic Census.
+
+
+We  give an
+overview of the different raw data inputs and how they are treated and
+adjusted in Section~\ref{sec:input_files}. In a system that focusses on the
+dynamics at the individual and firm level, proper identification of the
+entities is important, and we briefly highlight the steps undertaken to
+this end. A more detailed analysis of the probabilistic editing of
+individual record has been published elsewhere \citep{AbowdVilhuber2005}. The
+raw data are then aggregated and standardized into a series of component
+files, which we call the ``Infrastructure Files'', as described in Section~\ref{sec:files}. Finally,
+Sections~\ref{sec:aux} and~\ref{sec:aggregate} illustrate how they are brought together to
+create the QWI statistics. It will soon become clear to the reader that the
+level of detail potentially available with these statistics requires
+special attention to the confidentiality of the the underlying entities.
+How their identity is protected is described in Section
+\ref{sec:confidentiality}. Many of the files described in this paper are
+accessible in either a public-use or restricted-access version, and a brief
+description with pointers to more detailed documentation is provided in
+Section~\ref{sec:public}. Section~\ref{sec:conclusion} concludes and
+provides a glimpse at the ongoing research into improving the infrastructure files.
+
+We should note that this paper has far too {\it few} authors. Over the years,
+many individuals have contributed to the creation of these files. [~complete list here~]
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "qwi-overview"
+%%% End: 

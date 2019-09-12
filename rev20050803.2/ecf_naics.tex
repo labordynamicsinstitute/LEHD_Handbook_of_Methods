@@ -1,0 +1,174 @@
+%%%  +--< LEHD-QWI ecf 3.1.49 2005-01-26 schwa305            >--+  %%%
+%%%  +--< Location: /programs/production/dev1/current/ecf    >--+  %%%
+%%%  +--< File: doc/new_variables_naics_etc.tex              >--+  %%%
+% Converted from Microsoft Word to LaTeX
+% by Chikrii SoftLab Word2TeX converter (version 2.4)
+% Copyright (C) 1999-2001 Kirill A. Chikrii, Anna V. Chikrii
+% Copyright (C) 1999-2001 Chikrii SoftLab.
+% All rights reserved.
+% http://www.word2tex.com/
+% mailto: info@word2tex.com, support@word2tex.com
+%\subsection{Subject: ECF Enhancements}
+%
+%\subsubsection{Date: 2/20/2004}
+%
+%Author: Kevin McKinney
+
+
+%\documentclass [10pt]{article}
+%\usepackage {longtable}
+%\usepackage{fullpage}
+
+%\begin{document}
+
+
+
+
+
+\subsection{NAICS codes on the ECF}
+\label{sec:ecf:naics}
+
+Enhanced NAICS variables on the ECF  can be differentiated  by the source(s) and coding
+system used in their creation. There are two sources of data -- the ES202 and
+the BLS-created LDB --  and two coding systems for NAICS --  NAICS1997 and
+NAICS2002.  Every NAICS variable uses at least one
+source and one coding system.
+
+The ESO (ES202-only) and FNL (final) variables are of primary importance to the user community. 
+The ESO variables use  information from the ES202 exclusively and ignore any 
+information that may be available on the LDB. We provide in  Section~\ref{sec:backcoding} an analysis on 
+why this may be preferred. The FNL variables incorporate information from 
+both the ES202 and the LDB, with the LDB being the primary source. The QWI
+uses FNL variables for its NAICS statistics. Neither ESO nor FNL variables
+contain missing values.
+
+
+\subsubsection{NAICS algorithm precedence ordering}
+
+
+Four basic sources of industry information are available on the ECF: NAICS
+and NAICS{\_}AUX as well as SIC from ES202 records, and the LDB-sourced
+NAICS{\_}LDB codes. The NAICS, NAICS{\_}AUX, and 
+NAICS{\_}LDB, when missing (no valid 6-digit industry code), are imputed based on the  following
+algorithm. SIC is filled similarly. Depending on the imputation used, a
+$miss$ variable is defined, which is used in building the ESO and FNL variables.
+
+
+\begin{enumerate}
+\item Valid 6 digit industry code ($miss=0$)
+
+\item Imputed code based on first 3,4, or 5 digits when no valid six digit code is 
+available in another period ($miss=0$)
+
+\item Imputed code based on contemporaneous SIC if SIC changed prior to 2000 
+($miss=1.5$)
+
+\item Valid 6 digit code from another period ($miss=2$)
+
+\item Valid code from another source (for example if NAICS1997 is missing, 
+NAICS2002 or SIC may be available) ($miss=3$)
+
+\item Use SEIN mode value ($miss=5$ if contemporaneous modal value, $miss=7$ if
+  the modal value stems from another time period)
+
+\item Unconditional impute ($miss=6$ if only the SEIN-level modal value is
+  imputed unconditionally, $miss=11$ if the SEIN-level value was
+  unconditionally imputed and propogated to all SEINUNITs.)
+\end{enumerate}
+
+
+
+\subsubsection{ESO and FNL variables}
+
+
+
+The ESO and FNL variables are made up of combinations of the various sources 
+of industry information. The ESO variable uses the NAICS and NAICS{\_}AUX 
+variables as input. Information from the variable with the lowest MISS value 
+is preferred although in case of a tie the NAICS{\_}AUX value is used.
+
+
+The FNL variable uses the ESO and LDB variables. Information from the 
+variable with the lowest MISS value is preferred although in case of a tie 
+the NAICS{\_}LDB value is used. Keep in mind that although the source of an 
+ESO or FNL variable may be equal to NCS, the actual source can only be 
+ascertained by going back to the original.
+
+
+
+\subsubsection{LDB versus LEHD NAICS backcoding}
+\label{sec:backcoding}
+
+The LDB algorithm is to some extent a black box and testing has shown that 
+it does a relatively poor job of capturing  industry changes of SEINs that 
+occurred during the 1990s. In fact, the LDB appears to be a simple
+backfill that does not take into account an SEIN's entire SIC history.
+
+% Kevin: email 2005-01-28
+% Somewhere along the line something I said was lost in translation.
+% Actually the LDB NAICS codes are too smooth over time (they never change)
+% relative to the variation found in SIC codes.  The LDB looks like a
+% simple backfill that does not take into account a firm's entire SIC
+% history (prior to ~1999).  I know that some of the SIC changes may be
+% spurious, but I also feel that there is valuable information in a firm's
+% SIC code history that I therefore attempted to use in my impute
+% algorithm.  However, overall the effect of the different approaches is
+% relatively small since very few firms change industry, especially
+% relative to, for example, the proportion of firms that change location. 
+% 
+
+Although some of the SIC changes over time may be spurious, an SEIN's SIC
+code history contains valuable information that we have attempted to
+preserve in our imputation algorithm. Overall, the effect of the different
+approaches is relatively small, since very few SEINs change industry, in
+particular relative to the proportion of SEINs that change geography.
+
+
+In the following, we present  a summary of research done on a comparison of
+the ESO and FNL NAICS codes on the Illinois ECF. 
+%
+%
+The LDB-sourced NAICS variable is used for about 85{\%} of the records for
+Illinois, the rest are filled with information from the ES202. It is
+unclear why only 85{\%} of ES202 records are in the LDB. The results
+weighted by employment are about the same suggesting that activity was not
+a criterion for being included on the LDB. 
+
+First and not surprisingly, in
+later years and quarters (1999+) when NAICS is actively coded by the
+states, the ESO and FNL codes look almost identical when available.
+
+Second, there is little variation in the LDB NAICS codes over time compared 
+with SIC. Among all of the active SEIN-SEINUNITs over the period covered by
+the Illinois data, 
+%\marginpar{\tiny fill in with actual time period spanned}
+only slightly more than  8{\%} experience at least one SIC change compared with about 1.5{\%} on 
+the LDB. Almost all NAICS code changes occur after 1999. While this is not entirely 
+unexpected, it is something to keep in mind when comparing NAICS{\_}FNL 
+versus SIC or NAICS{\_}ESO employment totals. Many of these changes in 
+industry appear to be real and are not captured on the LDB.
+
+One effect of this is that as we go back in time a larger portion of 
+employment can be found in NAICS{\_}FNL codes that are different than one 
+would expect given the SIC code on the ECF. For example, in 1990 about 
+13{\%} of employment is in a NAICS{\_}FNL code that is different than what 
+we would expect based on the SIC. By 2001, the proportion of employment
+that is in a NAICS code outside of the set of possible values predicted by
+the SIC-NAICS crosswalk falls to 3{\%}. The 
+ES202-based NAICS variable does a better job tracking SIC, since more SIC 
+information is used in putting it together.
+% (about 3{\%} consistently over the period).
+%\marginpar{\tiny what is 3 percent}
+
+The main source of the discrepancy is due to entities that experience a 
+change in their SIC code prior to 2000. The LDB appears to ignore this 
+change, while the ES202-based NAICS variable uses an SIC-based impute for these 
+SEINUNITS. The result is a series that exhibits similar patterns of change 
+over time as SIC, while still preserving the value added in the NAICS codes 
+for entities that did not experience a change.
+
+Also, users should keep in mind that for early years ($<1997$) some of the 
+NAICS industries have yet to come into existence. The
+prevalence of this problem has not been investigated yet.
+
+

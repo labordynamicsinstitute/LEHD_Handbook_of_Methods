@@ -1,0 +1,67 @@
+Search History
+*  #1 displaced workers (179 	 records )
+
+        
+TITLE:  Playing Hard to Get: Theory and Evidence on Layoffs, Recalls, and Unemployment
+AUTHOR(S):  Rodriguez-Planas,-Nuria
+AUTHOR AFFILIATION:  Boston U and The Brookings Institution
+SOURCE (BIBLIOGRAPHIC CITATION):  Boston University, Industry Studies Program Working Paper Series on Economics: 86, January 1998, pages 50.
+DOCUMENT TYPE:  Working-Paper
+PUBLICATION YEAR:  1998
+POST 1990 DESCRIPTORS:  Wage-Level-and-Structure;-Wage-Differentials-by-Skill,-Training,-Occupation,-etc.-industry,-schooling,-experience,-tenure,-cohort,-etc. (J310); Labor-Turnover;-Vacancies;-Layoffs-includes-separations,-hires,-redundancy,-job-tenure,-displaced-workers (J630); Permanent-Lay-off;-Temporary-Lay-Off;-Signaling;-Unemployment;-Earnings-Profiles-
+ABSTRACT:  In the United States, many laid-off workers are recalled to their former employer. I develop an asymmetric information model of layoffs in which high productivity workers are more likely to be recalled and may choose to remain unemployed rather than accept a low-wage job. In this case, unemployment can serve as a signal of productivity, and unemployment duration may be positively related to post-laid-off wages even among workers who are not recalled. In contrast, since workers whose plant closed cannot be recalled, longer unemployment duration should not have a positive signaling benefit for such workers. Analysis of the data from the January 1988-1992 Displaced Workers Supplements to the Current Population Survey and from the Panel Study of Income Dynamics (waves XIII to XXIV) reveals that the wage/unemployment duration relation differs between the two groups in the predicted way, and finds evidence consistent with asymmetric information in the U.S. labor market.
+
+TITLE:  Job Displacement and Mobility of Younger Workers
+AUTHOR(S):  Gustafson,-Cynthia-K.
+AUTHOR AFFILIATION:  UC Berkeley
+SOURCE (BIBLIOGRAPHIC CITATION):  University of California, Berkeley, The Center for Labor Economics Working Paper: 8, November 1998, pages 48.
+DOCUMENT TYPE:  Working-Paper
+PUBLICATION YEAR:  1998
+POST 1990 DESCRIPTORS:  Geographic-Labor-Mobility;-Immigrant-Workers (J610); Labor-Turnover;-Vacancies;-Layoffs-includes-separations,-hires,-redundancy,-job-tenure,-displaced-workers (J630); Unemployment-Insurance;-Severance-Pay;-Plant-Closings (J650); Job-Displacement;-Mobility-
+ABSTRACT:  This paper explores the long-term effects of job displacement on younger workers and how these effects depend on post-displacement mobility across location, industry and occupation. Data from the National Longitudinal Survey of Youth are used to construct a group of displaced workers and a comparison group containing non-displaced workers. Using a generalized "difference-in differences" model that includes individual fixed effects, I estimate what displaced workers' employment status, earnings, and hours worked would have been had they not been displaced and how these effects vary by post-displacement mobility decisions. I find that displacement has a large negative effect on employment, earnings, and hours worked. Seven percent of displaced workers are not employed six years after displacement yet would have been but for displacement. Among individuals who return to work, displacement decreases workers' earnings and hours worked by 14% and 8%, respectively, in the long-term. Workers who move locations find a long-term earnings cost of 10% compared with immobile workers' cost of 15%. Contrary to previous findings, workers who switch either industry or occupation have similar long-term earnings losses as workers who stay in their same industry or occupation. The effects of mobility, however, vary largely when conditioning on a worker characteristic.
+
+TITLE:  Earnings Losses and Unemployment of Displaced Workers in Germany
+AUTHOR(S):  Couch,-Kenneth-A.
+AUTHOR AFFILIATION:  U CT
+SOURCE (BIBLIOGRAPHIC CITATION):  Industrial-and-Labor-Relations-Review; 54(3), April 2001, pages 559-72.
+DOCUMENT TYPE:  Journal-Article
+PUBLICATION YEAR:  2001
+POST 1990 DESCRIPTORS:  Labor-Turnover;-Vacancies;-Layoffs-includes-separations,-hires,-redundancy,-job-tenure,-displaced-workers (J630); Unemployment:-Models,-Duration,-Incidence,-and-Job-Search (J640); Displaced;-Unemployment-
+ABSTRACT:  Data from the German Socio-Economic Panel are used to examine the experiences of German workers following job displacement due to plant closure.  In the year of displacement, annual earnings declined by about 13.5%, and the typical worker experienced between 6 and 10 additional days of annual unemployment.  Two years later, annual earnings were only 6.5% less than before displacement, and the largest estimated increase in annual unemployment was 4 days. These estimated effects lie near the lower end of the range of similar estimates for U.S. workers.
+
+TITLE:  Risk of Labor Displacement and Cross-Industry Labor Mobility
+AUTHOR(S):  Magnani,-Elisabetta
+AUTHOR AFFILIATION:  U New S Wales
+SOURCE (BIBLIOGRAPHIC CITATION):  Industrial-and-Labor-Relations-Review; 54(3), April 2001, pages 593-610.
+DOCUMENT TYPE:  Journal-Article
+PUBLICATION YEAR:  2001
+POST 1990 DESCRIPTORS:  Occupational-and-Intergenerational-Mobility;-Promotion (J620); Labor-Turnover;-Vacancies;-Layoffs-includes-separations,-hires,-redundancy,-job-tenure,-displaced-workers (J630); Displaced-
+ABSTRACT:  A well-supported conclusion of previous research is that displacement entails large and persistent costs for workers.  It therefore seems reasonable to expect workers to try to anticipate and respond to the risk of displacement.  Using 1983-93 data from the Panel Survey of Income Dynamics and the Displaced Workers Supplement to the Current Population Survey, the author investigates whether industry-specific measures of job loss risk are correlated with workers' propensity to cross industry lines for new jobs.  She finds that a one standard deviation increase in the risk of job loss (an 86% increase from the mean level) increased the probability of inter-sectoral mobility by 10.5% in a sample of white men.  Three factors that appreciably increased the likelihood of inter-sectoral mobility in response to job insecurity were voluntary separation from the previous job, high educational attainment, and being currently employed (as opposed to temporarily laid off).
+
+TITLE:  Estimating Wage Losses of Displaced Workers in Germany
+AUTHOR(S):  Burda,-Michael-C.; Mertens,-Antje
+AUTHOR AFFILIATION:  Humboldt-U Berlin and CEPR; Max Planck Institute and Humboldt-U Berlin
+SOURCE (BIBLIOGRAPHIC CITATION):  Labour-Economics; 8(1), January 2001, pages 15-41.
+Full Text:  42;232,GOTO(232,http://journals.library.utoronto.ca:951/cgi-bin/sciserv.pl?collection=journals&_ob=GatewayURL&_origin=SilverLinker&_urlversion=4&_method=citationSearch&_volkey=0927%2d5371%238%2315%231&_version=1&md5=70509e357638b9ba0258b1c0b01a8e07)32,<IMG SRC="slinker.gif" BORDER=0>Science Direct (UofT)
+DOCUMENT TYPE:  Journal-Article
+PUBLICATION YEAR:  2001
+POST 1990 DESCRIPTORS:  Labor-Turnover;-Vacancies;-Layoffs-includes-separations,-hires,-redundancy,-job-tenure,-displaced-workers (J630); Wage-Level-and-Structure;-Wage-Differentials-by-Skill,-Training,-Occupation,-etc.-industry,-schooling,-experience,-tenure,-cohort,-etc. (J310); Displaced;-Earnings;-Wage-
+ABSTRACT:  This paper employs the German Socioeconomic Panel (GSOEP) and the social insurance file (IAB) to study the effect of displacement on reemployment earnings of West German workers. On average, wages of the displaced decline only slightly upon reemployment. For workers in the IAB sample in 1986, we find that the lowest earnings quartile, in which displacement is concentrated, even gains slightly (+2%), while wage growth losses for the upper three quartiles are comparable with US evidence (-17%). Large wage losses are persistent and associated with changes of industry, but not of firm.  A surprising finding is that displacement in Germany is often associated with later recall, in contrast to the North American experience.
+
+TITLE:  Mobility and Stability: The Dynamics of Job Change in Labor Markets
+AUTHOR(S):  Farber,-Henry-S.
+AUTHOR AFFILIATION:  Princeton U
+SOURCE (BIBLIOGRAPHIC CITATION):  Princeton Industrial Relations Section Working Paper: 400, June 1998, pages 66.
+DOCUMENT TYPE:  Working-Paper
+PUBLICATION YEAR:  1998
+POST 1990 DESCRIPTORS:  Contracts:-Specific-Human-Capital,-Matching-Models,-Efficiency-Wage-Models,-and-Internal-Labor-Markets-other-contracts (J410); Labor-Turnover;-Vacancies;-Layoffs-includes-separations,-hires,-redundancy,-job-tenure,-displaced-workers (J630); Worker-Mobility;-Employment-Relationships;-Firm-Specific-Capital;-Worker-Heterogeneity-
+ABSTRACT:  Three central facts describe inter-firm worker mobility in modern labor markets: 1) long-term employment relationships are common, 2) most new jobs end early, and 3) the probability of a job ending declines with tenure. The author investigates whether tests of the specific capital model are successful in distinguishing it from a model based on heterogeneity. Analyses which use longitudinal data with detailed mobility histories of workers suggest that both heterogeneity and specific capital (implying true duration dependence in the hazard of job ending) appear to be significant factors in accounting for mobility patterns. A second approach uses estimation of the return to tenure in earnings functions. This is found to have several weaknesses including endogeneity of tenure and the lack of tight theoretical links between tenure and accumulated specific capital and between productivity and wages. A third approach uses data on the earnings experience of displaced workers. Several tests are derived based on these data, but there is generally an alternative heterogeneity-based explanation that makes interpretation difficult. Nonetheless, firms appear willing to pay to encourage long-term employment relationships, and they may do so because it is efficient to invest in their workforce.
+
+TITLE:  Worker Displacement in France and Germany
+AUTHOR(S):  Bender,-Stefan et-al.
+AUTHOR AFFILIATION:  Institute fur Arbeitsmarkt-und Berufsforschung, Nurnberg
+SOURCE (BIBLIOGRAPHIC CITATION):  Institute for Fiscal Studies Working Paper: W99/14, April 1999, pages 56.
+DOCUMENT TYPE:  Working-Paper
+PUBLICATION YEAR:  1999
+POST 1990 DESCRIPTORS:  Employment-Determination;-Demand-for-Labor;-Self-Employment (J230); Wage-Level-and-Structure;-Wage-Differentials-by-Skill,-Training,-Occupation,-etc.-industry,-schooling,-experience,-tenure,-cohort,-etc. (J310); Unemployment:-Models,-Duration,-Incidence,-and-Job-Search (J640); Earnings;-Wages;-Employment;-Unemployment;-Displacement-
+ABSTRACT:  This paper describes the evolution of earnings and employment, post-displacement and post-other-separation for workers in France and Germany. The authors exploit administrative data from both countries, which has the advantage of providing large, representative samples of a wide range of workers from all sectors. Furthermore, reported earnings and employment durations are precisely measured. The paper describes the institutional context in France and Germany surrounding quits and layoffs. The analysis focuses on non-employment duration and earnings changes experienced by workers who have stayed with a single firm for at least 4 years. The authors find that the determinants of displacement are roughly similar across countries. In both countries, a large share of displaced workers transit to their subsequent employers without spending any time in non-employment. The share of direct transitions is always higher for displaced workers than for workers that separate for other reasons. The durations of spells out of the work force are shorter in both countries for displaced workers than for those who separate for other reasons. In both countries, the authors find that displacement does not seem to be associated with large earnings losses.

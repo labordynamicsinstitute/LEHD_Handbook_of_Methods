@@ -1,0 +1,164 @@
+%TCIDATA{LaTeXparent=0,0,sw-edit.tex}
+
+% -*- latex -*- 
+%
+% Time-stamp: <05/04/06 23:54:19 vilhuber> 
+%              Automatically adjusted if using Xemacs
+%              Please adjust manually if using other editors
+%
+% icf.tex
+% Responsible: Fredrik, Martha
+% Part of QWI_methods.tex
+
+%\subsection{Individual Characteristics File}
+\label{sec:icf_overview}
+%\label{cha:icf}
+
+The \textit{Individual Characteristics File }(ICF)%
+\mindex{ICF}\index{Individual Characteristics File|see{ICF}}
+for each state contains one record for every
+person who is ever employed in that state over the time period spanned by
+the state's unemployment insurance records. 
+
+The ICF is constructed in the following manner. First, the universe of
+individuals is defined by compiling the list of unique PIKs from the
+EHF. Demographic information from the PCF is then merged on by PIK, and
+records without a valid match flagged. PIK\index{PIK}-survey identifier
+crosswalks link the CPS and SIPP ID variables into the ICF, and gender and
+age information from the CPS is used to complement and verify the
+PCF-provided information. 
+%\marginpar{\tiny Talk  about validated/non-validated crosswalks? Coverage per year?}
+
+\subsection{Age and gender imputation}
+\index{imputation!age}
+\index{imputation!gender}
+
+Approximately 3{\%} of the PIKs\index{PIK} found in the UI\index{UI}
+wage records do not match to the PCF\index{PCF} file. Multiple imputation
+methods are used to assign \index{missing values} date of birth and gender
+to these individuals. To impute gender, the probability of being male is
+estimated using a state-specific logit
+model\index{imputation!logit}\index{logit}:
+
+\begin{equation}
+  \label{eq:logit:gender}
+  P(male)=f(X_{is}\beta_s)
+\end{equation}
+where $X_{is}$ contains a  full set of yearly log earnings and squared log
+earnings, and full set of employment indicators covering time period spanned
+by the state's records, for each individual $i$ with strictly positive earnings
+within state $s$ and non-missing PCF gender. The state-specific $\hat{\beta}_s$ as estimated from Equation
+(\ref{eq:logit:gender}) is then used to predict the probability of
+being male for individuals with missing gender  within state $s$, and gender is assigned as
+\begin{equation}
+  \label{eq:impute:gender}
+  \text{male}~\text{if}~X_{is}\hat{\beta}_s \geq \mu_l 
+\end{equation}
+where $\mu_l \sim U[0,1]$ is one of  $l = 1,\dots,10$ independent draws
+from the distribution. Thus, each individual with missing gender is
+assigned ten independent implicates.
+
+The  imputation of date of birth is done in a similar fashion using a multinomial logit
+to predict the probability of being in one of eight age categories and then
+assigning an age based on this probability and the distribution of ages
+within the category. Again, the imputation occurs ten times.
+
+It should be noted that if an individual is missing gender or age in the
+PCF, but not in the CPS, then the CPS values are used, not the imputed
+values. Also, before the imputation model for date of birth is implemented,
+basic editing of the date of birth variable takes place to account for
+obvious coding errors, such as a negative age at the time when UI earnings
+is first reported for the individual. In those relatively rare cases where
+the date of birth information is deemed unrealistic it is set to missing
+and instead imputed based on the model described above.
+
+\subsection{Place of residence imputation}
+\label{sec:icf:place_impute}
+\index{imputation!residence}
+
+Place of residence information on the ICF is derived from the StARS
+(Statistical Administrative Records System), which for the vast majority of
+the individuals found in the UI wage records contains information on the
+place of residence down to the exact geographical coordinates. However, in
+some 10 
+%[LARS: THIS NUMBER IS A ROUGH ESTIMATE BASED ON MY RECOLLECTION.
+%CHECK WITH PRODUCTION FOR MORE PRECISION] 
+percent of all cases this information is incomplete or missing. In
+particular the  QWI computation relies on completed place of residence
+information is because this is a key conditioning variable in the
+unit-to-worker (U2W) imputation model (see Section~\ref{sec:u2w}). 
+
+%In its current version the unit-to-worker
+%imputation model needs place of residence information as of 1999 and,
+%therefore, the completed place of residence information on the ICF reflects
+%the same year, even though longitudinal information at an annual frequency
+%is available from StARS.
+
+
+County of residence is imputed based on a categorical model of data that
+can be represented by a contingency table. In particular, separately for
+each state, unique combinations of categories of gender, age, race, income
+and county of work are used to form $i=1,\ldots ,I$ populations. For each
+sample $i$, the probability of residing in a particular county as of 1999,
+$\pi_{ij}$, is estimated by the sample proportion, $p_{ij}=n_{ij}/n_{i}$,
+where $j=1,\ldots ,J$ indexes all the counties in the state plus an extra
+category for out-of-state residents.
+
+County of residence is then imputed based on
+%
+\begin{eqnarray}
+  \label{eq:county_impute}
+  county = j &\text{if}& P_{ij - 1} \le u_k < P_{ij} 
+\end{eqnarray}
+%
+where $P_i $ is the CDF corresponding to $p_i $ for the $i$th population
+and $\mu _{kl} \sim U[0,1]$ is one of $k = 1,\ldots,10$ independent draws for
+the $l$th individual belonging to the $i$th population.
+
+In its current version no geography below the county level is imputed and
+in those cases where exact geographical coordinates are incomplete the
+centroid of the finest geographical area is used. Thus, in cases where no
+geography information is available this amounts to the centroid of the
+imputed county. Geographical coordinates are not assigned to individuals
+whose county of residence has been imputed to be out-of-state.
+
+%
+%
+%09{\_}icf.sas - 15{\_}icf.sas: PCF, CPR match, who is imputed, what about
+% people who move, precision of TIGER match.
+
+\subsection{Education imputation}
+\index{imputation!education}
+
+%[ FREDRIK: describe, please. Verbal plus imputation model ]
+%16{\_}icf.sas- 19{\_}icf.sas
+
+The imputation model for education relies on a statistical match between
+the Decennial Census 1990 and LEHD data. The probability of belonging to
+one of 13 education categories is estimated using 1990 Decennial data
+conditional on characteristics that are common to both Decennial and LEHD
+data, using a state-specific logit
+model\index{imputation!logit}\index{logit}:
+
+\begin{equation}
+  \label{eq:logit:educat}
+  P(educat)=f(Z_{is}\gamma_s)
+\end{equation}
+where $Z_{is}$ contains age categories, earnings categories, and industry
+dummies for individuals age 14 and older in the 1990 Census Long Form
+residing in the state being estimated, and who reported strictly positive
+wage earnings.
+
+Education is then imputed based on
+\begin{eqnarray}
+  \label{eq:impute:educat}
+  \text{educat}=j &~\text{if} & {cp}_{j-1} \leq \mu_l < {cp}_{j} 
+\end{eqnarray}
+where $cp_{j}=Z_{is}\hat{\gamma}_s$ and $\mu_l \sim U[0,1]$ is one of  $l =
+11,\dots,20$ independent draws, and $i \in EHF$.
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "qwi-overview"
+%%% End: 
